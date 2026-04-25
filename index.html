@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    //fonts.googleapis.com">
-    //fonts.gstatic.com" crossorigin>
-    //fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&family=Fragment+Mono&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&family=Fragment+Mono&display=swap" rel="stylesheet">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nicolas Vaca</title>
@@ -23,7 +23,7 @@
         #nav-links a { font-size: 14px; letter-spacing: 0.15em; font-weight: 400; opacity: 0.88; transition: opacity 180ms ease; }
         #nav-links a:hover { opacity: 1; }
 
-        /* HERO - Parallax ready */
+        /* HERO */
         #hero { position: relative; height: 100vh; overflow: hidden; background: #111; z-index: 1; }
         #hero-photo { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 20%; filter: grayscale(100%); background: linear-gradient(160deg, #1a1a1a 0%, #2d2d2d 40%, #1a1a1a 100%); }
         #hero::after { content: ''; position: absolute; inset: 0; background: rgba(0,0,0,0.18); pointer-events: none; }
@@ -58,7 +58,7 @@
         #about-socials a:hover { border-color: rgba(255,255,255,0.8); color: #fff; }
         #about-socials svg { width: 16px; height: 16px; }
 
-        /* PODCAST SECTION - Minimalist B&W */
+        /* PODCAST SECTION */
         #podcast-section { background: #fff; color: #1a1a1a; padding: 80px 8%; }
         .pod-header { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 32px; flex-wrap: wrap; gap: 12px; }
         .pod-title-label { font-size: 11px; letter-spacing: 0.32em; text-transform: uppercase; color: rgba(0,0,0,0.35); margin-bottom: 4px; font-family: 'Fragment Mono', monospace; }
@@ -103,18 +103,7 @@
 
         /* FOOTER */
         footer { background: #fff; color: #1a1a1a; padding: 60px 40px 20px; }
-        #footer-name { 
-            font-size: clamp(60px, 13vw, 300px); 
-            font-weight: 900; 
-            letter-spacing: -0.03em; 
-            line-height: 0.8; 
-            color: #000; 
-            margin-bottom: 40px; 
-            width: 100%; 
-            text-align: center; 
-            text-transform: uppercase;
-            display: block;
-        }
+        #footer-name { font-size: clamp(60px, 13vw, 300px); font-weight: 900; letter-spacing: -0.03em; line-height: 0.8; color: #000; margin-bottom: 40px; width: 100%; text-align: center; text-transform: uppercase; display: block; }
         #footer-grid { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 32px; padding: 40px 0; border-top: 1px solid rgba(0,0,0,0.1); border-bottom: 1px solid rgba(0,0,0,0.1); }
         .footer-col-label { font-size: 11px; letter-spacing: 0.1em; color: rgba(0,0,0,0.35); font-weight: 500; text-transform: uppercase; margin-bottom: 12px; }
         .footer-col-value { font-size: 14px; color: #1a1a1a; line-height: 1.6; }
@@ -177,12 +166,11 @@
                 <div id="about-clock"><span id="clock-time">00:00</span><span>CET</span></div>
             </div>
             <div id="about-divider"></div>
-            <!-- Social Buttons moved here as requested -->
             <nav id="about-socials">
                 <a href="https://x.com/nicolasvacagr" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.736l7.73-8.835L1.254 2.25H8.08l4.259 5.63zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
-                <a href="https://instagram.com/nicolasvacagr" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>e x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+                <a href="https://instagram.com/nicolasvacagr" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
                 <a href="https://youtube.com/@nicolasvacagr" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></a>
-                <a href="https://linkedin.com/in/nicolasvacagr" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/>ircle cx="4" cy="4" r="2"/></svg></a>
+                <a href="https://linkedin.com/in/nicolasvacagr" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
             </nav>
         </div>
     </section>
@@ -216,7 +204,6 @@
                 </div>
             </div>
             <div class="pod-right">
-                <!-- Uniform text style for the quote and description -->
                 <p class="pod-desc-text">Ralph Waldo Emerson once said that in the minds of geniuses, we find our own neglected thoughts. The more I learn, the more I find this to be true. Untold is where I and you go to explore those neglected thoughts, by listening to people far smarter than me.</p>
                 <p class="pod-desc-text">I look to speak with researchers, explorers, thinkers, and anyone with an idea worth spreading, a story worth telling, or a question more of us should be asking ourselves. Join me as I feed my curiosity, one conversation at a time.</p>
             </div>
@@ -234,7 +221,6 @@
         </div>
         <hr class="nl-divider">
         <div id="nl-articles">
-            <!-- Feed loads via script -->
             <div class="nl-article" style="pointer-events:none;opacity:0.3"><div class="nl-art-img"></div><div style="height:11px;background:#e8e8e8;width:35%"></div><div style="height:16px;background:#e8e8e8;width:90%"></div><div style="height:13px;background:#e8e8e8"></div></div>
         </div>
         <div class="nl-signup">
@@ -250,21 +236,19 @@
     </section>
 
     <footer id="contact">
-        <!-- Big expanding name footer -->
         <span id="footer-name">NICOLAS VACA</span>
-        
         <div id="footer-grid">
             <div>
                 <div class="footer-col-label">Contact</div>
                 <div class="footer-col-value">
-                    <a href="mailto:contact@nicolasvacagr.com">contact@nicolasvacagr.com</a><br>
+                    <a href="mailto:contact@nicolasvacagr.com">contact@nicolasvacagr.com</a><br><br>
                     <a href="tel:+34678789532">+34 678 78 95 32</a>
                 </div>
             </div>
             <div>
                 <div class="footer-col-label">Current Madrid Time</div>
                 <div class="footer-col-value">
-                    <span class="footer-time-big" id="footer-clock">00:00</span>
+                    <span class="footer-time-big" id="footer-clock">00:00</span><br>
                     <span class="footer-time-tz">CET</span>
                 </div>
             </div>
@@ -277,65 +261,54 @@
             <div>
                 <div class="footer-col-label">Elsewhere</div>
                 <div class="footer-col-value">
-                    <a href="https://instagram.com/nicolasvacagr" target="_blank">Instagram</a><br>
-                    <a href="https://x.com/nicolasvacagr" target="_blank">X (Twitter)</a><br>
+                    <a href="https://instagram.com/nicolasvacagr" target="_blank">Instagram</a><br><br>
+                    <a href="https://x.com/nicolasvacagr" target="_blank">X (Twitter)</a><br><br>
                     <a href="https://youtube.com/@nicolasvacagr" target="_blank">Youtube</a>
                 </div>
             </div>
         </div>
         <div id="footer-bottom">
-            <span>&copy; 2026 Nicolas Vaca</span>
+            <span>© 2026 Nicolas Vaca</span>
             <div>
-                <a href="#">Privacy Policy</a> &nbsp; | &nbsp; <a href="#">Terms</a>
+                <a href="#">Privacy Policy</a>   |   <a href="#">Terms</a>
             </div>
         </div>
     </footer>
 
     <script>
-        /* 2. PARALLAX EFFECT FOR NICO & VACA */
+        /* 2. PARALLAX EFFECT */
         const nav = document.getElementById('nav');
         const nicoEl = document.getElementById('hero-nico');
         const vacaEl = document.getElementById('hero-vaca');
         const taglineEl = document.getElementById('hero-tagline');
         const heroEl = document.getElementById('hero');
-
         function heroParallax() {
             const y = window.scrollY;
             const heroH = heroEl.offsetHeight;
-            
-            // Nico moves down until alignment
             const travel = y * 0.7; 
-            // Fade out both as they approach the highlight section
             const opacity = Math.max(0, 1 - (y / (heroH * 0.7)));
-
             nicoEl.style.transform = `translateY(${travel}px)`;
             nicoEl.style.opacity = opacity;
             vacaEl.style.opacity = opacity;
             taglineEl.style.opacity = opacity;
-
-            // Nav background logic
             nav.style.background = y > 100 ? 'rgba(0,0,0,0.8)' : 'rgba(0,0,0,0)';
-            
             requestAnimationFrame(heroParallax);
         }
         requestAnimationFrame(heroParallax);
 
-        /* 3. SCROLL HIGHLIGHT FIX */
+        /* 3. SCROLL HIGHLIGHT */
         const wrapper = document.getElementById('about-scroll-wrapper');
         const sentences = Array.from(document.querySelectorAll('.about-sentence'));
-
         function updateAboutScroll() {
             const rect = wrapper.getBoundingClientRect();
             const viewH = window.innerHeight;
             const scrolled = -rect.top;
             const total = wrapper.offsetHeight - viewH;
             const progress = Math.max(0, Math.min(1, scrolled / total));
-
             sentences.forEach((el, i) => {
                 const step = 1 / sentences.length;
                 const start = i * step;
                 const end = (i + 1) * step;
-                
                 if (progress >= start && progress < end) {
                     el.classList.add('lit');
                     el.classList.remove('dim');
@@ -349,7 +322,7 @@
         }
         window.addEventListener('scroll', updateAboutScroll, { passive: true });
 
-        /* 8. MADRID CLOCK FIX */
+        /* 8. MADRID CLOCK */
         function updateMadridTime() {
             const now = new Date();
             const timeStr = now.toLocaleTimeString('en-GB', { 
@@ -366,7 +339,7 @@
         setInterval(updateMadridTime, 1000);
         updateMadridTime();
 
-        /* 6. SUBSTACK FEED FIX */
+        /* 6. SUBSTACK FEED */
         async function loadSubstack() {
             const container = document.getElementById('nl-articles');
             try {
