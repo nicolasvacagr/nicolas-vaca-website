@@ -1,341 +1,451 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&family=Fragment+Mono&display=swap" rel="stylesheet">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nicolas Vaca - Podcast Host & AWS Ecosystem Builder</title>
+    <title>Nicolas Vaca</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background: #fff;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-        
-        /* Header */
-        header {
-            padding: 20px 0;
-            border-bottom: 1px solid #eee;
-        }
-        
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .logo {
-            font-size: 24px;
-            font-weight: bold;
-            color: #000;
-        }
-        
-        .nav-links {
-            display: flex;
-            gap: 30px;
-            list-style: none;
-        }
-        
-        .nav-links a {
-            text-decoration: none;
-            color: #666;
-            transition: color 0.3s;
-        }
-        
-        .nav-links a:hover {
-            color: #000;
-        }
-        
-        /* Hero Section */
-        .hero {
-            padding: 100px 0;
-            text-align: center;
-        }
-        
-        .hero h1 {
-            font-size: 56px;
-            font-weight: 700;
-            margin-bottom: 20px;
-            line-height: 1.2;
-        }
-        
-        .hero p {
-            font-size: 20px;
-            color: #666;
-            max-width: 600px;
-            margin: 0 auto 40px;
-        }
-        
-        .cta-button {
-            display: inline-block;
-            padding: 15px 40px;
-            background: #000;
-            color: #fff;
-            text-decoration: none;
-            border-radius: 8px;
-            font-weight: 500;
-            transition: background 0.3s;
-        }
-        
-        .cta-button:hover {
-            background: #333;
-        }
-        
-        /* Sections */
-        section {
-            padding: 80px 0;
-        }
-        
-        section h2 {
-            font-size: 40px;
-            margin-bottom: 40px;
-            text-align: center;
-        }
-        
-        /* Podcast Section */
-        .podcast-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin-top: 40px;
-        }
-        
-        .podcast-card {
-            border: 1px solid #eee;
-            border-radius: 12px;
-            padding: 30px;
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-        
-        .podcast-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-        }
-        
-        .podcast-card h3 {
-            font-size: 24px;
-            margin-bottom: 15px;
-        }
-        
-        .podcast-card p {
-            color: #666;
-            margin-bottom: 20px;
-        }
-        
-        .listen-link {
-            color: #000;
-            text-decoration: none;
-            font-weight: 500;
-        }
-        
-        /* Newsletter */
-        .newsletter {
-            background: #f9f9f9;
-            text-align: center;
-        }
-        
-        .newsletter-form {
-            max-width: 500px;
-            margin: 0 auto;
-            display: flex;
-            gap: 10px;
-        }
-        
-        .newsletter-form input {
-            flex: 1;
-            padding: 15px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            font-size: 16px;
-        }
-        
-        .newsletter-form button {
-            padding: 15px 30px;
-            background: #000;
-            color: #fff;
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-        
-        .newsletter-form button:hover {
-            background: #333;
-        }
-        
-        /* Contact */
-        .contact-form {
-            max-width: 600px;
-            margin: 0 auto;
-        }
-        
-        .form-group {
-            margin-bottom: 20px;
-        }
-        
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 500;
-        }
-        
-        .form-group input,
-        .form-group textarea {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            font-size: 16px;
-            font-family: inherit;
-        }
-        
-        .form-group textarea {
-            min-height: 150px;
-            resize: vertical;
-        }
-        
-        .submit-button {
-            width: 100%;
-            padding: 15px;
-            background: #000;
-            color: #fff;
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-        
-        .submit-button:hover {
-            background: #333;
-        }
-        
-        /* Footer */
-        footer {
-            padding: 40px 0;
-            text-align: center;
-            border-top: 1px solid #eee;
-            color: #666;
-        }
-        
-        .social-links {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin-bottom: 20px;
-        }
-        
-        .social-links a {
-            color: #666;
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-        
-        .social-links a:hover {
-            color: #000;
+        /* BASE & RESET */
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; scroll-behavior: smooth; }
+        body { font-family: 'Plus Jakarta Sans', -apple-system, sans-serif; background: #000; color: #fff; overflow-x: hidden; }
+        a { color: inherit; text-decoration: none; }
+        button { cursor: pointer; background: none; border: none; font: inherit; color: inherit; }
+        img { display: block; max-width: 100%; }
+
+        /* NAV */
+        nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; padding: 22px 40px; display: flex; align-items: center; justify-content: space-between; background: rgba(0,0,0,0); transition: background 60ms linear; }
+        #nav-name { font-size: 16px; font-weight: 800; letter-spacing: 0.02em; white-space: nowrap; }
+        #nav-links { display: flex; gap: 48px; justify-content: flex-end; }
+        #nav-links a { font-size: 14px; letter-spacing: 0.15em; font-weight: 400; opacity: 0.88; transition: opacity 180ms ease; }
+        #nav-links a:hover { opacity: 1; }
+
+        /* HERO */
+        #hero { position: relative; height: 100vh; overflow: hidden; background: #111; }
+        #hero-photo { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 20%; filter: grayscale(100%); background: linear-gradient(160deg, #1a1a1a 0%, #2d2d2d 40%, #1a1a1a 100%); }
+        #hero::after { content: ''; position: absolute; inset: 0; background: rgba(0,0,0,0.18); pointer-events: none; }
+        #hero-nico { position: absolute; top: 60px; left: 40px; font-size: clamp(80px, 14vw, 160px); font-weight: 900; letter-spacing: -0.02em; line-height: 1; color: #fff; z-index: 2; user-select: none; will-change: transform; }
+        #hero-vaca { position: absolute; bottom: 18px; right: 40px; font-size: clamp(80px, 14vw, 160px); font-weight: 900; letter-spacing: -0.02em; line-height: 1; color: #fff; z-index: 2; user-select: none; }
+        #hero-tagline { position: absolute; bottom: 36px; left: 40px; font-size: 24px; letter-spacing: 0.05em; font-weight: 400; color: rgba(255,255,255,0.75); line-height: 1.3; z-index: 2; font-family: 'Fragment Mono', monospace; text-transform: uppercase; }
+        #hero-arrow { display: block; margin-top: 8px; font-size: 18px; animation: bounce 2s ease-in-out infinite; }
+        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(5px); } }
+
+        /* ABOUT SCROLL SECTION */
+        #about-scroll-wrapper { position: relative; height: 400vh; background: #000; }
+        #about-scroll-sticky { position: sticky; top: 0; height: 100vh; display: flex; align-items: center; justify-content: flex-start; padding: 0 8%; overflow: hidden; }
+        .about-sentence-block { max-width: 100%; }
+        .about-sentence { display: inline; font-size: clamp(28px, 4.5vw, 60px); font-weight: 700; line-height: 1.22; letter-spacing: -0.02em; color: rgba(255,255,255,0.15); transition: color 500ms ease; }
+        .about-sentence.lit { color: rgba(255,255,255,1); }
+        .about-sentence.dim { color: rgba(255,255,255,0.15); }
+
+        /* ABOUT BIO SECTION */
+        #about { background: #000; display: grid; grid-template-columns: 1fr 1fr; min-height: 100vh; align-items: center; padding: 80px 8%; gap: 80px; }
+        #about-photo { position: relative; aspect-ratio: 3/4; max-height: 600px; overflow: hidden; border-radius: 2px; background: #1a1a1a; }
+        #about-photo img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%); }
+        #about-text-col { display: flex; flex-direction: column; gap: 32px; }
+        .about-para { font-size: clamp(16px, 1.6vw, 20px); line-height: 1.7; color: rgba(255,255,255,0.38); font-weight: 400; }
+        .about-para .hi { color: #fff; font-weight: 700; }
+        #about-meta { display: flex; flex-direction: column; gap: 4px; }
+        #about-location { font-size: 15px; color: rgba(255,255,255,0.5); font-weight: 400; }
+        #about-clock { font-size: 18px; font-weight: 600; color: rgba(255,255,255,0.85); letter-spacing: -0.01em; }
+        #about-clock span { font-size: 14px; font-weight: 400; color: rgba(255,255,255,0.4); margin-left: 4px; }
+        #about-divider { width: 100%; height: 1px; background: rgba(255,255,255,0.12); }
+        #about-socials { display: flex; gap: 20px; align-items: center; }
+        #about-socials a { display: flex; align-items: center; justify-content: center; width: 38px; height: 38px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.2); color: rgba(255,255,255,0.6); transition: all 180ms ease; }
+        #about-socials a:hover { border-color: rgba(255,255,255,0.8); color: #fff; }
+        #about-socials svg { width: 16px; height: 16px; }
+
+        /* PODCAST SECTION */
+        #podcast-section { background: #fff; color: #1a1a1a; padding: 80px 8%; }
+        .pod-header { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 32px; flex-wrap: wrap; gap: 12px; }
+        .pod-title-label { font-size: 11px; letter-spacing: 0.32em; text-transform: uppercase; color: rgba(0,0,0,0.35); margin-bottom: 4px; font-family: 'Fragment Mono', monospace; }
+        .pod-title { font-size: clamp(44px, 7vw, 80px); font-weight: 900; letter-spacing: 0.22em; text-transform: uppercase; color: #0E375D; line-height: 0.88; }
+        .pod-cta { font-size: 13px; font-weight: 600; color: #1a1a1a; border-bottom: 1px solid rgba(0,0,0,0.18); padding-bottom: 2px; transition: opacity 180ms ease; }
+        .pod-cta:hover { opacity: 0.5; }
+        .pod-divider { width: 100%; height: 1px; background: rgba(0,0,0,0.09); border: none; margin: 0; }
+        .pod-grid { display: grid; grid-template-columns: 1fr 1fr; align-items: start; gap: 0; }
+        .pod-left { border-right: 1px solid rgba(0,0,0,0.09); padding: 36px 40px 36px 0; }
+        .pod-right { padding: 36px 0 36px 40px; display: flex; flex-direction: column; gap: 24px; }
+        .pod-video-wrap { position: relative; border-radius: 3px; overflow: hidden; aspect-ratio: 16/9; background: #e8e8e8; }
+        .pod-video-thumb { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .pod-play-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.12); display: flex; align-items: center; justify-content: center; }
+        .pod-play-btn { width: 52px; height: 52px; border-radius: 50%; background: rgba(255,255,255,0.93); display: flex; align-items: center; justify-content: center; color: #0E375D; box-shadow: 0 2px 20px rgba(0,0,0,0.18); transition: transform 200ms ease; cursor: pointer; }
+        .pod-play-btn:hover { transform: scale(1.06); }
+        .pod-ep-label { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(0,0,0,0.32); font-weight: 600; margin-bottom: 6px; margin-top: 20px; }
+        .pod-ep-title { font-size: 16px; line-height: 1.38; letter-spacing: -0.02em; font-weight: 700; color: #1a1a1a; margin-bottom: 5px; }
+        .pod-ep-meta { font-size: 12px; color: rgba(0,0,0,0.36); font-weight: 500; }
+        .pod-platforms { display: flex; gap: 20px; margin-top: 16px; flex-wrap: wrap; }
+        .pod-plat-btn { font-size: 12px; font-weight: 600; letter-spacing: 0.03em; color: rgba(0,0,0,0.4); transition: color 180ms ease; padding: 0; }
+        .pod-plat-btn:hover { color: #1a1a1a; }
+        .pod-desc-main { font-size: clamp(18px, 2.2vw, 22px); line-height: 1.6; letter-spacing: -0.025em; font-weight: 400; color: #1a1a1a; margin: 0; }
+        .pod-desc-sub { font-size: 14px; line-height: 1.8; color: rgba(0,0,0,0.5); margin: 0; font-weight: 400; }
+
+        /* NEWSLETTER SECTION */
+        #newsletter-section { background: #fff; color: #1a1a1a; padding: 0 8% 80px; }
+        .nl-header { display: flex; align-items: flex-end; justify-content: space-between; padding: 48px 0 40px; gap: 24px; flex-wrap: wrap; }
+        .nl-title-label { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(0,0,0,0.35); font-weight: 500; margin-bottom: 6px; }
+        .nl-title { font-size: 32px; font-weight: 700; letter-spacing: -0.03em; line-height: 1.1; }
+        .nl-link { font-size: 13px; color: #0E375D; font-weight: 500; letter-spacing: 0.02em; white-space: nowrap; }
+        .nl-link:hover { opacity: 0.7; }
+        .nl-divider { width: 100%; height: 1px; background: rgba(0,0,0,0.09); }
+        #nl-articles { display: flex; gap: 32px; padding: 40px 0 48px; width: 100%; }
+        .nl-article { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; gap: 12px; border-right: 1px solid rgba(0,0,0,0.09); padding-right: 32px; text-decoration: none; color: inherit; transition: opacity 180ms ease; }
+        .nl-article:last-child { border-right: none; padding-right: 0; }
+        .nl-article:hover { opacity: 0.7; }
+        .nl-art-img { width: 100%; aspect-ratio: 16/9; border-radius: 3px; overflow: hidden; background: #e8e8e8; }
+        .nl-art-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .nl-art-date { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(0,0,0,0.35); font-weight: 500; }
+        .nl-art-title { font-size: 16px; font-weight: 600; line-height: 1.35; color: #1a1a1a; letter-spacing: -0.01em; }
+        .nl-art-excerpt { font-size: 13px; line-height: 1.7; color: rgba(0,0,0,0.5); display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; flex: 1; }
+        .nl-art-read { font-size: 12px; color: #0E375D; font-weight: 500; }
+        .nl-signup { display: flex; align-items: center; justify-content: space-between; padding: 48px 0 64px; gap: 32px; flex-wrap: wrap; border-top: 1px solid rgba(0,0,0,0.09); }
+        .nl-signup-copy { display: flex; flex-direction: column; gap: 8px; flex: 1; min-width: 240px; }
+        .nl-signup-title { font-size: 20px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.2; }
+        .nl-signup-sub { font-size: 14px; color: rgba(0,0,0,0.5); line-height: 1.6; max-width: 360px; }
+        .nl-form { display: flex; gap: 8px; flex: 1; min-width: 280px; max-width: 440px; }
+        .nl-input { flex: 1; height: 44px; padding: 0 16px; font-size: 14px; font-family: inherit; border: 1px solid rgba(0,0,0,0.15); border-radius: 3px; outline: none; background: #fff; color: #1a1a1a; min-width: 0; }
+        .nl-input:focus { border-color: rgba(0,0,0,0.4); }
+        .nl-submit { height: 44px; padding: 0 20px; background: #0E375D; color: #fff; border: none; border-radius: 3px; font-size: 13px; font-weight: 600; font-family: inherit; letter-spacing: 0.03em; white-space: nowrap; cursor: pointer; transition: opacity 180ms ease; }
+        .nl-submit:hover { opacity: 0.8; }
+
+        /* FOOTER */
+        footer { background: #fff; color: #1a1a1a; padding: 60px 40px 0; }
+        #footer-name { font-size: clamp(60px, 11vw, 160px); font-weight: 900; letter-spacing: -0.03em; line-height: 0.9; color: #000; margin-bottom: 40px; }
+        #footer-grid { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 32px; padding: 40px 0; border-top: 1px solid rgba(0,0,0,0.1); border-bottom: 1px solid rgba(0,0,0,0.1); }
+        .footer-col-label { font-size: 11px; letter-spacing: 0.1em; color: rgba(0,0,0,0.35); font-weight: 500; text-transform: uppercase; margin-bottom: 12px; }
+        .footer-col-value { font-size: 14px; color: #1a1a1a; line-height: 1.6; }
+        .footer-col-value a { display: flex; align-items: center; gap: 6px; font-size: 14px; color: #1a1a1a; margin-bottom: 4px; transition: opacity 180ms ease; }
+        .footer-col-value a:hover { opacity: 0.5; }
+        .footer-time-big { font-size: 28px; font-weight: 700; letter-spacing: -0.02em; color: #000; display: inline; }
+        .footer-time-tz { font-size: 14px; color: rgba(0,0,0,0.45); margin-left: 4px; }
+        .footer-social-link { display: block; font-size: 14px; color: #1a1a1a; margin-bottom: 4px; transition: opacity 180ms ease; }
+        .footer-social-link:hover { opacity: 0.5; }
+        #footer-bottom { display: flex; align-items: center; justify-content: space-between; padding: 20px 0; font-size: 12px; color: rgba(0,0,0,0.4); }
+        #footer-bottom-links { display: flex; gap: 32px; align-items: center; }
+        #scroll-top { display: flex; align-items: center; justify-content: center; width: 32px; height: 32px; border: 1px solid rgba(0,0,0,0.2); border-radius: 50%; color: #1a1a1a; transition: all 180ms ease; cursor: pointer; }
+        #scroll-top:hover { border-color: #000; }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            nav { padding: 16px 20px; }
+            #nav-links { gap: 24px !important; }
+            #hero-nico, #hero-vaca { font-size: clamp(52px, 16vw, 100px); }
+            #hero-nico { top: 14px; left: 20px; }
+            #hero-vaca { bottom: 80px; right: 20px; }
+            #hero-tagline { left: 20px; bottom: 24px; }
+            #about { grid-template-columns: 1fr; padding: 60px 6%; gap: 40px; }
+            #about-photo { max-height: 400px; aspect-ratio: 4/3; }
+            .pod-grid { grid-template-columns: 1fr; }
+            .pod-left { border-right: none; border-bottom: 1px solid rgba(0,0,0,0.09); padding: 28px 0; }
+            .pod-right { padding: 28px 0 0; }
+            #footer-grid { grid-template-columns: 1fr 1fr; }
+            #footer-name { font-size: clamp(40px, 14vw, 100px); }
+            #nl-articles { flex-direction: column; }
+            .nl-article { border-right: none; padding-right: 0; border-bottom: 1px solid rgba(0,0,0,0.09); padding-bottom: 24px; }
+            .nl-article:last-child { border-bottom: none; padding-bottom: 0; }
+            .about-sentence { font-size: clamp(22px, 6vw, 40px); }
+            #podcast-section, #newsletter-section { padding-left: 6%; padding-right: 6%; }
+            footer { padding: 40px 20px 0; }
+            #footer-grid { padding: 32px 0; }
         }
     </style>
 </head>
 <body>
-    <header>
-        <nav class="container">
-            <div class="logo">NICOLAS VACA</div>
-            <ul class="nav-links">
-                <li><a href="#home">Home</a></li>
-                <li><a href="#podcast">Podcast</a></li>
-                <li><a href="#newsletter">Newsletter</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-        </nav>
-    </header>
+    <nav id="nav">
+        <a href="/" id="nav-name">NICOLAS VACA</a>
+        <div id="nav-links">
+            <a href="#about">ABOUT</a>
+            <a href="#podcast">PODCAST</a>
+            <a href="#thoughts">THOUGHTS</a>
+            <a href="#contact">CONTACT</a>
+        </div>
+    </nav>
 
-    <section id="home" class="hero">
-        <div class="container">
-            <h1>Podcast Host &<br>AWS Ecosystem Builder</h1>
-            <p>Exploring startup ecosystems, interviewing fascinating founders, and building connections across Europe's tech landscape.</p>
-            <a href="#podcast" class="cta-button">Listen to the Podcast</a>
+    <section id="hero">
+        <div id="hero-photo"></div>
+        <span id="hero-nico">NICO</span>
+        <span id="hero-vaca">VACA</span>
+        <div id="hero-tagline">
+            LEARNING A LITTLE<br>ABOUT A LOT
+            <span id="hero-arrow">↓</span>
         </div>
     </section>
 
-    <section id="podcast">
-        <div class="container">
-            <h2>Latest Episodes</h2>
-            <div class="podcast-grid">
-                <div class="podcast-card">
-                    <h3>Episode 1</h3>
-                    <p>Featured Guest TBA - An inspiring conversation about building in public and startup growth.</p>
-                    <a href="#" class="listen-link">Listen on Spotify →</a>
-                </div>
-                <div class="podcast-card">
-                    <h3>Episode 2</h3>
-                    <p>Featured Guest TBA - Diving deep into the Nordic startup ecosystem and venture capital.</p>
-                    <a href="#" class="listen-link">Listen on Spotify →</a>
-                </div>
-                <div class="podcast-card">
-                    <h3>Episode 3</h3>
-                    <p>Featured Guest TBA - Exploring AI, technology trends, and the future of work.</p>
-                    <a href="#" class="listen-link">Listen on Spotify →</a>
-                </div>
+    <section id="about-scroll-wrapper">
+        <div id="about-scroll-sticky">
+            <div class="about-sentence-block">
+                <span class="about-sentence" data-index="0">As a former tennis player and athlete at the Rafa Nadal Academy,</span>
+                <span class="about-sentence" data-index="1">I am used to spending my free time learning about one of the many interests I have.</span>
+                <span class="about-sentence" data-index="2">I recently decided to channel my curiosity into Untold.</span>
+                <span class="about-sentence" data-index="3">My platform to speak with smart and interesting people.</span>
             </div>
         </div>
     </section>
 
-    <section id="newsletter" class="newsletter">
-        <div class="container">
-            <h2>Subscribe to Newsletter</h2>
-            <p>Get weekly insights on startups, podcasting, and the European tech scene.</p>
-            <form class="newsletter-form">
-                <input type="email" placeholder="Enter your email" required>
-                <button type="submit">Subscribe</button>
-            </form>
+    <section id="about">
+        <div id="about-photo">
+            <!-- Replace with real photo -->
+            <div style="width:100%;height:100%;background:linear-gradient(160deg,#1c1c1c,#2a2a2a);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.06);font-size:13px;letter-spacing:0.15em;text-transform:uppercase;font-family:monospace;text-align:center;padding:20px;">place<br>about photo<br>here</div>
         </div>
-    </section>
-
-    <section id="contact">
-        <div class="container">
-            <h2>Get in Touch</h2>
-            <form class="contact-form">
-                <div class="form-group">
-                    <label for="name">Name</label>
-                    <input type="text" id="name" required>
-                </div>
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" required>
-                </div>
-                <div class="form-group">
-                    <label for="message">Message</label>
-                    <textarea id="message" required></textarea>
-                </div>
-                <button type="submit" class="submit-button">Send Message</button>
-            </form>
-        </div>
-    </section>
-
-    <footer>
-        <div class="container">
-            <div class="social-links">
-                <a href="#">LinkedIn</a>
-                <a href="#">Twitter</a>
-                <a href="#">Spotify</a>
-                <a href="#">YouTube</a>
+        <div id="about-text-col">
+            <p class="about-para">As someone who since early on found pleasure in <span class="hi">knowing more than was necessary</span> about things only few found interesting I still spend my time filling my head with <span class="hi">fun facts</span> and <span class="hi">unknown stories</span>.</p>
+            <p class="about-para">Right now, I’m diving deep into conversations with experts in <span class="hi">artificial intelligence</span> with a focus on infrastructure needs and model alignment, <span class="hi">evolutionary psychology</span>, <span class="hi">relationship dynamics</span>, <span class="hi">personal development</span>, and more.</p>
+            <div id="about-meta">
+                <div id="about-location">Based and work in Madrid</div>
+                <div id="about-clock"><span id="clock-time">00:00</span><span>CET</span></div>
             </div>
-            <p>&copy; 2026 Nicolas Vaca. All rights reserved.</p>
+            <div id="about-divider"></div>
+            <nav id="about-socials">
+                <a href="https://x.com/nicolasvacagr" target="_blank" rel="noopener noreferrer">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.736l7.73-8.835L1.254 2.25H8.08l4.259 5.63zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                </a>
+                <a href="https://instagram.com/nicolasvacagr" target="_blank" rel="noopener noreferrer">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+                </a>
+                <a href="https://youtube.com/@nicolasvacagr" target="_blank" rel="noopener noreferrer">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                </a>
+                <a href="https://linkedin.com/in/nicolasvacagr" target="_blank" rel="noopener noreferrer">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+                </a>
+            </nav>
+        </div>
+    </section>
+
+    <section id="podcast-section">
+        <div class="pod-header">
+            <div>
+                <div class="pod-title-label">The Podcast</div>
+                <div class="pod-title">Untold</div>
+            </div>
+            <a href="https://open.spotify.com/show/5FGKcMKTWyOAPTgkGNxATB" target="_blank" class="pod-cta">All Episodes →</a>
+        </div>
+        <hr class="pod-divider">
+        <div class="pod-grid">
+            <div class="pod-left">
+                <div class="pod-video-wrap">
+                    <div style="position:absolute;inset:0;background:#e0e0e0;display:flex;align-items:center;justify-content:center;color:rgba(0,0,0,0.2);font-size:13px;letter-spacing:0.1em;text-transform:uppercase;font-family:monospace;">Latest episode</div>
+                    <div class="pod-play-overlay">
+                        <button class="pod-play-btn" onclick="this.closest('.pod-video-wrap').innerHTML='<iframe src=\'https://www.youtube.com/embed/Jyq0goeYNwg?rel=0&autoplay=1\' frameborder=\'0\' allow=\'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\' allowfullscreen style=\'position:absolute;inset:0;width:100%;height:100%;\'></iframe>'">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                        </button>
+                    </div>
+                </div>
+                <div class="pod-ep-label">Episode 01</div>
+                <div class="pod-ep-title" id="pod-ep-title">Loading episode...</div>
+                <div class="pod-ep-meta" id="pod-ep-meta"></div>
+                <div class="pod-platforms">
+                    <button class="pod-plat-btn" onclick="window.open('https://open.spotify.com/show/5FGKcMKTWyOAPTgkGNxATB','_blank')">Spotify</button>
+                    <button class="pod-plat-btn" onclick="window.open('https://podcasts.apple.com/co/podcast/untold/id1881240541','_blank')">Apple Podcasts</button>
+                    <button class="pod-plat-btn" onclick="window.open('https://youtube.com/@nicolasvacagr','_blank')">YouTube</button>
+                </div>
+            </div>
+            <div class="pod-right">
+                <p class="pod-desc-main">Ralph Waldo Emerson once said that in the minds of geniuses, we find our own neglected thoughts. The more I learn, the more I find this to be true. <em>Untold</em> is where I and you go to explore those neglected thoughts, by listening to people far smarter than me.</p>
+                <p class="pod-desc-sub">I look to speak with researchers, explorers, thinkers, and anyone with an idea worth spreading, a story worth telling, or a question more of us should be asking ourselves. Join me as I feed my curiosity, one conversation at a time.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="newsletter-section">
+        <hr class="nl-divider">
+        <div class="nl-header">
+            <div>
+                <div class="nl-title-label">The Newsletter</div>
+                <div class="nl-title">Latest Articles</div>
+            </div>
+            <a href="https://nicolasvaca.substack.com" target="_blank" rel="noopener noreferrer" class="nl-link">All articles →</a>
+        </div>
+        <hr class="nl-divider">
+        <div id="nl-articles">
+            <!-- Loading Skeletons -->
+            <div class="nl-article" style="pointer-events:none;opacity:0.3">
+                <div class="nl-art-img"></div>
+                <div style="height:11px;background:#e8e8e8;width:35%"></div>
+                <div style="height:16px;background:#e8e8e8;width:90%"></div>
+                <div style="height:13px;background:#e8e8e8"></div>
+            </div>
+        </div>
+        <div class="nl-signup">
+            <div class="nl-signup-copy">
+                <div class="nl-signup-title">Get the newsletter</div>
+                <div class="nl-signup-sub">Ideas worth sitting with, delivered to your inbox. No noise, just the good stuff when it\'s ready.</div>
+            </div>
+            <form class="nl-form" onsubmit="handleNlSubmit(event)">
+                <input class="nl-input" type="email" placeholder="Your email address" required id="nl-email">
+                <button class="nl-submit" type="submit" id="nl-btn">Subscribe</button>
+            </form>
+        </div>
+    </section>
+
+    <footer id="contact">
+        <div id="footer-name">NICOLAS VACA</div>
+        <div id="footer-grid">
+            <div>
+                <div class="footer-col-label">Contact</div>
+                <div class="footer-col-value">
+                    <a href="mailto:contact@nicolasvacagr.com">contact@nicolasvacagr.com</a>
+                    <a href="tel:+34678789532">+34 678 78 95 32</a>
+                </div>
+            </div>
+            <div>
+                <div class="footer-col-label">My current time</div>
+                <div class="footer-col-value">
+                    <span class="footer-time-big" id="footer-clock">00:00</span>
+                    <span class="footer-time-tz">Madrid CET</span>
+                </div>
+            </div>
+            <div>
+                <div class="footer-col-label">Location</div>
+                <div class="footer-col-value">
+                    Calle de Santo Tomé 6,<br>Madrid,<br>28004
+                </div>
+            </div>
+            <div>
+                <div class="footer-col-label">Elsewhere</div>
+                <div class="footer-col-value">
+                    <a href="https://instagram.com/nicolasvacagr" target="_blank" class="footer-social-link">Instagram</a>
+                    <a href="https://x.com/nicolasvacagr" target="_blank" class="footer-social-link">X</a>
+                    <a href="https://youtube.com/@nicolasvacagr" target="_blank" class="footer-social-link">Youtube</a>
+                    <a href="https://linkedin.com/in/nicolasvacagr" target="_blank" class="footer-social-link">LinkedIn</a>
+                </div>
+            </div>
+        </div>
+        <div id="footer-bottom">
+            <span>&copy; 2026 Nicolas Vaca</span>
+            <div id="footer-bottom-links">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms & Conditions</a>
+                <button id="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 15l-6-6-6 6"/></svg>
+                </button>
+            </div>
         </div>
     </footer>
+
+    <script>
+        /* NAV & HERO PARALLAX */
+        const nav = document.getElementById(\'nav\');
+        const nicoEl = document.getElementById(\'hero-nico\');
+        const vacaEl = document.getElementById(\'hero-vaca\');
+        const taglineEl = document.getElementById(\'hero-tagline\');
+        const heroEl = document.getElementById(\'hero\');
+
+        function easeInOut(t) { return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; }
+
+        let currentTravel = 0;
+        let currentNavOpacity = 0;
+
+        function loop() {
+            const y = window.scrollY;
+            const heroH = heroEl.offsetHeight;
+            const nicoH = nicoEl.offsetHeight;
+            const totalTravel = heroH - 18 - nicoH - 60;
+            const rawRatio = Math.max(0, Math.min(1, y / (heroH * 0.65)));
+            const easedRatio = easeInOut(rawRatio);
+            
+            const targetTravel = totalTravel * easedRatio;
+            const targetNavOpacity = rawRatio;
+            const targetTaglineOpacity = Math.max(0, 1 - rawRatio * 1.4);
+
+            currentTravel += (targetTravel - currentTravel) * 0.12;
+            currentNavOpacity += (targetNavOpacity - currentNavOpacity) * 0.12;
+
+            nicoEl.style.transform = `translateY(${currentTravel.toFixed(2)}px)`;
+            nav.style.background = `rgba(0,0,0,${currentNavOpacity.toFixed(3)})`;
+            taglineEl.style.opacity = targetTaglineOpacity.toFixed(3);
+            
+            requestAnimationFrame(loop);
+        }
+        requestAnimationFrame(loop);
+
+        /* ABOUT SCROLL HIGHLIGHT */
+        const wrapper = document.getElementById(\'about-scroll-wrapper\');
+        const sentences = Array.from(document.querySelectorAll(\'.about-sentence\'));
+
+        function updateAbout() {
+            const rect = wrapper.getBoundingClientRect();
+            const scrolled = -rect.top;
+            const total = wrapper.offsetHeight - window.innerHeight;
+            const progress = Math.max(0, Math.min(1, scrolled / total));
+
+            sentences.forEach((el, i) => {
+                const threshold = i / sentences.length;
+                const nextThreshold = (i + 1) / sentences.length;
+                if (progress > nextThreshold) { el.classList.remove(\'lit\'); el.classList.add(\'dim\'); }
+                else if (progress > threshold) { el.classList.add(\'lit\'); el.classList.remove(\'dim\'); }
+                else { el.classList.remove(\'lit\', \'dim\'); }
+            });
+        }
+        window.addEventListener(\'scroll\', updateAbout, { passive: true });
+
+        /* CLOCKS */
+        function updateClocks() {
+            const t = new Date().toLocaleTimeString(\'en-GB\', { timeZone: \'Europe/Madrid\', hour: \'2-digit\', minute: \'2-digit\', hour12: false });
+            document.getElementById(\'clock-time\').textContent = t;
+            document.getElementById(\'footer-clock\').textContent = t;
+        }
+        setInterval(updateClocks, 10000);
+        updateClocks();
+
+        /* PODCAST RSS */
+        async function loadPodcastEp() {
+            try {
+                const res = await fetch(\'https://corsproxy.io/?url=\' + encodeURIComponent(\'https://anchor.fm/s/10e8379bc/podcast/rss\'));
+                const txt = await res.text();
+                const xml = new DOMParser().parseFromString(txt, \'text/xml\');
+                const items = xml.querySelectorAll(\'item\');
+                const ep = items[0];
+                if (ep) {
+                    document.getElementById(\'pod-ep-title\').textContent = ep.querySelector(\'title\').textContent;
+                    const date = new Date(ep.querySelector(\'pubDate\').textContent).toLocaleDateString(\'en-US\', { month: \'long\', day: \'numeric\', year: \'numeric\' });
+                    document.getElementById(\'pod-ep-meta\').textContent = date;
+                }
+            } catch (e) { console.error(\'Pod load fail\', e); }
+        }
+        loadPodcastEp();
+
+        /* SUBSTACK ARTICLES */
+        async function loadArticles() {
+            const container = document.getElementById(\'nl-articles\');
+            try {
+                const res = await fetch(\'https://corsproxy.io/?url=\' + encodeURIComponent(\'https://nicolasvaca.substack.com/feed\'));
+                const txt = await res.text();
+                const xml = new DOMParser().parseFromString(txt, \'text/xml\');
+                const items = Array.from(xml.querySelectorAll(\'item\')).slice(0, 3);
+                container.innerHTML = items.map((item, i) => {
+                    const title = item.querySelector(\'title\').textContent;
+                    const link = item.querySelector(\'link\').textContent;
+                    const pub = new Date(item.querySelector(\'pubDate\').textContent).toLocaleDateString(\'en-GB\', { day: \'numeric\', month: \'long\', year: \'numeric\' });
+                    const desc = item.querySelector(\'description\').textContent;
+                    const imgMatch = desc.match(/img src="([^"]+)"/);
+                    const img = imgMatch ? imgMatch[1] : null;
+                    return `
+                        <a href="${link}" target="_blank" class="nl-article" style="${i===2 ? \'border-right:none;padding-right:0\' : \'\'}">
+                            <div class="nl-art-img">${img ? `<img src="${img}" alt="${title}">` : \'\'}</div>
+                            <span class="nl-art-date">${pub}</span>
+                            <span class="nl-art-title">${title}</span>
+                            <span class="nl-art-read">Read →</span>
+                        </a>
+                    `;
+                }).join(\'\');
+            } catch (e) { console.error(\'NL load fail\', e); }
+        }
+        loadArticles();
+
+        function handleNlSubmit(e) {
+            e.preventDefault();
+            const btn = document.getElementById(\'nl-btn\');
+            btn.textContent = \'...\';
+            setTimeout(() => {
+                document.getElementById(\'nl-email\').value = \'\';
+                btn.textContent = \'Done!\';
+                setTimeout(() => { btn.textContent = \'Subscribe\'; }, 3000);
+            }, 1000);
+        }
+    </script>
 </body>
 </html>
