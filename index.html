@@ -17,47 +17,123 @@
 
     /* ─── NAV ─── */
     #nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
-      padding: 22px 40px;
-      display: flex; align-items: center; justify-content: space-between;
-      background: rgba(0,0,0,0);
-      transition: background 200ms ease;
-    }
-    /* Name: hidden at start, fades in once scrolled */
-    #nav-name {
-      font-size: 16px; font-weight: 800; letter-spacing: 0.02em; white-space: nowrap;
-      opacity: 0; pointer-events: none;
-      transition: opacity 300ms ease;
-    }
-    #nav-name.visible { opacity: 1; pointer-events: auto; }
-
-    /* Links: start centered across full bar, slide to right on scroll */
-    #nav-links {
-      display: flex; gap: 48px; align-items: center;
-      position: absolute; left: 0; right: 0;
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1000;
+      padding: 14px 32px;
+      display: flex;
+      align-items: center;
       justify-content: center;
-      transition: right 350ms ease, left 350ms ease;
+      gap: 48px;
+      width: calc(100% - 80px);
+      border-radius: 0px;
+      background: transparent;
+      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
     }
-    #nav-links.scrolled {
-      position: absolute; left: auto; right: 40px;
+
+    /* Compact state — triggered by scroll */
+    #nav.compact {
+      left: auto;
+      right: 20px;
+      transform: none;
+      width: auto;
+      border-radius: 40px;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,0.15);
+      padding: 10px 24px;
+      gap: 32px;
       justify-content: flex-end;
     }
-    #nav-links a { font-size: 14px; letter-spacing: 0.15em; font-weight: 400; opacity: 0.88; transition: opacity 180ms ease; white-space: nowrap; }
+
+    /* Name: hidden at start, slides in when compact */
+    #nav-name {
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+      white-space: nowrap;
+      opacity: 0;
+      max-width: 0;
+      overflow: hidden;
+      transition: opacity 0.4s ease, max-width 0.4s ease;
+      pointer-events: none;
+    }
+    #nav.compact #nav-name {
+      opacity: 1;
+      max-width: 200px;
+      pointer-events: auto;
+    }
+
+    #nav-links {
+      display: flex;
+      gap: 48px;
+      align-items: center;
+      transition: gap 0.5s ease;
+    }
+    #nav.compact #nav-links { gap: 32px; }
+    #nav-links a {
+      font-size: 13px;
+      letter-spacing: 0.15em;
+      font-weight: 500;
+      opacity: 0.88;
+      transition: opacity 180ms ease;
+      white-space: nowrap;
+    }
     #nav-links a:hover { opacity: 1; }
 
     /* ─── HERO ─── */
-    #hero { position: relative; height: 100vh; overflow: hidden; background: #111; z-index: 1; }
-    #hero-photo { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 20%; filter: grayscale(100%); background: linear-gradient(160deg, #1a1a1a 0%, #2d2d2d 40%, #1a1a1a 100%); }
-    #hero::after { content: ''; position: absolute; inset: 0; background: rgba(0,0,0,0.18); pointer-events: none; }
+    #hero {
+      position: relative;
+      height: 100vh;
+      overflow: hidden;
+      background: #111;
+      z-index: 1;
+    }
+    #hero-photo {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: center 20%;
+      filter: grayscale(100%);
+      background: linear-gradient(160deg, #1a1a1a 0%, #2d2d2d 40%, #1a1a1a 100%);
+    }
+    #hero::after {
+      content: ''; position: absolute; inset: 0;
+      background: rgba(0,0,0,0.18); pointer-events: none;
+    }
+
+    /* NICO — sticky parallax via JS for cross-browser safety */
     #hero-nico {
       position: absolute;
-      top: 64px; left: 40px; /* top = nav height, maintaining constant gap */
-      font-size: clamp(80px, 14vw, 160px); font-weight: 900; letter-spacing: -0.02em; line-height: 1;
-      color: #fff; z-index: 2; user-select: none; will-change: transform;
+      top: 72px; left: 40px;
+      font-size: clamp(80px, 14vw, 160px);
+      font-weight: 900; letter-spacing: -0.02em; line-height: 1;
+      color: #fff; z-index: 2; user-select: none;
+      will-change: transform;
     }
-    #hero-vaca { position: absolute; bottom: 18px; right: 40px; font-size: clamp(80px, 14vw, 160px); font-weight: 900; letter-spacing: -0.02em; line-height: 1; color: #fff; z-index: 2; user-select: none; }
-    #hero-tagline { position: absolute; bottom: 36px; left: 40px; font-size: 24px; letter-spacing: 0.05em; font-weight: 400; color: rgba(255,255,255,0.75); line-height: 1.3; z-index: 2; font-family: 'Fragment Mono', monospace; text-transform: uppercase; }
-    #hero-arrow { display: block; margin-top: 8px; font-size: 18px; animation: bounce 2s ease-in-out infinite; }
+    #hero-vaca {
+      position: absolute;
+      bottom: 18px; right: 40px;
+      font-size: clamp(80px, 14vw, 160px);
+      font-weight: 900; letter-spacing: -0.02em; line-height: 1;
+      color: #fff; z-index: 2; user-select: none;
+    }
+    #hero-tagline {
+      position: absolute;
+      bottom: 36px; left: 40px;
+      font-size: 24px; letter-spacing: 0.05em; font-weight: 400;
+      color: rgba(255,255,255,0.75); line-height: 1.3;
+      z-index: 2;
+      font-family: 'Fragment Mono', monospace;
+      text-transform: uppercase;
+      transition: opacity 0.3s ease;
+    }
+    #hero-arrow {
+      display: block; margin-top: 8px; font-size: 18px;
+      animation: bounce 2s ease-in-out infinite;
+    }
     @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(5px); } }
 
     /* ─── ABOUT SCROLL ─── */
@@ -100,7 +176,6 @@
     .pod-play-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.12); display: flex; align-items: center; justify-content: center; }
     .pod-play-btn { width: 52px; height: 52px; border-radius: 50%; background: rgba(255,255,255,0.93); display: flex; align-items: center; justify-content: center; color: #1a1a1a; box-shadow: 0 2px 20px rgba(0,0,0,0.18); transition: transform 200ms ease; cursor: pointer; }
     .pod-play-btn:hover { transform: scale(1.06); }
-    /* FIX 3: same font/size as about-para but black */
     .pod-desc-text { font-size: clamp(16px, 1.6vw, 20px); line-height: 1.7; color: #1a1a1a; font-weight: 400; margin: 0; }
     .pod-ep-label { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(0,0,0,0.32); font-weight: 600; margin-bottom: 6px; margin-top: 20px; }
     .pod-ep-title { font-size: 16px; line-height: 1.38; letter-spacing: -0.02em; font-weight: 700; color: #1a1a1a; margin-bottom: 5px; }
@@ -138,7 +213,6 @@
 
     /* ─── FOOTER ─── */
     footer { background: #fff; color: #1a1a1a; padding: 60px 40px 20px; }
-    /* FIX 5: fluid font, never wraps */
     #footer-name {
       font-size: clamp(10px, 11.5vw, 9999px);
       font-weight: 900; letter-spacing: -0.03em; line-height: 0.85;
@@ -146,7 +220,6 @@
       text-align: center; text-transform: uppercase;
       display: block; white-space: nowrap; overflow: hidden;
     }
-    /* FIX 6: contact left | clock center | location center | socials right */
     #footer-grid { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 32px; padding: 40px 0; border-top: 1px solid rgba(0,0,0,0.1); border-bottom: 1px solid rgba(0,0,0,0.1); }
     .footer-col-contact { text-align: left; }
     .footer-col-center  { text-align: center; }
@@ -166,11 +239,10 @@
 
     /* ─── RESPONSIVE ─── */
     @media (max-width: 768px) {
-      #nav { padding: 16px 20px; }
-      #nav-links { gap: 20px; }
-      #nav-links.scrolled { right: 20px; }
+      #nav { width: calc(100% - 40px); gap: 20px; padding: 12px 20px; }
+      #nav.compact { right: 10px; }
       #hero-nico, #hero-vaca { font-size: clamp(52px, 16vw, 100px); }
-      #hero-nico { top: 56px; left: 20px; }
+      #hero-nico { top: 72px; left: 20px; }
       #hero-vaca { bottom: 80px; right: 20px; }
       #hero-tagline { left: 20px; bottom: 24px; }
       #about { grid-template-columns: 1fr; padding: 60px 6%; gap: 40px; }
@@ -196,7 +268,7 @@
 <a href="#about" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)">Skip to content</a>
 
 <!-- NAV -->
-<nav id="nav" aria-label="Main navigation">
+<nav id="nav">
   <a href="#" id="nav-name">NICOLAS VACA</a>
   <div id="nav-links">
     <a href="#about-scroll-wrapper">ABOUT</a>
@@ -292,7 +364,6 @@
         <button class="pod-plat-btn" onclick="window.open('https://youtube.com/@nicolasvacagr','_blank')">→ YouTube</button>
       </div>
     </div>
-    <!-- FIX 3: uniform .pod-desc-text matches about-para style, black color -->
     <div class="pod-right">
       <p class="pod-desc-text">Ralph Waldo Emerson once said that in the minds of geniuses, we find our own neglected thoughts. The more I learn, the more I find this to be true. Untold is where I and you go to explore those neglected thoughts, by listening to people far smarter than me.</p>
       <p class="pod-desc-text">I look to speak with researchers, explorers, thinkers, and anyone with an idea worth spreading, a story worth telling, or a question more of us should be asking ourselves. Join me as I feed my curiosity, one conversation at a time.</p>
@@ -329,10 +400,7 @@
 
 <!-- FOOTER -->
 <footer id="contact">
-  <!-- FIX 5: always one line, fluid font -->
   <span id="footer-name">NICOLAS VACA</span>
-
-  <!-- FIX 6: contact left | clock centered | location centered | socials right -->
   <div id="footer-grid">
     <div class="footer-col-contact">
       <div class="footer-col-label">Contact</div>
@@ -362,7 +430,6 @@
       </div>
     </div>
   </div>
-
   <div id="footer-bottom">
     <span>© 2026 Nicolas Vaca</span>
     <div style="display:flex;align-items:center;gap:16px;">
@@ -373,61 +440,60 @@
 </footer>
 
 <script>
-/* ── FIX 1 + 2: NAV ANIMATION + PARALLAX ── */
-const navEl     = document.getElementById('nav');
-const navName   = document.getElementById('nav-name');
-const navLinks  = document.getElementById('nav-links');
-const nicoEl    = document.getElementById('hero-nico');
-const vacaEl    = document.getElementById('hero-vaca');
+/* ── NAV: expand → compact pill on scroll ── */
+const navEl    = document.getElementById('nav');
+const nicoEl   = document.getElementById('hero-nico');
+const vacaEl   = document.getElementById('hero-vaca');
 const taglineEl = document.getElementById('hero-tagline');
-const heroEl    = document.getElementById('hero');
+const heroEl   = document.getElementById('hero');
 
-const SCROLL_THRESHOLD = 40;
+const SCROLL_THRESHOLD = 80;
 let currentTravel = 0;
+let ticking = false;
 
 function easeOut(t) { return 1 - Math.pow(1 - t, 3); }
 
-function getNavH() { return navEl.offsetHeight; }
-
-function updateNav(y) {
-  if (y > SCROLL_THRESHOLD) {
-    navLinks.classList.add('scrolled');
-    navName.classList.add('visible');
-    navEl.style.background = 'rgba(0,0,0,0.85)';
-  } else {
-    navLinks.classList.remove('scrolled');
-    navName.classList.remove('visible');
-    navEl.style.background = 'rgba(0,0,0,0)';
+function onScroll() {
+  if (!ticking) {
+    requestAnimationFrame(update);
+    ticking = true;
   }
 }
 
-function getParallaxTravel(y) {
-  const navH     = getNavH();
-  const heroH    = heroEl.offsetHeight;
-  const nicoH    = nicoEl.offsetHeight;
-  const vacaH    = vacaEl.offsetHeight;
-  const vacaTop  = heroH - 18 - vacaH;
-  const nicoStart = navH;
-  const maxTravel = vacaTop - nicoStart - nicoH;
-  const meetY    = heroH * 0.65;
-  const ratio    = Math.max(0, Math.min(1, y / meetY));
-  return maxTravel * easeOut(ratio);
-}
-
-function loop() {
+function update() {
   const y = window.scrollY;
-  const targetTravel = getParallaxTravel(y);
-  currentTravel += (targetTravel - currentTravel) * 0.1;
+
+  /* NAV toggle */
+  if (y > SCROLL_THRESHOLD) {
+    navEl.classList.add('compact');
+  } else {
+    navEl.classList.remove('compact');
+  }
+
+  /* NICO parallax — stays pinned below nav, travels toward VACA */
+  const navH    = navEl.offsetHeight;
+  const heroH   = heroEl.offsetHeight;
+  const nicoH   = nicoEl.offsetHeight;
+  const vacaH   = vacaEl.offsetHeight;
+  const vacaTop = heroH - 18 - vacaH;
+  const maxTravel = Math.max(0, vacaTop - 72 - nicoH);
+  const meetY   = heroH * 0.65;
+  const ratio   = Math.max(0, Math.min(1, y / meetY));
+  const target  = maxTravel * easeOut(ratio);
+
+  /* Smooth lerp */
+  currentTravel += (target - currentTravel) * 0.12;
   nicoEl.style.transform = `translateY(${currentTravel.toFixed(2)}px)`;
 
-  const heroH = heroEl.offsetHeight;
-  const fadeRatio = Math.max(0, 1 - (y / (heroH * 0.5)));
+  /* Tagline fade */
+  const fadeRatio = Math.max(0, 1 - (y / (heroH * 0.45)));
   taglineEl.style.opacity = fadeRatio.toFixed(3);
 
-  updateNav(y);
-  requestAnimationFrame(loop);
+  ticking = false;
 }
-requestAnimationFrame(loop);
+
+window.addEventListener('scroll', onScroll, { passive: true });
+requestAnimationFrame(update);
 
 /* ── ABOUT SCROLL HIGHLIGHT ── */
 const wrapper   = document.getElementById('about-scroll-wrapper');
@@ -472,7 +538,7 @@ async function loadPodcast() {
 }
 loadPodcast();
 
-/* ── FIX 4: SUBSTACK — multi-proxy fallback ── */
+/* ── SUBSTACK: multi-proxy fallback ── */
 async function loadArticles() {
   const container = document.getElementById('nl-articles');
   const feedUrl   = 'https://nicolasvaca.substack.com/feed';
@@ -481,7 +547,6 @@ async function loadArticles() {
     u => 'https://api.allorigins.win/raw?url=' + encodeURIComponent(u),
     u => 'https://thingproxy.freeboard.io/fetch/' + u,
   ];
-
   let xml = null;
   for (const proxy of proxies) {
     try {
@@ -491,12 +556,10 @@ async function loadArticles() {
       if (doc.querySelector('item')) { xml = doc; break; }
     } catch { continue; }
   }
-
   if (!xml) {
     container.innerHTML = '<div style="padding:24px 0;color:rgba(0,0,0,0.4);font-size:14px;">Could not load articles. <a href="https://nicolasvaca.substack.com" target="_blank" style="color:#1a1a1a;text-decoration:underline;">Read on Substack →</a></div>';
     return;
   }
-
   const items = Array.from(xml.querySelectorAll('item')).slice(0, 3);
   container.innerHTML = items.map((item, i) => {
     const title   = item.querySelector('title')?.textContent?.trim() ?? '';
