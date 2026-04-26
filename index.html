@@ -16,102 +16,95 @@
     img { display: block; max-width: 100%; }
 
     /* ─── NAV ─── */
+    /* FIX 2: right-anchored so width shrink visually "slides" items right */
     #nav {
       position: fixed;
       top: 20px;
-      left: 50%;
-      transform: translateX(-50%);
+      right: 20px;
       z-index: 1000;
-      width: calc(100% - 80px);
+      width: calc(100% - 40px);
       padding: 14px 0;
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      background: transparent;
       color: #fff;
-      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      background: transparent;
+      border-radius: 0;
+      border: 1px solid transparent;
+      transition:
+        width 0.55s cubic-bezier(0.4, 0, 0.2, 1),
+        padding 0.55s cubic-bezier(0.4, 0, 0.2, 1),
+        border-radius 0.55s cubic-bezier(0.4, 0, 0.2, 1),
+        background 0.55s cubic-bezier(0.4, 0, 0.2, 1),
+        border-color 0.55s cubic-bezier(0.4, 0, 0.2, 1),
+        gap 0.55s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
-    /* Compact pill on scroll */
+    /* Compact pill */
     #nav.compact {
-      left: auto;
-      right: 20px;
-      transform: none;
       width: auto;
       border-radius: 40px;
       background: rgba(255, 255, 255, 0.1);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-color: rgba(255, 255, 255, 0.15);
       padding: 10px 24px;
-      gap: 32px;
-      justify-content: flex-end;
+      gap: 28px;
     }
 
     /* Light theme — over white sections */
     #nav.light { color: #1a1a1a; }
     #nav.compact.light {
       background: rgba(0, 0, 0, 0.06);
-      border: 1px solid rgba(0, 0, 0, 0.12);
+      border-color: rgba(0, 0, 0, 0.12);
     }
 
-    /* Name: hidden until compact */
+    /* Name: slides in when compact */
     #nav-name {
       font-size: 15px;
       font-weight: 800;
       letter-spacing: 0.02em;
       white-space: nowrap;
-      opacity: 0;
       max-width: 0;
+      opacity: 0;
       overflow: hidden;
-      transition: opacity 0.4s ease, max-width 0.5s ease;
+      flex-shrink: 0;
       pointer-events: none;
-      display: none;
+      transition: max-width 0.45s ease, opacity 0.3s ease;
     }
     #nav.compact #nav-name {
-      display: block;
-      opacity: 1;
       max-width: 200px;
+      opacity: 1;
       pointer-events: auto;
     }
 
-    /* Links — display:contents dissolves wrapper so links become direct flex children */
-    #nav-links { display: contents; }
-    #nav.compact #nav-links {
+    /* Links: flex:1 in expanded → fills full nav width with space-between */
+    #nav-links {
       display: flex;
-      gap: 32px;
+      flex: 1;
+      justify-content: space-between;
       align-items: center;
+      transition: gap 0.55s ease;
     }
-
+    #nav.compact #nav-links {
+      flex: 0 0 auto;
+      justify-content: flex-end;
+      gap: 28px;
+    }
     #nav-links a {
       font-size: 13px;
       letter-spacing: 0.15em;
       font-weight: 500;
       opacity: 0.88;
-      transition: opacity 180ms ease, color 300ms ease;
       white-space: nowrap;
       color: inherit;
+      transition: opacity 180ms ease, color 300ms ease;
     }
     #nav-links a:hover { opacity: 1; }
 
     /* ─── HERO ─── */
-    #hero {
-      position: relative;
-      height: 100vh;
-      overflow: hidden;
-      background: #111;
-      z-index: 1;
-    }
-    #hero-photo {
-      position: absolute; inset: 0;
-      width: 100%; height: 100%;
-      object-fit: cover; object-position: center 20%;
-      filter: grayscale(100%);
-    }
-    #hero::after {
-      content: ''; position: absolute; inset: 0;
-      background: rgba(0,0,0,0.18); pointer-events: none;
-    }
+    #hero { position: relative; height: 100vh; overflow: hidden; background: #111; z-index: 1; }
+    #hero-photo { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 20%; filter: grayscale(100%); }
+    #hero::after { content: ''; position: absolute; inset: 0; background: rgba(0,0,0,0.18); pointer-events: none; }
     #hero-nico {
       position: absolute;
       top: 72px; left: 40px;
@@ -131,16 +124,11 @@
       position: absolute;
       bottom: 36px; left: 40px;
       font-size: 24px; letter-spacing: 0.05em; font-weight: 400;
-      color: rgba(255,255,255,0.75); line-height: 1.3;
-      z-index: 2;
-      font-family: 'Fragment Mono', monospace;
-      text-transform: uppercase;
+      color: rgba(255,255,255,0.75); line-height: 1.3; z-index: 2;
+      font-family: 'Fragment Mono', monospace; text-transform: uppercase;
       transition: opacity 0.3s ease;
     }
-    #hero-arrow {
-      display: block; margin-top: 8px; font-size: 18px;
-      animation: bounce 2s ease-in-out infinite;
-    }
+    #hero-arrow { display: block; margin-top: 8px; font-size: 18px; animation: bounce 2s ease-in-out infinite; }
     @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(5px); } }
 
     /* ─── ABOUT SCROLL ─── */
@@ -220,13 +208,23 @@
 
     /* ─── FOOTER ─── */
     footer { background: #fff; color: #1a1a1a; padding: 60px 40px 20px; }
+
+    /* FIX 3: JS sets exact font-size via fitFooterName(), white-space:nowrap prevents wrapping */
     #footer-name {
-      font-size: clamp(10px, 11.5vw, 9999px);
-      font-weight: 900; letter-spacing: -0.03em; line-height: 0.85;
-      color: #000; margin-bottom: 40px; width: 100%;
-      text-align: center; text-transform: uppercase;
-      display: block; white-space: nowrap; overflow: hidden;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      line-height: 0.85;
+      color: #000;
+      margin-bottom: 40px;
+      width: 100%;
+      text-align: center;
+      text-transform: uppercase;
+      display: block;
+      white-space: nowrap;
+      overflow: hidden;
     }
+
+    /* FIX 4+5: No labels for contact/location/socials. Middle cols left-aligned */
     #footer-grid {
       display: grid;
       grid-template-columns: 1fr 1fr 1fr 1fr;
@@ -235,16 +233,27 @@
       border-top: 1px solid rgba(0,0,0,0.1);
       border-bottom: 1px solid rgba(0,0,0,0.1);
     }
-    .footer-col-contact { text-align: left; }
-    .footer-col-center  { text-align: center; }
-    .footer-col-right   { text-align: right; }
-    .footer-col-right .footer-col-value a { justify-content: flex-end; }
-    .footer-col-label { font-size: 11px; letter-spacing: 0.1em; color: rgba(0,0,0,0.35); font-weight: 500; text-transform: uppercase; margin-bottom: 12px; }
+    .footer-col-label {
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      color: rgba(0,0,0,0.35);
+      font-weight: 500;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
     .footer-col-value { font-size: 14px; color: #1a1a1a; line-height: 1.6; }
     .footer-col-value a { display: flex; align-items: center; gap: 6px; font-size: 14px; color: #1a1a1a; margin-bottom: 4px; transition: opacity 180ms ease; }
     .footer-col-value a:hover { opacity: 0.5; }
-    .footer-time-big { font-size: 28px; font-weight: 700; color: #000; display: block; }
-    .footer-time-tz { font-size: 14px; color: rgba(0,0,0,0.45); }
+
+    /* Col alignment */
+    .fc-left  { text-align: left; }
+    .fc-right { text-align: right; }
+    .fc-right .footer-col-value a { justify-content: flex-end; }
+
+    /* Time display */
+    .footer-time-big { font-size: 22px; font-weight: 700; color: #000; }
+    .footer-time-loc { font-size: 16px; font-weight: 400; color: rgba(0,0,0,0.5); }
+
     #footer-bottom { display: flex; align-items: center; justify-content: space-between; padding: 20px 0; font-size: 12px; color: rgba(0,0,0,0.4); }
     #footer-bottom a { color: inherit; transition: opacity 180ms ease; }
     #footer-bottom a:hover { opacity: 0.7; }
@@ -253,8 +262,8 @@
 
     /* ─── RESPONSIVE ─── */
     @media (max-width: 768px) {
-      #nav { width: calc(100% - 40px); padding: 12px 0; }
-      #nav.compact { right: 10px; padding: 10px 20px; }
+      #nav { width: calc(100% - 20px); padding: 12px 0; right: 10px; }
+      #nav.compact { padding: 10px 20px; }
       #hero-nico, #hero-vaca { font-size: clamp(52px, 16vw, 100px); }
       #hero-nico { top: 72px; left: 20px; }
       #hero-vaca { bottom: 80px; right: 20px; }
@@ -271,9 +280,8 @@
       .about-sentence { font-size: clamp(22px, 6vw, 40px); }
       #podcast-section, #newsletter-section { padding-left: 6%; padding-right: 6%; }
       footer { padding: 40px 20px 0; }
-      .footer-col-right { text-align: left; }
-      .footer-col-right .footer-col-value a { justify-content: flex-start; }
-      .footer-col-center { text-align: left; }
+      .fc-right { text-align: left; }
+      .fc-right .footer-col-value a { justify-content: flex-start; }
     }
   </style>
 </head>
@@ -417,29 +425,36 @@
 </section>
 
 <!-- FOOTER -->
+<!-- FIX 4+5: no CONTACT/LOCATION/ELSEWHERE labels; time has "My current time"; middle cols left-aligned -->
 <footer id="contact">
   <span id="footer-name">NICOLAS VACA</span>
+
   <div id="footer-grid">
-    <div class="footer-col-contact">
-      <div class="footer-col-label">Contact</div>
+    <!-- Col 1: Contact — left, no label -->
+    <div class="fc-left">
       <div class="footer-col-value">
         <a href="mailto:contact@nicolasvacagr.com">contact@nicolasvacagr.com</a>
         <a href="tel:+34678789532">+34 678 78 95 32</a>
       </div>
     </div>
-    <div class="footer-col-center">
-      <div class="footer-col-label">Current Madrid Time</div>
+
+    <!-- Col 2: Time — left, "My current time" label -->
+    <div class="fc-left">
+      <div class="footer-col-label">My current time</div>
       <div class="footer-col-value">
-        <span class="footer-time-big" id="footer-clock">00:00</span>
-        <span class="footer-time-tz">CET</span>
+        <span class="footer-time-big"><span id="footer-clock">00:00</span><span class="footer-time-loc"> Madrid (CET)</span></span>
       </div>
     </div>
-    <div class="footer-col-center">
-      <div class="footer-col-label">Location</div>
-      <div class="footer-col-value">Calle de Santo Tomé 6,<br>Madrid, 28004</div>
+
+    <!-- Col 3: Location — left, no label -->
+    <div class="fc-left">
+      <div class="footer-col-value" style="padding-top:0">
+        Calle de Santo Tomé 6,<br>Madrid, 28004
+      </div>
     </div>
-    <div class="footer-col-right">
-      <div class="footer-col-label">Elsewhere</div>
+
+    <!-- Col 4: Socials — right, no label -->
+    <div class="fc-right">
       <div class="footer-col-value">
         <a href="https://instagram.com/nicolasvacagr" target="_blank">Instagram</a>
         <a href="https://x.com/nicolasvacagr" target="_blank">X (Twitter)</a>
@@ -448,6 +463,7 @@
       </div>
     </div>
   </div>
+
   <div id="footer-bottom">
     <span>© 2026 Nicolas Vaca</span>
     <div style="display:flex;align-items:center;gap:16px;">
@@ -465,12 +481,11 @@ const taglineEl = document.getElementById('hero-tagline');
 const heroEl    = document.getElementById('hero');
 
 const SCROLL_THRESHOLD = 80;
-let currentTravel = 0;
 let ticking = false;
 
 function easeOut(t) { return 1 - Math.pow(1 - t, 3); }
 
-/* Sections with WHITE backgrounds — nav switches to dark text over these */
+/* Sections with white backgrounds */
 const lightSections = ['podcast-section', 'newsletter-section', 'contact'];
 
 function getNavTheme() {
@@ -478,9 +493,7 @@ function getNavTheme() {
   for (const id of lightSections) {
     const el = document.getElementById(id);
     if (!el) continue;
-    const top    = el.offsetTop;
-    const bottom = top + el.offsetHeight;
-    if (navMidY >= top && navMidY < bottom) return 'light';
+    if (navMidY >= el.offsetTop && navMidY < el.offsetTop + el.offsetHeight) return 'light';
   }
   return 'dark';
 }
@@ -488,21 +501,13 @@ function getNavTheme() {
 function update() {
   const y = window.scrollY;
 
-  /* NAV: expand ↔ compact */
-  if (y > SCROLL_THRESHOLD) {
-    navEl.classList.add('compact');
-  } else {
-    navEl.classList.remove('compact');
-  }
+  /* NAV compact toggle */
+  y > SCROLL_THRESHOLD ? navEl.classList.add('compact') : navEl.classList.remove('compact');
 
-  /* NAV: color theme */
-  if (getNavTheme() === 'light') {
-    navEl.classList.add('light');
-  } else {
-    navEl.classList.remove('light');
-  }
+  /* NAV color theme */
+  getNavTheme() === 'light' ? navEl.classList.add('light') : navEl.classList.remove('light');
 
-  /* NICO parallax */
+  /* FIX 1: NICO parallax — direct assignment, no lerp, so position is always exact */
   const heroH     = heroEl.offsetHeight;
   const nicoH     = nicoEl.offsetHeight;
   const vacaH     = vacaEl.offsetHeight;
@@ -511,13 +516,10 @@ function update() {
   const meetY     = heroH * 0.65;
   const ratio     = Math.max(0, Math.min(1, y / meetY));
   const target    = maxTravel * easeOut(ratio);
-
-  currentTravel += (target - currentTravel) * 0.12;
-  nicoEl.style.transform = `translateY(${currentTravel.toFixed(2)}px)`;
+  nicoEl.style.transform = `translateY(${target.toFixed(2)}px)`;
 
   /* Tagline fade */
-  const fadeRatio = Math.max(0, 1 - (y / (heroH * 0.45)));
-  taglineEl.style.opacity = fadeRatio.toFixed(3);
+  taglineEl.style.opacity = Math.max(0, 1 - (y / (heroH * 0.45))).toFixed(3);
 
   ticking = false;
 }
@@ -531,15 +533,11 @@ update();
 /* ── ABOUT SCROLL HIGHLIGHT ── */
 const wrapper   = document.getElementById('about-scroll-wrapper');
 const sentences = Array.from(document.querySelectorAll('.about-sentence'));
-
 window.addEventListener('scroll', () => {
   const rect     = wrapper.getBoundingClientRect();
-  const scrolled = -rect.top;
-  const total    = wrapper.offsetHeight - window.innerHeight;
-  const progress = Math.max(0, Math.min(1, scrolled / total));
+  const progress = Math.max(0, Math.min(1, -rect.top / (wrapper.offsetHeight - window.innerHeight)));
   sentences.forEach((el, i) => {
-    const t = i / sentences.length;
-    const n = (i + 1) / sentences.length;
+    const t = i / sentences.length, n = (i + 1) / sentences.length;
     if (progress >= n)      { el.classList.remove('lit'); el.classList.add('dim'); }
     else if (progress >= t) { el.classList.add('lit');    el.classList.remove('dim'); }
     else                    { el.classList.remove('lit', 'dim'); }
@@ -549,8 +547,7 @@ window.addEventListener('scroll', () => {
 /* ── CLOCKS ── */
 function updateClocks() {
   const t = new Date().toLocaleTimeString('en-GB', {
-    timeZone: 'Europe/Madrid',
-    hour: '2-digit', minute: '2-digit', hour12: false
+    timeZone: 'Europe/Madrid', hour: '2-digit', minute: '2-digit', hour12: false
   });
   const c1 = document.getElementById('clock-time');
   const c2 = document.getElementById('footer-clock');
@@ -559,6 +556,22 @@ function updateClocks() {
 }
 updateClocks();
 setInterval(updateClocks, 60000);
+
+/* FIX 3: Auto-fit footer name to exact container width */
+function fitFooterName() {
+  const el = document.getElementById('footer-name');
+  if (!el) return;
+  const available = el.parentElement.clientWidth - 80; /* 40px padding each side */
+  let lo = 10, hi = 600, mid;
+  while (hi - lo > 1) {
+    mid = Math.floor((lo + hi) / 2);
+    el.style.fontSize = mid + 'px';
+    el.scrollWidth <= available ? lo = mid : hi = mid;
+  }
+  el.style.fontSize = lo + 'px';
+}
+fitFooterName();
+window.addEventListener('resize', fitFooterName);
 
 /* ── PODCAST RSS ── */
 async function loadPodcast() {
