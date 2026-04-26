@@ -9,109 +9,95 @@
   <title>Nicolas Vaca</title>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; scroll-behavior: smooth; }
-    body { font-family: 'Plus Jakarta Sans', -apple-system, sans-serif; background: #000; color: #fff; overflow-x: hidden; }
+    html { -webkit-font-smoothing: antialiased; scroll-behavior: smooth; }
+    body { font-family: 'Plus Jakarta Sans', sans-serif; background: #000; color: #fff; overflow-x: hidden; }
     a { color: inherit; text-decoration: none; }
     button { cursor: pointer; background: none; border: none; font: inherit; color: inherit; }
     img { display: block; max-width: 100%; }
 
-    /* ─── NAV ─── */
-    /* FIX 2: right-anchored so width shrink visually "slides" items right */
+    /* ─── NAV: two layers, crossfade on scroll ─── */
     #nav {
       position: fixed;
-      top: 20px;
-      right: 20px;
+      top: 20px; left: 0; right: 0;
       z-index: 1000;
-      width: calc(100% - 40px);
-      padding: 14px 0;
-      display: flex;
-      align-items: center;
-      color: #fff;
-      background: transparent;
-      border-radius: 0;
-      border: 1px solid transparent;
-      transition:
-        width 0.55s cubic-bezier(0.4, 0, 0.2, 1),
-        padding 0.55s cubic-bezier(0.4, 0, 0.2, 1),
-        border-radius 0.55s cubic-bezier(0.4, 0, 0.2, 1),
-        background 0.55s cubic-bezier(0.4, 0, 0.2, 1),
-        border-color 0.55s cubic-bezier(0.4, 0, 0.2, 1),
-        gap 0.55s cubic-bezier(0.4, 0, 0.2, 1);
+      pointer-events: none; /* container itself is invisible */
+      height: 52px;
     }
 
-    /* Compact pill */
-    #nav.compact {
-      width: auto;
+    /* LAYER 1: full-width expanded */
+    #nav-expanded {
+      position: absolute;
+      top: 0; left: 20px; right: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 0;
+      color: #fff;
+      pointer-events: auto;
+      opacity: 1;
+      transition: opacity 0.4s ease, color 0.3s ease;
+    }
+    #nav-expanded a {
+      font-size: 13px;
+      letter-spacing: 0.15em;
+      font-weight: 500;
+      opacity: 0.88;
+      transition: opacity 180ms ease;
+    }
+    #nav-expanded a:hover { opacity: 1; }
+
+    /* LAYER 2: compact pill */
+    #nav-compact {
+      position: absolute;
+      top: 0; right: 20px;
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      padding: 10px 24px;
       border-radius: 40px;
       background: rgba(255, 255, 255, 0.1);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
-      border-color: rgba(255, 255, 255, 0.15);
-      padding: 10px 24px;
-      gap: 28px;
-    }
-
-    /* Light theme — over white sections */
-    #nav.light { color: #1a1a1a; }
-    #nav.compact.light {
-      background: rgba(0, 0, 0, 0.06);
-      border-color: rgba(0, 0, 0, 0.12);
-    }
-
-    /* Name: slides in when compact */
-    #nav-name {
-      font-size: 15px;
-      font-weight: 800;
-      letter-spacing: 0.02em;
-      white-space: nowrap;
-      max-width: 0;
-      opacity: 0;
-      overflow: hidden;
-      flex-shrink: 0;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #fff;
       pointer-events: none;
-      transition: max-width 0.45s ease, opacity 0.3s ease;
+      opacity: 0;
+      transition: opacity 0.4s ease, background 0.3s ease, border-color 0.3s ease, color 0.3s ease;
     }
-    #nav.compact #nav-name {
-      max-width: 200px;
-      opacity: 1;
-      pointer-events: auto;
-    }
-
-    /* Links: flex:1 in expanded → fills full nav width with space-between */
-    #nav-links {
-      display: flex;
-      flex: 1;
-      justify-content: space-between;
-      align-items: center;
-      transition: gap 0.55s ease;
-    }
-    #nav.compact #nav-links {
-      flex: 0 0 auto;
-      justify-content: flex-end;
-      gap: 28px;
-    }
-    #nav-links a {
+    #nav-compact a {
       font-size: 13px;
       letter-spacing: 0.15em;
       font-weight: 500;
       opacity: 0.88;
       white-space: nowrap;
-      color: inherit;
-      transition: opacity 180ms ease, color 300ms ease;
+      transition: opacity 180ms ease;
     }
-    #nav-links a:hover { opacity: 1; }
+    #nav-compact a:first-child { font-weight: 800; letter-spacing: 0.02em; }
+    #nav-compact a:hover { opacity: 1; }
+
+    /* Compact active state: swap layers */
+    #nav.compact #nav-expanded { opacity: 0; pointer-events: none; }
+    #nav.compact #nav-compact  { opacity: 1; pointer-events: auto; }
+
+    /* Light theme (over white sections) */
+    #nav.light #nav-expanded { color: #1a1a1a; }
+    #nav.light #nav-compact {
+      color: #1a1a1a;
+      background: rgba(0, 0, 0, 0.07);
+      border-color: rgba(0, 0, 0, 0.14);
+    }
 
     /* ─── HERO ─── */
     #hero { position: relative; height: 100vh; overflow: hidden; background: #111; z-index: 1; }
-    #hero-photo { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 20%; filter: grayscale(100%); }
     #hero::after { content: ''; position: absolute; inset: 0; background: rgba(0,0,0,0.18); pointer-events: none; }
+
+    /* FIX 1: NICO is purely static — no transform, no JS animation */
     #hero-nico {
       position: absolute;
       top: 72px; left: 40px;
       font-size: clamp(80px, 14vw, 160px);
       font-weight: 900; letter-spacing: -0.02em; line-height: 1;
       color: #fff; z-index: 2; user-select: none;
-      will-change: transform;
     }
     #hero-vaca {
       position: absolute;
@@ -129,14 +115,13 @@
       transition: opacity 0.3s ease;
     }
     #hero-arrow { display: block; margin-top: 8px; font-size: 18px; animation: bounce 2s ease-in-out infinite; }
-    @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(5px); } }
+    @keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(5px)} }
 
     /* ─── ABOUT SCROLL ─── */
     #about-scroll-wrapper { position: relative; height: 400vh; background: #000; z-index: 2; }
-    #about-scroll-sticky { position: sticky; top: 0; height: 100vh; display: flex; align-items: center; justify-content: flex-start; padding: 0 8%; overflow: hidden; }
-    .about-sentence-block { max-width: 100%; }
+    #about-scroll-sticky { position: sticky; top: 0; height: 100vh; display: flex; align-items: center; padding: 0 8%; overflow: hidden; }
     .about-sentence { display: inline; font-size: clamp(28px, 4.5vw, 60px); font-weight: 700; line-height: 1.22; letter-spacing: -0.02em; color: rgba(255,255,255,0.15); transition: color 500ms ease; }
-    .about-sentence.lit { color: rgba(255,255,255,1); }
+    .about-sentence.lit { color: #fff; }
     .about-sentence.dim { color: rgba(255,255,255,0.15); }
 
     /* ─── ABOUT BIO ─── */
@@ -144,15 +129,15 @@
     #about-photo { position: relative; aspect-ratio: 3/4; max-height: 600px; overflow: hidden; border-radius: 2px; background: #1a1a1a; }
     #about-photo img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%); }
     #about-text-col { display: flex; flex-direction: column; gap: 32px; }
-    .about-para { font-size: clamp(16px, 1.6vw, 20px); line-height: 1.7; color: rgba(255,255,255,0.38); font-weight: 400; }
+    .about-para { font-size: clamp(16px, 1.6vw, 20px); line-height: 1.7; color: rgba(255,255,255,0.38); }
     .about-para .hi { color: #fff; font-weight: 700; }
     #about-meta { display: flex; flex-direction: column; gap: 4px; }
-    #about-location { font-size: 15px; color: rgba(255,255,255,0.5); font-weight: 400; }
+    #about-location { font-size: 15px; color: rgba(255,255,255,0.5); }
     #about-clock { font-size: 18px; font-weight: 600; color: rgba(255,255,255,0.85); letter-spacing: -0.01em; }
     #about-clock span { font-size: 14px; font-weight: 400; color: rgba(255,255,255,0.4); margin-left: 4px; }
     #about-divider { width: 100%; height: 1px; background: rgba(255,255,255,0.12); }
     #about-socials { display: flex; gap: 20px; align-items: center; }
-    #about-socials a { display: flex; align-items: center; justify-content: center; width: 38px; height: 38px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.2); color: rgba(255,255,255,0.6); transition: border-color 180ms ease, color 180ms ease; }
+    #about-socials a { display: flex; align-items: center; justify-content: center; width: 38px; height: 38px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.2); color: rgba(255,255,255,0.6); transition: border-color 180ms, color 180ms; }
     #about-socials a:hover { border-color: rgba(255,255,255,0.8); color: #fff; }
     #about-socials svg { width: 16px; height: 16px; }
 
@@ -160,23 +145,23 @@
     #podcast-section { background: #fff; color: #1a1a1a; padding: 80px 8%; }
     .pod-header { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 32px; flex-wrap: wrap; gap: 12px; }
     .pod-title-label { font-size: 11px; letter-spacing: 0.32em; text-transform: uppercase; color: rgba(0,0,0,0.35); margin-bottom: 4px; font-family: 'Fragment Mono', monospace; }
-    .pod-title { font-size: clamp(44px, 7vw, 80px); font-weight: 900; letter-spacing: 0.22em; text-transform: uppercase; color: #1a1a1a; line-height: 0.88; }
-    .pod-cta { font-size: 13px; font-weight: 600; color: #1a1a1a; border-bottom: 1px solid rgba(0,0,0,0.18); padding-bottom: 2px; transition: opacity 180ms ease; }
+    .pod-title { font-size: clamp(44px, 7vw, 80px); font-weight: 900; letter-spacing: 0.22em; text-transform: uppercase; line-height: 0.88; }
+    .pod-cta { font-size: 13px; font-weight: 600; border-bottom: 1px solid rgba(0,0,0,0.18); padding-bottom: 2px; transition: opacity 180ms; }
     .pod-cta:hover { opacity: 0.5; }
     .pod-divider { width: 100%; height: 1px; background: rgba(0,0,0,0.09); border: none; margin: 0; }
-    .pod-grid { display: grid; grid-template-columns: 1fr 1fr; align-items: start; gap: 0; }
+    .pod-grid { display: grid; grid-template-columns: 1fr 1fr; align-items: start; }
     .pod-left { border-right: 1px solid rgba(0,0,0,0.09); padding: 36px 40px 36px 0; }
     .pod-right { padding: 36px 0 36px 40px; display: flex; flex-direction: column; gap: 24px; }
     .pod-video-wrap { position: relative; border-radius: 3px; overflow: hidden; aspect-ratio: 16/9; background: #e8e8e8; }
     .pod-play-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.12); display: flex; align-items: center; justify-content: center; }
-    .pod-play-btn { width: 52px; height: 52px; border-radius: 50%; background: rgba(255,255,255,0.93); display: flex; align-items: center; justify-content: center; color: #1a1a1a; box-shadow: 0 2px 20px rgba(0,0,0,0.18); transition: transform 200ms ease; cursor: pointer; }
+    .pod-play-btn { width: 52px; height: 52px; border-radius: 50%; background: rgba(255,255,255,0.93); display: flex; align-items: center; justify-content: center; color: #1a1a1a; box-shadow: 0 2px 20px rgba(0,0,0,0.18); transition: transform 200ms; cursor: pointer; }
     .pod-play-btn:hover { transform: scale(1.06); }
-    .pod-desc-text { font-size: clamp(16px, 1.6vw, 20px); line-height: 1.7; color: #1a1a1a; font-weight: 400; margin: 0; }
+    .pod-desc-text { font-size: clamp(16px, 1.6vw, 20px); line-height: 1.7; color: #1a1a1a; }
     .pod-ep-label { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(0,0,0,0.32); font-weight: 600; margin-bottom: 6px; margin-top: 20px; }
-    .pod-ep-title { font-size: 16px; line-height: 1.38; letter-spacing: -0.02em; font-weight: 700; color: #1a1a1a; margin-bottom: 5px; }
+    .pod-ep-title { font-size: 16px; line-height: 1.38; letter-spacing: -0.02em; font-weight: 700; margin-bottom: 5px; }
     .pod-ep-meta { font-size: 12px; color: rgba(0,0,0,0.36); font-weight: 500; }
     .pod-platforms { display: flex; gap: 20px; margin-top: 16px; flex-wrap: wrap; }
-    .pod-plat-btn { font-size: 12px; font-weight: 600; letter-spacing: 0.03em; color: rgba(0,0,0,0.4); transition: color 180ms ease; padding: 0; }
+    .pod-plat-btn { font-size: 12px; font-weight: 600; letter-spacing: 0.03em; color: rgba(0,0,0,0.4); transition: color 180ms; }
     .pod-plat-btn:hover { color: #1a1a1a; }
 
     /* ─── NEWSLETTER ─── */
@@ -184,89 +169,63 @@
     .nl-header { display: flex; align-items: flex-end; justify-content: space-between; padding: 48px 0 40px; gap: 24px; flex-wrap: wrap; }
     .nl-title-label { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(0,0,0,0.35); font-weight: 500; margin-bottom: 6px; }
     .nl-title { font-size: 32px; font-weight: 700; letter-spacing: -0.03em; line-height: 1.1; }
-    .nl-link { font-size: 13px; color: #1a1a1a; font-weight: 600; border-bottom: 1px solid rgba(0,0,0,0.1); padding-bottom: 2px; }
+    .nl-link { font-size: 13px; font-weight: 600; border-bottom: 1px solid rgba(0,0,0,0.1); padding-bottom: 2px; }
     .nl-divider { width: 100%; height: 1px; background: rgba(0,0,0,0.09); border: none; }
-    #nl-articles { display: flex; gap: 32px; padding: 40px 0 48px; width: 100%; }
-    .nl-article { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; gap: 12px; border-right: 1px solid rgba(0,0,0,0.09); padding-right: 32px; text-decoration: none; color: inherit; transition: opacity 180ms ease; }
+    #nl-articles { display: flex; gap: 32px; padding: 40px 0 48px; }
+    .nl-article { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; gap: 12px; border-right: 1px solid rgba(0,0,0,0.09); padding-right: 32px; color: inherit; transition: opacity 180ms; }
     .nl-article:last-child { border-right: none; padding-right: 0; }
     .nl-article:hover { opacity: 0.7; }
     .nl-art-img { width: 100%; aspect-ratio: 16/9; border-radius: 3px; overflow: hidden; background: #f0f0f0; }
-    .nl-art-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .nl-art-img img { width: 100%; height: 100%; object-fit: cover; }
     .nl-art-date { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(0,0,0,0.35); font-weight: 500; }
-    .nl-art-title { font-size: 16px; font-weight: 700; line-height: 1.35; color: #1a1a1a; }
+    .nl-art-title { font-size: 16px; font-weight: 700; line-height: 1.35; }
     .nl-art-excerpt { font-size: 13px; line-height: 1.7; color: rgba(0,0,0,0.5); display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; flex: 1; }
-    .nl-art-read { font-size: 12px; font-weight: 600; color: #1a1a1a; }
+    .nl-art-read { font-size: 12px; font-weight: 600; }
     .nl-signup { display: flex; align-items: center; justify-content: space-between; padding: 48px 0 64px; gap: 32px; flex-wrap: wrap; border-top: 1px solid rgba(0,0,0,0.09); }
     .nl-signup-copy { display: flex; flex-direction: column; gap: 8px; flex: 1; min-width: 240px; }
     .nl-signup-title { font-size: 20px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.2; }
     .nl-signup-sub { font-size: 14px; color: rgba(0,0,0,0.5); line-height: 1.6; max-width: 360px; }
     .nl-form { display: flex; gap: 8px; flex: 1; min-width: 280px; max-width: 440px; }
-    .nl-input { flex: 1; height: 44px; padding: 0 16px; font-size: 14px; font-family: inherit; border: 1px solid rgba(0,0,0,0.15); border-radius: 3px; outline: none; background: #fff; color: #1a1a1a; min-width: 0; }
+    .nl-input { flex: 1; height: 44px; padding: 0 16px; font-size: 14px; font-family: inherit; border: 1px solid rgba(0,0,0,0.15); border-radius: 3px; outline: none; background: #fff; min-width: 0; }
     .nl-input:focus { border-color: rgba(0,0,0,0.4); }
-    .nl-submit { height: 44px; padding: 0 20px; background: #1a1a1a; color: #fff; border-radius: 3px; font-size: 13px; font-weight: 600; font-family: inherit; letter-spacing: 0.03em; white-space: nowrap; cursor: pointer; transition: opacity 180ms ease; }
+    .nl-submit { height: 44px; padding: 0 20px; background: #1a1a1a; color: #fff; border-radius: 3px; font-size: 13px; font-weight: 600; font-family: inherit; letter-spacing: 0.03em; white-space: nowrap; transition: opacity 180ms; }
     .nl-submit:hover { opacity: 0.8; }
 
     /* ─── FOOTER ─── */
     footer { background: #fff; color: #1a1a1a; padding: 60px 40px 20px; }
-
-    /* FIX 3: JS sets exact font-size via fitFooterName(), white-space:nowrap prevents wrapping */
     #footer-name {
-      font-weight: 900;
-      letter-spacing: -0.03em;
-      line-height: 0.85;
-      color: #000;
-      margin-bottom: 40px;
-      width: 100%;
-      text-align: center;
-      text-transform: uppercase;
-      display: block;
-      white-space: nowrap;
-      overflow: hidden;
+      font-weight: 900; letter-spacing: -0.03em; line-height: 0.85;
+      color: #000; margin-bottom: 40px; width: 100%;
+      text-align: center; text-transform: uppercase;
+      display: block; white-space: nowrap; overflow: hidden;
     }
-
-    /* FIX 4+5: No labels for contact/location/socials. Middle cols left-aligned */
     #footer-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr 1fr;
-      gap: 32px;
-      padding: 40px 0;
+      display: grid; grid-template-columns: 1fr 1fr 1fr 1fr;
+      gap: 32px; padding: 40px 0;
       border-top: 1px solid rgba(0,0,0,0.1);
       border-bottom: 1px solid rgba(0,0,0,0.1);
     }
-    .footer-col-label {
-      font-size: 11px;
-      letter-spacing: 0.1em;
-      color: rgba(0,0,0,0.35);
-      font-weight: 500;
-      text-transform: uppercase;
-      margin-bottom: 12px;
-    }
+    .footer-col-label { font-size: 11px; letter-spacing: 0.1em; color: rgba(0,0,0,0.35); font-weight: 500; text-transform: uppercase; margin-bottom: 12px; }
     .footer-col-value { font-size: 14px; color: #1a1a1a; line-height: 1.6; }
-    .footer-col-value a { display: flex; align-items: center; gap: 6px; font-size: 14px; color: #1a1a1a; margin-bottom: 4px; transition: opacity 180ms ease; }
+    .footer-col-value a { display: flex; align-items: center; gap: 6px; font-size: 14px; color: #1a1a1a; margin-bottom: 4px; transition: opacity 180ms; }
     .footer-col-value a:hover { opacity: 0.5; }
-
-    /* Col alignment */
     .fc-left  { text-align: left; }
     .fc-right { text-align: right; }
     .fc-right .footer-col-value a { justify-content: flex-end; }
-
-    /* Time display */
     .footer-time-big { font-size: 22px; font-weight: 700; color: #000; }
     .footer-time-loc { font-size: 16px; font-weight: 400; color: rgba(0,0,0,0.5); }
-
     #footer-bottom { display: flex; align-items: center; justify-content: space-between; padding: 20px 0; font-size: 12px; color: rgba(0,0,0,0.4); }
-    #footer-bottom a { color: inherit; transition: opacity 180ms ease; }
+    #footer-bottom a { color: inherit; transition: opacity 180ms; }
     #footer-bottom a:hover { opacity: 0.7; }
-    #scroll-top { display: flex; align-items: center; justify-content: center; width: 32px; height: 32px; border: 1px solid rgba(0,0,0,0.2); border-radius: 50%; color: #1a1a1a; transition: border-color 180ms ease; cursor: pointer; margin-left: 16px; }
+    #scroll-top { display: flex; align-items: center; justify-content: center; width: 32px; height: 32px; border: 1px solid rgba(0,0,0,0.2); border-radius: 50%; color: #1a1a1a; transition: border-color 180ms; margin-left: 16px; }
     #scroll-top:hover { border-color: #000; }
 
     /* ─── RESPONSIVE ─── */
     @media (max-width: 768px) {
-      #nav { width: calc(100% - 20px); padding: 12px 0; right: 10px; }
-      #nav.compact { padding: 10px 20px; }
-      #hero-nico, #hero-vaca { font-size: clamp(52px, 16vw, 100px); }
-      #hero-nico { top: 72px; left: 20px; }
-      #hero-vaca { bottom: 80px; right: 20px; }
+      #nav-expanded { left: 10px; right: 10px; }
+      #nav-compact { right: 10px; padding: 10px 20px; }
+      #hero-nico { top: 72px; left: 20px; font-size: clamp(52px,16vw,100px); }
+      #hero-vaca { bottom: 80px; right: 20px; font-size: clamp(52px,16vw,100px); }
       #hero-tagline { left: 20px; bottom: 24px; font-size: 18px; }
       #about { grid-template-columns: 1fr; padding: 60px 6%; gap: 40px; }
       #about-photo { max-height: 400px; aspect-ratio: 4/3; }
@@ -276,8 +235,8 @@
       #footer-grid { grid-template-columns: 1fr 1fr; }
       #nl-articles { flex-direction: column; }
       .nl-article { border-right: none; padding-right: 0; border-bottom: 1px solid rgba(0,0,0,0.09); padding-bottom: 24px; }
-      .nl-article:last-child { border-bottom: none; padding-bottom: 0; }
-      .about-sentence { font-size: clamp(22px, 6vw, 40px); }
+      .nl-article:last-child { border-bottom: none; }
+      .about-sentence { font-size: clamp(22px,6vw,40px); }
       #podcast-section, #newsletter-section { padding-left: 6%; padding-right: 6%; }
       footer { padding: 40px 20px 0; }
       .fc-right { text-align: left; }
@@ -289,10 +248,16 @@
 
 <a href="#about" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)">Skip to content</a>
 
-<!-- NAV -->
+<!-- NAV: two independent layers, crossfade between them -->
 <nav id="nav">
-  <a href="#" id="nav-name">NICOLAS VACA</a>
-  <div id="nav-links">
+  <div id="nav-expanded">
+    <a href="#about-scroll-wrapper">ABOUT</a>
+    <a href="#podcast-section">PODCAST</a>
+    <a href="#newsletter-section">THOUGHTS</a>
+    <a href="#contact">CONTACT</a>
+  </div>
+  <div id="nav-compact">
+    <a href="#">NICOLAS VACA</a>
     <a href="#about-scroll-wrapper">ABOUT</a>
     <a href="#podcast-section">PODCAST</a>
     <a href="#newsletter-section">THOUGHTS</a>
@@ -302,9 +267,10 @@
 
 <!-- HERO -->
 <section id="hero" aria-label="Hero">
-  <div id="hero-photo" style="background:linear-gradient(160deg,#1a1a1a 0%,#2d2d2d 40%,#1a1a1a 100%);position:absolute;inset:0;display:flex;align-items:center;justify-content:center;">
+  <div style="position:absolute;inset:0;background:linear-gradient(160deg,#1a1a1a 0%,#2d2d2d 40%,#1a1a1a 100%);display:flex;align-items:center;justify-content:center;">
     <span style="color:rgba(255,255,255,0.06);font-size:13px;letter-spacing:0.15em;text-transform:uppercase;font-family:'Fragment Mono',monospace;">→ place hero photo here ←</span>
   </div>
+  <!-- FIX 1: purely static, no JS transform -->
   <span id="hero-nico" aria-hidden="true">NICO</span>
   <span id="hero-vaca" aria-hidden="true">VACA</span>
   <div id="hero-tagline">
@@ -316,7 +282,7 @@
 <!-- ABOUT SCROLL HIGHLIGHT -->
 <section id="about-scroll-wrapper" aria-label="About intro">
   <div id="about-scroll-sticky">
-    <div class="about-sentence-block" role="text">
+    <div role="text">
       <span class="about-sentence" data-index="0">As a former tennis player and athlete at the Rafa Nadal Academy,</span>
       <span class="about-sentence" data-index="1">I am used to spending my free time learning about one of the many interests I have.</span>
       <span class="about-sentence" data-index="2">I recently decided to channel my curiosity into Untold.</span>
@@ -341,17 +307,17 @@
     </div>
     <div id="about-divider"></div>
     <nav id="about-socials" aria-label="Social links">
-      <a href="https://x.com/nicolasvacagr" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)">
+      <a href="https://x.com/nicolasvacagr" target="_blank" rel="noopener noreferrer" aria-label="X">
         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.736l7.73-8.835L1.254 2.25H8.08l4.259 5.63zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
       </a>
       <a href="https://instagram.com/nicolasvacagr" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
       </a>
       <a href="https://youtube.com/@nicolasvacagr" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
       </a>
       <a href="https://linkedin.com/in/nicolasvacagr" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
       </a>
     </nav>
   </div>
@@ -372,7 +338,7 @@
       <div class="pod-video-wrap">
         <div style="position:absolute;inset:0;background:#e0e0e0;display:flex;align-items:center;justify-content:center;color:rgba(0,0,0,0.2);font-size:13px;letter-spacing:0.1em;text-transform:uppercase;font-family:'Fragment Mono',monospace;">Latest episode</div>
         <div class="pod-play-overlay">
-          <button class="pod-play-btn" aria-label="Play episode" onclick="this.closest('.pod-video-wrap').innerHTML='<iframe src=\'https://www.youtube.com/embed/Jyq0goeYNwg?rel=0&autoplay=1\' title=\'Untold\' frameborder=\'0\' allow=\'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\' allowfullscreen style=\'position:absolute;inset:0;width:100%;height:100%;\'></iframe>'">
+          <button class="pod-play-btn" aria-label="Play episode" onclick="this.closest('.pod-video-wrap').innerHTML='<iframe src=\'https://www.youtube.com/embed/Jyq0goeYNwg?rel=0&autoplay=1\' frameborder=\'0\' allow=\'autoplay;encrypted-media\' allowfullscreen style=\'position:absolute;inset:0;width:100%;height:100%;\'></iframe>'">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
           </button>
         </div>
@@ -425,35 +391,24 @@
 </section>
 
 <!-- FOOTER -->
-<!-- FIX 4+5: no CONTACT/LOCATION/ELSEWHERE labels; time has "My current time"; middle cols left-aligned -->
 <footer id="contact">
   <span id="footer-name">NICOLAS VACA</span>
-
   <div id="footer-grid">
-    <!-- Col 1: Contact — left, no label -->
     <div class="fc-left">
       <div class="footer-col-value">
         <a href="mailto:contact@nicolasvacagr.com">contact@nicolasvacagr.com</a>
         <a href="tel:+34678789532">+34 678 78 95 32</a>
       </div>
     </div>
-
-    <!-- Col 2: Time — left, "My current time" label -->
     <div class="fc-left">
       <div class="footer-col-label">My current time</div>
       <div class="footer-col-value">
         <span class="footer-time-big"><span id="footer-clock">00:00</span><span class="footer-time-loc"> Madrid (CET)</span></span>
       </div>
     </div>
-
-    <!-- Col 3: Location — left, no label -->
     <div class="fc-left">
-      <div class="footer-col-value" style="padding-top:0">
-        Calle de Santo Tomé 6,<br>Madrid, 28004
-      </div>
+      <div class="footer-col-value">Calle de Santo Tomé 6,<br>Madrid, 28004</div>
     </div>
-
-    <!-- Col 4: Socials — right, no label -->
     <div class="fc-right">
       <div class="footer-col-value">
         <a href="https://instagram.com/nicolasvacagr" target="_blank">Instagram</a>
@@ -463,7 +418,6 @@
       </div>
     </div>
   </div>
-
   <div id="footer-bottom">
     <span>© 2026 Nicolas Vaca</span>
     <div style="display:flex;align-items:center;gap:16px;">
@@ -475,25 +429,18 @@
 
 <script>
 const navEl     = document.getElementById('nav');
-const nicoEl    = document.getElementById('hero-nico');
-const vacaEl    = document.getElementById('hero-vaca');
 const taglineEl = document.getElementById('hero-tagline');
 const heroEl    = document.getElementById('hero');
-
-const SCROLL_THRESHOLD = 80;
+const THRESHOLD = 80;
 let ticking = false;
 
-function easeOut(t) { return 1 - Math.pow(1 - t, 3); }
-
-/* Sections with white backgrounds */
 const lightSections = ['podcast-section', 'newsletter-section', 'contact'];
 
 function getNavTheme() {
-  const navMidY = window.scrollY + navEl.offsetHeight / 2;
+  const mid = window.scrollY + 30;
   for (const id of lightSections) {
     const el = document.getElementById(id);
-    if (!el) continue;
-    if (navMidY >= el.offsetTop && navMidY < el.offsetTop + el.offsetHeight) return 'light';
+    if (el && mid >= el.offsetTop && mid < el.offsetTop + el.offsetHeight) return 'light';
   }
   return 'dark';
 }
@@ -501,25 +448,14 @@ function getNavTheme() {
 function update() {
   const y = window.scrollY;
 
-  /* NAV compact toggle */
-  y > SCROLL_THRESHOLD ? navEl.classList.add('compact') : navEl.classList.remove('compact');
+  /* Nav compact crossfade */
+  y > THRESHOLD ? navEl.classList.add('compact') : navEl.classList.remove('compact');
 
-  /* NAV color theme */
+  /* Nav color */
   getNavTheme() === 'light' ? navEl.classList.add('light') : navEl.classList.remove('light');
 
-  /* FIX 1: NICO parallax — direct assignment, no lerp, so position is always exact */
-  const heroH     = heroEl.offsetHeight;
-  const nicoH     = nicoEl.offsetHeight;
-  const vacaH     = vacaEl.offsetHeight;
-  const vacaTop   = heroH - 18 - vacaH;
-  const maxTravel = Math.max(0, vacaTop - 72 - nicoH);
-  const meetY     = heroH * 0.65;
-  const ratio     = Math.max(0, Math.min(1, y / meetY));
-  const target    = maxTravel * easeOut(ratio);
-  nicoEl.style.transform = `translateY(${target.toFixed(2)}px)`;
-
   /* Tagline fade */
-  taglineEl.style.opacity = Math.max(0, 1 - (y / (heroH * 0.45))).toFixed(3);
+  taglineEl.style.opacity = Math.max(0, 1 - y / (heroEl.offsetHeight * 0.45)).toFixed(3);
 
   ticking = false;
 }
@@ -530,25 +466,21 @@ window.addEventListener('scroll', () => {
 
 update();
 
-/* ── ABOUT SCROLL HIGHLIGHT ── */
+/* About scroll highlight */
 const wrapper   = document.getElementById('about-scroll-wrapper');
-const sentences = Array.from(document.querySelectorAll('.about-sentence'));
+const sentences = document.querySelectorAll('.about-sentence');
 window.addEventListener('scroll', () => {
-  const rect     = wrapper.getBoundingClientRect();
-  const progress = Math.max(0, Math.min(1, -rect.top / (wrapper.offsetHeight - window.innerHeight)));
+  const p = Math.max(0, Math.min(1, -wrapper.getBoundingClientRect().top / (wrapper.offsetHeight - window.innerHeight)));
   sentences.forEach((el, i) => {
-    const t = i / sentences.length, n = (i + 1) / sentences.length;
-    if (progress >= n)      { el.classList.remove('lit'); el.classList.add('dim'); }
-    else if (progress >= t) { el.classList.add('lit');    el.classList.remove('dim'); }
-    else                    { el.classList.remove('lit', 'dim'); }
+    const t = i / sentences.length, n = (i+1) / sentences.length;
+    el.classList.toggle('lit', p >= t && p < n);
+    el.classList.toggle('dim', p >= n);
   });
 }, { passive: true });
 
-/* ── CLOCKS ── */
+/* Clocks */
 function updateClocks() {
-  const t = new Date().toLocaleTimeString('en-GB', {
-    timeZone: 'Europe/Madrid', hour: '2-digit', minute: '2-digit', hour12: false
-  });
+  const t = new Date().toLocaleTimeString('en-GB', { timeZone:'Europe/Madrid', hour:'2-digit', minute:'2-digit', hour12:false });
   const c1 = document.getElementById('clock-time');
   const c2 = document.getElementById('footer-clock');
   if (c1) c1.textContent = t;
@@ -557,23 +489,22 @@ function updateClocks() {
 updateClocks();
 setInterval(updateClocks, 60000);
 
-/* FIX 3: Auto-fit footer name to exact container width */
+/* Footer name auto-fit */
 function fitFooterName() {
   const el = document.getElementById('footer-name');
-  if (!el) return;
-  const available = el.parentElement.clientWidth - 80; /* 40px padding each side */
+  const avail = el.parentElement.clientWidth - 80;
   let lo = 10, hi = 600, mid;
   while (hi - lo > 1) {
     mid = Math.floor((lo + hi) / 2);
     el.style.fontSize = mid + 'px';
-    el.scrollWidth <= available ? lo = mid : hi = mid;
+    el.scrollWidth <= avail ? lo = mid : hi = mid;
   }
   el.style.fontSize = lo + 'px';
 }
 fitFooterName();
 window.addEventListener('resize', fitFooterName);
 
-/* ── PODCAST RSS ── */
+/* Podcast RSS */
 async function loadPodcast() {
   try {
     const res = await fetch('https://corsproxy.io/?url=' + encodeURIComponent('https://anchor.fm/s/10e8379bc/podcast/rss'));
@@ -581,7 +512,7 @@ async function loadPodcast() {
     const ep  = xml.querySelector('item');
     if (ep) {
       document.getElementById('pod-ep-title').textContent = ep.querySelector('title').textContent;
-      const d   = new Date(ep.querySelector('pubDate').textContent).toLocaleDateString('en-US', { month: 'long', day: 'numeric' });
+      const d   = new Date(ep.querySelector('pubDate').textContent).toLocaleDateString('en-US', { month:'long', day:'numeric' });
       const dur = ep.getElementsByTagName('itunes:duration')[0]?.textContent?.trim() ?? '';
       document.getElementById('pod-ep-meta').textContent = d + (dur ? ' · ' + dur : '');
     }
@@ -589,7 +520,7 @@ async function loadPodcast() {
 }
 loadPodcast();
 
-/* ── SUBSTACK: multi-proxy fallback ── */
+/* Substack articles */
 async function loadArticles() {
   const container = document.getElementById('nl-articles');
   const feedUrl   = 'https://nicolasvaca.substack.com/feed';
@@ -599,9 +530,9 @@ async function loadArticles() {
     u => 'https://thingproxy.freeboard.io/fetch/' + u,
   ];
   let xml = null;
-  for (const proxy of proxies) {
+  for (const p of proxies) {
     try {
-      const res = await fetch(proxy(feedUrl), { signal: AbortSignal.timeout(6000) });
+      const res = await fetch(p(feedUrl), { signal: AbortSignal.timeout(6000) });
       if (!res.ok) continue;
       const doc = new DOMParser().parseFromString(await res.text(), 'text/xml');
       if (doc.querySelector('item')) { xml = doc; break; }
@@ -611,20 +542,17 @@ async function loadArticles() {
     container.innerHTML = '<div style="padding:24px 0;color:rgba(0,0,0,0.4);font-size:14px;">Could not load articles. <a href="https://nicolasvaca.substack.com" target="_blank" style="color:#1a1a1a;text-decoration:underline;">Read on Substack →</a></div>';
     return;
   }
-  const items = Array.from(xml.querySelectorAll('item')).slice(0, 3);
-  container.innerHTML = items.map((item, i) => {
+  container.innerHTML = Array.from(xml.querySelectorAll('item')).slice(0, 3).map((item, i, arr) => {
     const title   = item.querySelector('title')?.textContent?.trim() ?? '';
-    const link    = item.querySelector('link')?.textContent?.trim() ?? 'https://nicolasvaca.substack.com';
-    const pub     = item.querySelector('pubDate')?.textContent?.trim() ?? '';
-    const date    = pub ? new Date(pub).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }) : '';
+    const link    = item.querySelector('link')?.textContent?.trim() ?? '#';
+    const pub     = item.querySelector('pubDate')?.textContent ?? '';
+    const date    = pub ? new Date(pub).toLocaleDateString('en-GB', { day:'numeric', month:'long', year:'numeric' }) : '';
     const desc    = item.querySelector('description')?.textContent ?? '';
     const tmp     = document.createElement('div'); tmp.innerHTML = desc;
-    const excerpt = (tmp.textContent || '').replace(/\s+/g, ' ').trim().slice(0, 180);
+    const excerpt = (tmp.textContent||'').replace(/\s+/g,' ').trim().slice(0,180);
     const imgM    = desc.match(/<img[^>]+src=["'](https?[^"']+)['"]/);
-    const img     = imgM ? imgM[1] : null;
-    const last    = i === items.length - 1;
-    return `<a href="${link}" target="_blank" rel="noopener noreferrer" class="nl-article"${last ? ' style="border-right:none;padding-right:0"' : ''}>
-      ${img ? `<div class="nl-art-img"><img src="${img}" alt="${title}" loading="lazy"></div>` : '<div class="nl-art-img" style="background:#e0e0e0"></div>'}
+    return `<a href="${link}" target="_blank" rel="noopener" class="nl-article"${i===arr.length-1?' style="border-right:none;padding-right:0"':''}>
+      ${imgM ? `<div class="nl-art-img"><img src="${imgM[1]}" alt="${title}" loading="lazy"></div>` : '<div class="nl-art-img" style="background:#e0e0e0"></div>'}
       <span class="nl-art-date">${date}</span>
       <span class="nl-art-title">${title}</span>
       <span class="nl-art-excerpt">${excerpt}</span>
@@ -634,7 +562,7 @@ async function loadArticles() {
 }
 loadArticles();
 
-/* ── NEWSLETTER FORM ── */
+/* Newsletter form */
 function handleNlSubmit(e) {
   e.preventDefault();
   const btn = document.getElementById('nl-btn');
