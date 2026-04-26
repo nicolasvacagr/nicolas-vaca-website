@@ -15,19 +15,21 @@
     button { cursor: pointer; background: none; border: none; font: inherit; color: inherit; }
     img { display: block; max-width: 100%; }
 
-    /* ─── NAV: two layers, crossfade on scroll ─── */
+    /* ─── NAV ─── */
     #nav {
       position: fixed;
       top: 20px; left: 0; right: 0;
       z-index: 1000;
-      pointer-events: none; /* container itself is invisible */
+      pointer-events: none;
       height: 52px;
     }
 
-    /* LAYER 1: full-width expanded */
+    /* LAYER 1: expanded — inset 40px each side to match NICO/VACA positions */
     #nav-expanded {
       position: absolute;
-      top: 0; left: 20px; right: 20px;
+      top: 0;
+      left: 40px;   /* matches #hero-nico left: 40px */
+      right: 40px;  /* matches #hero-vaca right: 40px */
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -46,10 +48,11 @@
     }
     #nav-expanded a:hover { opacity: 1; }
 
-    /* LAYER 2: compact pill */
+    /* LAYER 2: compact pill — anchored right: 40px to match VACA */
     #nav-compact {
       position: absolute;
-      top: 0; right: 20px;
+      top: 0;
+      right: 40px;  /* matches #hero-vaca right: 40px */
       display: flex;
       align-items: center;
       gap: 28px;
@@ -75,11 +78,11 @@
     #nav-compact a:first-child { font-weight: 800; letter-spacing: 0.02em; }
     #nav-compact a:hover { opacity: 1; }
 
-    /* Compact active state: swap layers */
+    /* Compact: crossfade layers */
     #nav.compact #nav-expanded { opacity: 0; pointer-events: none; }
     #nav.compact #nav-compact  { opacity: 1; pointer-events: auto; }
 
-    /* Light theme (over white sections) */
+    /* Light theme */
     #nav.light #nav-expanded { color: #1a1a1a; }
     #nav.light #nav-compact {
       color: #1a1a1a;
@@ -91,7 +94,6 @@
     #hero { position: relative; height: 100vh; overflow: hidden; background: #111; z-index: 1; }
     #hero::after { content: ''; position: absolute; inset: 0; background: rgba(0,0,0,0.18); pointer-events: none; }
 
-    /* FIX 1: NICO is purely static — no transform, no JS animation */
     #hero-nico {
       position: absolute;
       top: 72px; left: 40px;
@@ -154,7 +156,7 @@
     .pod-right { padding: 36px 0 36px 40px; display: flex; flex-direction: column; gap: 24px; }
     .pod-video-wrap { position: relative; border-radius: 3px; overflow: hidden; aspect-ratio: 16/9; background: #e8e8e8; }
     .pod-play-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.12); display: flex; align-items: center; justify-content: center; }
-    .pod-play-btn { width: 52px; height: 52px; border-radius: 50%; background: rgba(255,255,255,0.93); display: flex; align-items: center; justify-content: center; color: #1a1a1a; box-shadow: 0 2px 20px rgba(0,0,0,0.18); transition: transform 200ms; cursor: pointer; }
+    .pod-play-btn { width: 52px; height: 52px; border-radius: 50%; background: rgba(255,255,255,0.93); display: flex; align-items: center; justify-content: center; color: #1a1a1a; box-shadow: 0 2px 20px rgba(0,0,0,0.18); transition: transform 200ms; }
     .pod-play-btn:hover { transform: scale(1.06); }
     .pod-desc-text { font-size: clamp(16px, 1.6vw, 20px); line-height: 1.7; color: #1a1a1a; }
     .pod-ep-label { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(0,0,0,0.32); font-weight: 600; margin-bottom: 6px; margin-top: 20px; }
@@ -222,8 +224,8 @@
 
     /* ─── RESPONSIVE ─── */
     @media (max-width: 768px) {
-      #nav-expanded { left: 10px; right: 10px; }
-      #nav-compact { right: 10px; padding: 10px 20px; }
+      #nav-expanded { left: 20px; right: 20px; }
+      #nav-compact  { right: 20px; padding: 10px 20px; }
       #hero-nico { top: 72px; left: 20px; font-size: clamp(52px,16vw,100px); }
       #hero-vaca { bottom: 80px; right: 20px; font-size: clamp(52px,16vw,100px); }
       #hero-tagline { left: 20px; bottom: 24px; font-size: 18px; }
@@ -248,7 +250,7 @@
 
 <a href="#about" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)">Skip to content</a>
 
-<!-- NAV: two independent layers, crossfade between them -->
+<!-- NAV: two crossfading layers, both inset 40px to align with NICO/VACA -->
 <nav id="nav">
   <div id="nav-expanded">
     <a href="#about-scroll-wrapper">ABOUT</a>
@@ -270,7 +272,6 @@
   <div style="position:absolute;inset:0;background:linear-gradient(160deg,#1a1a1a 0%,#2d2d2d 40%,#1a1a1a 100%);display:flex;align-items:center;justify-content:center;">
     <span style="color:rgba(255,255,255,0.06);font-size:13px;letter-spacing:0.15em;text-transform:uppercase;font-family:'Fragment Mono',monospace;">→ place hero photo here ←</span>
   </div>
-  <!-- FIX 1: purely static, no JS transform -->
   <span id="hero-nico" aria-hidden="true">NICO</span>
   <span id="hero-vaca" aria-hidden="true">VACA</span>
   <div id="hero-tagline">
@@ -447,16 +448,9 @@ function getNavTheme() {
 
 function update() {
   const y = window.scrollY;
-
-  /* Nav compact crossfade */
   y > THRESHOLD ? navEl.classList.add('compact') : navEl.classList.remove('compact');
-
-  /* Nav color */
   getNavTheme() === 'light' ? navEl.classList.add('light') : navEl.classList.remove('light');
-
-  /* Tagline fade */
   taglineEl.style.opacity = Math.max(0, 1 - y / (heroEl.offsetHeight * 0.45)).toFixed(3);
-
   ticking = false;
 }
 
