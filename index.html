@@ -28,9 +28,11 @@
       align-items: center;
       justify-content: space-between;
       background: transparent;
+      color: #fff;
       transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
+    /* Compact pill on scroll */
     #nav.compact {
       left: auto;
       right: 20px;
@@ -46,6 +48,14 @@
       justify-content: flex-end;
     }
 
+    /* Light theme — over white sections */
+    #nav.light { color: #1a1a1a; }
+    #nav.compact.light {
+      background: rgba(0, 0, 0, 0.06);
+      border: 1px solid rgba(0, 0, 0, 0.12);
+    }
+
+    /* Name: hidden until compact */
     #nav-name {
       font-size: 15px;
       font-weight: 800;
@@ -56,26 +66,31 @@
       overflow: hidden;
       transition: opacity 0.4s ease, max-width 0.5s ease;
       pointer-events: none;
+      display: none;
     }
     #nav.compact #nav-name {
+      display: block;
       opacity: 1;
       max-width: 200px;
       pointer-events: auto;
     }
 
-    #nav-links {
+    /* Links — display:contents dissolves wrapper so links become direct flex children */
+    #nav-links { display: contents; }
+    #nav.compact #nav-links {
       display: flex;
-      gap: 0;
+      gap: 32px;
       align-items: center;
     }
-    #nav.compact #nav-links { gap: 32px; }
+
     #nav-links a {
       font-size: 13px;
       letter-spacing: 0.15em;
       font-weight: 500;
       opacity: 0.88;
-      transition: opacity 180ms ease;
+      transition: opacity 180ms ease, color 300ms ease;
       white-space: nowrap;
+      color: inherit;
     }
     #nav-links a:hover { opacity: 1; }
 
@@ -97,7 +112,6 @@
       content: ''; position: absolute; inset: 0;
       background: rgba(0,0,0,0.18); pointer-events: none;
     }
-
     #hero-nico {
       position: absolute;
       top: 72px; left: 40px;
@@ -444,7 +458,6 @@
 </footer>
 
 <script>
-/* ── NAV: expand → compact pill on scroll ── */
 const navEl     = document.getElementById('nav');
 const nicoEl    = document.getElementById('hero-nico');
 const vacaEl    = document.getElementById('hero-vaca');
@@ -457,30 +470,52 @@ let ticking = false;
 
 function easeOut(t) { return 1 - Math.pow(1 - t, 3); }
 
+/* Sections with WHITE backgrounds — nav switches to dark text over these */
+const lightSections = ['podcast-section', 'newsletter-section', 'contact'];
+
+function getNavTheme() {
+  const navMidY = window.scrollY + navEl.offsetHeight / 2;
+  for (const id of lightSections) {
+    const el = document.getElementById(id);
+    if (!el) continue;
+    const top    = el.offsetTop;
+    const bottom = top + el.offsetHeight;
+    if (navMidY >= top && navMidY < bottom) return 'light';
+  }
+  return 'dark';
+}
+
 function update() {
   const y = window.scrollY;
 
-  /* NAV: expand ↔ compact toggle */
+  /* NAV: expand ↔ compact */
   if (y > SCROLL_THRESHOLD) {
     navEl.classList.add('compact');
   } else {
     navEl.classList.remove('compact');
   }
 
-  /* NICO parallax — constant gap from nav, travels toward VACA */
-  const heroH    = heroEl.offsetHeight;
-  const nicoH    = nicoEl.offsetHeight;
-  const vacaH    = vacaEl.offsetHeight;
-  const vacaTop  = heroH - 18 - vacaH;
+  /* NAV: color theme */
+  if (getNavTheme() === 'light') {
+    navEl.classList.add('light');
+  } else {
+    navEl.classList.remove('light');
+  }
+
+  /* NICO parallax */
+  const heroH     = heroEl.offsetHeight;
+  const nicoH     = nicoEl.offsetHeight;
+  const vacaH     = vacaEl.offsetHeight;
+  const vacaTop   = heroH - 18 - vacaH;
   const maxTravel = Math.max(0, vacaTop - 72 - nicoH);
-  const meetY    = heroH * 0.65;
-  const ratio    = Math.max(0, Math.min(1, y / meetY));
-  const target   = maxTravel * easeOut(ratio);
+  const meetY     = heroH * 0.65;
+  const ratio     = Math.max(0, Math.min(1, y / meetY));
+  const target    = maxTravel * easeOut(ratio);
 
   currentTravel += (target - currentTravel) * 0.12;
   nicoEl.style.transform = `translateY(${currentTravel.toFixed(2)}px)`;
 
-  /* Tagline fade out as user scrolls */
+  /* Tagline fade */
   const fadeRatio = Math.max(0, 1 - (y / (heroH * 0.45)));
   taglineEl.style.opacity = fadeRatio.toFixed(3);
 
@@ -491,7 +526,6 @@ window.addEventListener('scroll', () => {
   if (!ticking) { requestAnimationFrame(update); ticking = true; }
 }, { passive: true });
 
-/* Run once on load */
 update();
 
 /* ── ABOUT SCROLL HIGHLIGHT ── */
@@ -512,7 +546,7 @@ window.addEventListener('scroll', () => {
   });
 }, { passive: true });
 
-/* ── CLOCKS (update once per minute, not every second) ── */
+/* ── CLOCKS ── */
 function updateClocks() {
   const t = new Date().toLocaleTimeString('en-GB', {
     timeZone: 'Europe/Madrid',
