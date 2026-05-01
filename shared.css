@@ -1,0 +1,109 @@
+/* ─── SHARED.CSS ─── */
+/* Import once here, not in every page */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&family=Fragment+Mono&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { -webkit-font-smoothing: antialiased; scroll-behavior: smooth; }
+body { font-family: 'Plus Jakarta Sans', sans-serif; background: #fff; color: #1a1a1a; overflow-x: hidden; }
+a { color: inherit; text-decoration: none; }
+button { cursor: pointer; background: none; border: none; font: inherit; color: inherit; }
+img { display: block; max-width: 100%; }
+
+/* ─── NAV ─── */
+#nav {
+  position: fixed;
+  top: 20px; left: 0; right: 0;
+  z-index: 1000;
+  pointer-events: none;
+  height: 52px;
+}
+#nav-expanded {
+  position: absolute; top: 0; left: 50px; right: 50px;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 0; color: #1a1a1a;
+  pointer-events: auto; opacity: 1;
+  transition: opacity 0.4s ease, color 0.3s ease;
+}
+#nav-expanded a {
+  font-size: 13px; letter-spacing: 0.15em; font-weight: 500; opacity: 0.88;
+  transition: opacity 180ms ease;
+}
+#nav-expanded a:hover { opacity: 1; }
+
+#nav-compact {
+  position: absolute; top: 0; right: 40px;
+  display: flex; align-items: center; gap: 28px;
+  padding: 10px 24px; border-radius: 40px;
+  background: rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(0, 0, 0, 0.18); color: #1a1a1a;
+  pointer-events: none; opacity: 0;
+  transition: opacity 0.4s ease, background 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+}
+#nav-compact a {
+  font-size: 13px; letter-spacing: 0.15em; font-weight: 500; opacity: 0.88;
+  white-space: nowrap; transition: opacity 180ms ease;
+}
+#nav-compact a:first-child { font-weight: 800; letter-spacing: 0.02em; }
+#nav-compact a:hover { opacity: 1; }
+
+#nav.compact #nav-expanded { opacity: 0; pointer-events: none; }
+#nav.compact #nav-compact  { opacity: 1; pointer-events: auto; }
+
+/* Inner pages: pill visible from the start */
+#nav.inner-page #nav-expanded { opacity: 0; pointer-events: none; }
+#nav.inner-page #nav-compact  { opacity: 1; pointer-events: auto; }
+
+#nav.dark-section #nav-expanded { color: #fff; }
+#nav.dark-section #nav-compact {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+#nav.light #nav-expanded { color: #1a1a1a; }
+#nav.light #nav-compact {
+  color: #1a1a1a;
+  background: rgba(0, 0, 0, 0.07);
+  border-color: rgba(0, 0, 0, 0.14);
+}
+
+/* ─── FOOTER ─── */
+footer {
+  background: #fff; color: #1a1a1a; padding: 60px 40px 20px;
+}
+#footer-name {
+  font-weight: 900; letter-spacing: -0.03em; line-height: 0.85;
+  color: #000; margin-bottom: 40px; width: 100%;
+  text-align: center; text-transform: uppercase;
+  display: block; white-space: nowrap; overflow: hidden;
+}
+#footer-grid {
+  display: grid; grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 32px; padding: 40px 0;
+  border-top: 1px solid rgba(0,0,0,0.1);
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+.footer-col-label { font-size: 11px; letter-spacing: 0.1em; color: rgba(0,0,0,0.35); font-weight: 500; text-transform: uppercase; margin-bottom: 12px; }
+.footer-col-value { font-size: 14px; color: #1a1a1a; line-height: 1.6; }
+.footer-col-value a { display: flex; align-items: center; gap: 6px; font-size: 14px; color: #1a1a1a; margin-bottom: 4px; transition: opacity 180ms; }
+.footer-col-value a:hover { opacity: 0.5; }
+.fc-left  { text-align: left; }
+.fc-right { text-align: right; }
+.fc-right .footer-col-value a { justify-content: flex-end; }
+.footer-time-big { font-size: 22px; font-weight: 700; color: #000; }
+.footer-time-loc { font-size: 16px; font-weight: 400; color: rgba(0,0,0,0.5); }
+#footer-bottom { display: flex; align-items: center; justify-content: space-between; padding: 20px 0; font-size: 12px; color: rgba(0,0,0,0.4); }
+#footer-bottom a { color: inherit; transition: opacity 180ms; }
+#footer-bottom a:hover { opacity: 0.7; }
+#scroll-top { display: flex; align-items: center; justify-content: center; width: 32px; height: 32px; border: 1px solid rgba(0,0,0,0.2); border-radius: 50%; color: #1a1a1a; transition: border-color 180ms; margin-left: 16px; }
+#scroll-top:hover { border-color: #000; }
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 768px) {
+  #nav-expanded { left: 20px; right: 20px; }
+  #nav-compact  { right: 20px; padding: 10px 20px; }
+  #footer-grid { grid-template-columns: 1fr 1fr; }
+  footer { padding: 40px 20px 0; }
+  .fc-right { text-align: left; }
+  .fc-right .footer-col-value a { justify-content: flex-start; }
+}
