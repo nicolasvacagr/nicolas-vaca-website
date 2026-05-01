@@ -65,7 +65,6 @@
 
     /* ─── EPISODES REEL ─── */
     #episodes-section { padding: 60px 0 0; }
-
     .eps-header {
       display: flex; align-items: flex-end; justify-content: space-between;
       padding: 0 8% 28px;
@@ -86,43 +85,39 @@
     }
     .eps-arrow:hover { border-color: rgba(0,0,0,0.5); color: #000; }
 
-    /* Divider */
-    .eps-divider { width: 100%; height: 1px; background: rgba(0,0,0,0.08); margin-bottom: 0; }
+    .eps-divider { width: 100%; height: 1px; background: rgba(0,0,0,0.08); }
 
-    /* Horizontal scroll reel */
-    #eps-reel-wrap {
-      position: relative;
-      overflow: hidden;
-    }
+    /* Horizontal scroll reel — padding so cards don't hug the edge */
+    #eps-reel-wrap { position: relative; overflow: hidden; }
     #eps-reel {
-      display: flex;
-      gap: 0;
-      overflow-x: auto;
-      scroll-behavior: smooth;
-      scrollbar-width: none;
-      -ms-overflow-style: none;
-      padding: 0;
+      display: flex; gap: 16px;
+      overflow-x: auto; scroll-behavior: smooth;
+      scrollbar-width: none; -ms-overflow-style: none;
+      padding: 32px 8% 40px;
     }
     #eps-reel::-webkit-scrollbar { display: none; }
 
-    /* Episode card */
+    /* ── CARD: now a real floating card with border + shadow ── */
     .ep-card {
-      flex: 0 0 calc(100% / 3);
-      min-width: 300px;
-      border-right: 1px solid rgba(0,0,0,0.08);
-      padding: 32px 36px;
-      display: flex; flex-direction: column; gap: 14px;
-      cursor: pointer; transition: background 180ms;
+      flex: 0 0 clamp(220px, 22vw, 300px); /* ~4 cards visible at full width */
+      background: #fff;
+      border: 1px solid rgba(0,0,0,0.09);
+      border-radius: 8px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+      padding: 20px 22px 18px;
+      display: flex; flex-direction: column; gap: 12px;
+      cursor: pointer;
+      transition: box-shadow 200ms, transform 200ms;
       box-sizing: border-box;
     }
-    .ep-card:hover { background: #fafafa; }
-    .ep-card:first-child { border-left: 1px solid rgba(0,0,0,0.08); }
-
-    .ep-card-top {
-      display: flex; align-items: center; gap: 12px;
+    .ep-card:hover {
+      box-shadow: 0 6px 24px rgba(0,0,0,0.11);
+      transform: translateY(-2px);
     }
+
+    .ep-card-top { display: flex; align-items: center; gap: 10px; }
     .ep-thumb {
-      width: 52px; height: 52px; border-radius: 6px;
+      width: 46px; height: 46px; border-radius: 6px;
       background: #e8e8e8; overflow: hidden; flex-shrink: 0;
     }
     .ep-thumb img { width: 100%; height: 100%; object-fit: cover; }
@@ -131,24 +126,22 @@
       font-size: 11px; font-weight: 600; letter-spacing: 0.08em;
       text-transform: uppercase; color: rgba(0,0,0,0.35);
     }
-    .ep-card-date { font-size: 12px; color: rgba(0,0,0,0.4); }
-    .ep-card-duration { font-size: 12px; color: rgba(0,0,0,0.35); font-family: 'Fragment Mono', monospace; }
+    .ep-card-date { font-size: 11px; color: rgba(0,0,0,0.4); }
 
     .ep-card-title {
-      font-size: 16px; font-weight: 700; line-height: 1.35;
-      letter-spacing: -0.02em; color: #000;
+      font-size: 14px; font-weight: 700; line-height: 1.35;
+      letter-spacing: -0.01em; color: #000;
     }
     .ep-card-desc {
-      font-size: 13px; line-height: 1.65; color: rgba(0,0,0,0.45);
-      display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden;
-      flex: 1;
+      font-size: 12px; line-height: 1.65; color: rgba(0,0,0,0.45);
+      display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical;
+      overflow: hidden; flex: 1;
     }
     .ep-card-listen {
-      display: flex; align-items: center; gap: 6px;
-      font-size: 13px; font-weight: 700; color: #000;
-      padding-top: 4px;
+      display: flex; align-items: center; gap: 5px;
+      font-size: 12px; font-weight: 700; color: #000; padding-top: 2px;
     }
-    .ep-card-listen svg { width: 12px; height: 12px; }
+    .ep-card-listen svg { width: 11px; height: 11px; }
 
     #eps-loading {
       padding: 64px 8%; font-size: 12px; color: rgba(0,0,0,0.3);
@@ -162,17 +155,14 @@
       display: grid; grid-template-columns: 1fr 1fr;
       gap: 80px; padding: 80px 8%;
       border-top: 1px solid rgba(0,0,0,0.09);
-      margin-top: 60px;
+      margin-top: 20px;
     }
     #about-show-left { display: flex; flex-direction: column; gap: 24px; }
     .show-label {
       font-size: 11px; letter-spacing: 0.32em; text-transform: uppercase;
       color: rgba(0,0,0,0.35); font-family: 'Fragment Mono', monospace;
     }
-    .show-heading {
-      font-size: clamp(28px, 3.5vw, 48px); font-weight: 900;
-      letter-spacing: -0.03em; line-height: 1.05; color: #000;
-    }
+    .show-heading { font-size: clamp(28px, 3.5vw, 48px); font-weight: 900; letter-spacing: -0.03em; line-height: 1.05; color: #000; }
     .show-para { font-size: clamp(15px, 1.3vw, 18px); line-height: 1.75; color: rgba(0,0,0,0.5); }
     #about-show-right { display: flex; flex-direction: column; gap: 20px; padding-top: 8px; }
     .show-quote {
@@ -186,10 +176,7 @@
     #guest-section { background: #000; color: #fff; padding: 80px 8%; }
     #guest-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
     #guest-left { display: flex; flex-direction: column; gap: 20px; }
-    .guest-label {
-      font-size: 11px; letter-spacing: 0.32em; text-transform: uppercase;
-      color: rgba(255,255,255,0.4); font-family: 'Fragment Mono', monospace;
-    }
+    .guest-label { font-size: 11px; letter-spacing: 0.32em; text-transform: uppercase; color: rgba(255,255,255,0.4); font-family: 'Fragment Mono', monospace; }
     .guest-heading { font-size: clamp(28px, 3.5vw, 48px); font-weight: 900; letter-spacing: -0.03em; line-height: 1.05; color: #fff; }
     .guest-para { font-size: clamp(15px, 1.3vw, 18px); line-height: 1.75; color: rgba(255,255,255,0.5); }
     #guest-right { display: flex; flex-direction: column; gap: 16px; }
@@ -198,8 +185,7 @@
     .g-input, .g-textarea {
       background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
       border-radius: 3px; color: #fff; font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: 14px; padding: 12px 16px; outline: none;
-      transition: border-color 180ms; width: 100%;
+      font-size: 14px; padding: 12px 16px; outline: none; transition: border-color 180ms; width: 100%;
     }
     .g-input::placeholder, .g-textarea::placeholder { color: rgba(255,255,255,0.22); }
     .g-input:focus, .g-textarea:focus { border-color: rgba(255,255,255,0.38); }
@@ -214,13 +200,13 @@
     .g-submit:hover { opacity: 0.8; }
 
     /* ─── RESPONSIVE ─── */
-    @media (max-width: 900px) {
-      .ep-card { flex: 0 0 80vw; }
-    }
+    @media (max-width: 1100px) { .ep-card { flex: 0 0 clamp(220px, 28vw, 280px); } }
+    @media (max-width: 900px)  { .ep-card { flex: 0 0 72vw; } }
     @media (max-width: 768px) {
       #pod-hero-text { right: 5%; left: 5%; width: auto; text-align: left; }
       #pod-platforms { justify-content: flex-start; }
-      .ep-card { flex: 0 0 88vw; }
+      .ep-card { flex: 0 0 84vw; }
+      #eps-reel { padding: 24px 6% 32px; }
       #about-show { grid-template-columns: 1fr; gap: 40px; padding: 60px 6%; }
       #guest-inner { grid-template-columns: 1fr; gap: 40px; }
       #guest-section { padding: 60px 6%; }
@@ -234,7 +220,13 @@
 
   <!-- ─── HERO ─── -->
   <section id="pod-hero">
-    <img src="images/naked-thumbnail" alt="Untold Podcast">
+    <!-- Tries exact filename; onerror tries common extensions -->
+    <img id="hero-img" src="images/naked-thumbnail" alt="Untold Podcast"
+      onerror="this.onerror=null;
+        const tries=['images/Naked Thumbnail','images/Naked-Thumbnail','images/naked-thumbnail.jpg','images/Naked Thumbnail.jpg','images/Naked-Thumbnail.jpg','images/naked-thumbnail.png','images/Naked Thumbnail.png'];
+        let idx=0;
+        const next=()=>{ if(idx<tries.length){this.src=tries[idx++];} };
+        this.onerror=next; next();">
     <div id="pod-hero-text">
       <div id="pod-hero-label">The Podcast</div>
       <div id="pod-hero-title">Untold</div>
@@ -332,12 +324,12 @@
     /* ─── REEL ARROWS ─── */
     const reel = document.getElementById('eps-reel');
     document.getElementById('reel-next').addEventListener('click', () => {
-      const cardW = reel.querySelector('.ep-card')?.offsetWidth || 360;
-      reel.scrollBy({ left: cardW, behavior: 'smooth' });
+      const cardW = (reel.querySelector('.ep-card')?.offsetWidth || 280) + 16;
+      reel.scrollBy({ left: cardW * 2, behavior: 'smooth' });
     });
     document.getElementById('reel-prev').addEventListener('click', () => {
-      const cardW = reel.querySelector('.ep-card')?.offsetWidth || 360;
-      reel.scrollBy({ left: -cardW, behavior: 'smooth' });
+      const cardW = (reel.querySelector('.ep-card')?.offsetWidth || 280) + 16;
+      reel.scrollBy({ left: -cardW * 2, behavior: 'smooth' });
     });
 
     /* ─── LOAD EPISODES ─── */
@@ -352,7 +344,6 @@
 
       let items = null;
 
-      // Try raw XML proxies
       for (const p of proxies) {
         try {
           const res = await fetch(p(rssUrl), { signal: AbortSignal.timeout(8000) });
@@ -373,7 +364,6 @@
         } catch { continue; }
       }
 
-      // Try JSON proxy fallback
       if (!items) {
         try {
           const res  = await fetch(jsonProxy(rssUrl), { signal: AbortSignal.timeout(8000) });
@@ -398,20 +388,34 @@
         return;
       }
 
-      reel.innerHTML = items.map((ep, i) => {
-        const date = ep.date ? new Date(ep.date).toLocaleDateString('en-US', { month:'long', day:'numeric', year:'numeric' }) : '';
+      // Identify the preview (last item, or titled "Preview" / "Untold – Preview")
+      // We exclude it from episode numbering but still show it as a card
+      const isPreview = (item) => /preview/i.test(item.title);
+      const realEps   = items.filter(ep => !isPreview(ep));
+      const totalReal = realEps.length;
+
+      reel.innerHTML = items.map((ep) => {
+        const preview = isPreview(ep);
+        // Episode number: count only real episodes, previews get "Preview" label
+        const epNum = preview
+          ? 'Preview'
+          : 'Ep. ' + (totalReal - realEps.indexOf(ep));
+
+        const date = ep.date
+          ? new Date(ep.date).toLocaleDateString('en-US', { month:'long', day:'numeric', year:'numeric' })
+          : '';
         const dur  = formatDuration(ep.duration);
         const tmp  = document.createElement('div'); tmp.innerHTML = ep.desc;
-        const excerpt = (tmp.textContent || '').replace(/\s+/g,' ').trim().slice(0, 160);
-        const num  = String(items.length - i).padStart(2, '0');
+        const excerpt = (tmp.textContent || '').replace(/\s+/g,' ').trim().slice(0, 140);
         const thumb = ep.image
           ? `<img src="${ep.image}" alt="${ep.title}" loading="lazy">`
           : '';
+
         return `<div class="ep-card" onclick="window.open('${ep.link}','_blank')">
           <div class="ep-card-top">
             <div class="ep-thumb">${thumb}</div>
             <div class="ep-card-meta">
-              <span class="ep-card-num">Ep. ${items.length - i}</span>
+              <span class="ep-card-num">${epNum}</span>
               <span class="ep-card-date">${date}${dur ? ' · ' + dur : ''}</span>
             </div>
           </div>
