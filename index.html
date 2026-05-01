@@ -24,6 +24,7 @@
       height: 52px;
     }
 
+    /* LAYER 1: expanded — BLACK text by default (light hero bg) */
     #nav-expanded {
       position: absolute;
       top: 0;
@@ -33,7 +34,7 @@
       align-items: center;
       justify-content: space-between;
       padding: 14px 0;
-      color: #fff;
+      color: #1a1a1a;
       pointer-events: auto;
       opacity: 1;
       transition: opacity 0.4s ease, color 0.3s ease;
@@ -47,6 +48,7 @@
     }
     #nav-expanded a:hover { opacity: 1; }
 
+    /* LAYER 2: compact pill — dark tint by default */
     #nav-compact {
       position: absolute;
       top: 0;
@@ -56,11 +58,11 @@
       gap: 28px;
       padding: 10px 24px;
       border-radius: 40px;
-      background: rgba(255, 255, 255, 0.1);
+      background: rgba(0, 0, 0, 0.15);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      color: #fff;
+      border: 1px solid rgba(0, 0, 0, 0.18);
+      color: #1a1a1a;
       pointer-events: none;
       opacity: 0;
       transition: opacity 0.4s ease, background 0.3s ease, border-color 0.3s ease, color 0.3s ease;
@@ -76,9 +78,19 @@
     #nav-compact a:first-child { font-weight: 800; letter-spacing: 0.02em; }
     #nav-compact a:hover { opacity: 1; }
 
+    /* Compact: crossfade layers */
     #nav.compact #nav-expanded { opacity: 0; pointer-events: none; }
     #nav.compact #nav-compact  { opacity: 1; pointer-events: auto; }
 
+    /* Dark theme (about/scroll sections) — white pill */
+    #nav.dark-section #nav-expanded { color: #fff; }
+    #nav.dark-section #nav-compact {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.15);
+    }
+
+    /* Light theme (podcast/newsletter/footer) */
     #nav.light #nav-expanded { color: #1a1a1a; }
     #nav.light #nav-compact {
       color: #1a1a1a;
@@ -427,6 +439,9 @@ const heroEl    = document.getElementById('hero');
 const THRESHOLD = 80;
 let ticking = false;
 
+// Sections that need dark (white) pill
+const darkSections  = ['hero', 'about-scroll-wrapper', 'about'];
+// Sections that need light (black) pill
 const lightSections = ['podcast-section', 'newsletter-section', 'contact'];
 
 function getNavTheme() {
@@ -435,13 +450,21 @@ function getNavTheme() {
     const el = document.getElementById(id);
     if (el && mid >= el.offsetTop && mid < el.offsetTop + el.offsetHeight) return 'light';
   }
-  return 'dark';
+  for (const id of darkSections) {
+    const el = document.getElementById(id);
+    if (el && mid >= el.offsetTop && mid < el.offsetTop + el.offsetHeight) return 'dark-section';
+  }
+  return 'default'; // hero — black text, no pill class needed
 }
 
 function update() {
   const y = window.scrollY;
   y > THRESHOLD ? navEl.classList.add('compact') : navEl.classList.remove('compact');
-  getNavTheme() === 'light' ? navEl.classList.add('light') : navEl.classList.remove('light');
+
+  const theme = getNavTheme();
+  navEl.classList.toggle('light', theme === 'light');
+  navEl.classList.toggle('dark-section', theme === 'dark-section');
+
   taglineEl.style.opacity = Math.max(0, 1 - y / (heroEl.offsetHeight * 0.45)).toFixed(3);
   ticking = false;
 }
@@ -508,8 +531,7 @@ loadPodcast();
 
 /* Substack articles */
 async function loadArticles() {
-  const container = document.getElementById('nl-articles');
-  const feedUrl   = 'https://nicolasvaca.substack.com/feed';
+  const container = document.getElementById('nl-artifree time leart feedUrl   = 'https://nicolasvaca.substack.com/feed';
   const proxies   = [
     u => 'https://corsproxy.io/?url=' + encodeURIComponent(u),
     u => 'https://api.allorigins.win/raw?url=' + encodeURIComponent(u),
@@ -521,7 +543,7 @@ async function loadArticles() {
       const res = await fetch(p(feedUrl), { signal: AbortSignal.timeout(6000) });
       if (!res.ok) continue;
       const doc = new DOMParser().parseFromString(await res.text(), 'text/xml');
-      if (doc.querySelector('item')) { xml = doc; break; }
+      if (doc.querySelector('item'free time lear; break; }
     } catch { continue; }
   }
   if (!xml) {
@@ -529,17 +551,15 @@ async function loadArticles() {
     return;
   }
   container.innerHTML = Array.from(xml.querySelectorAll('item')).slice(0, 3).map((item, i, arr) => {
-    const title   = item.querySelector('title')?.textContent?.trim() ?? '';
-    const link    = item.querySelector('link')?.textContent?.trim() ?? '#';
+    const title   = item.querySelector('title')?.textContent?.trim() ??free time lear link    = item.querySelector('link')?.textContent?.trim() ?? '#';
     const pub     = item.querySelector('pubDate')?.textContent ?? '';
     const date    = pub ? new Date(pub).toLocaleDateString('en-GB', { day:'numeric', month:'long', year:'numeric' }) : '';
     const desc    = item.querySelector('description')?.textContent ?? '';
-    const tmp     = document.createElement('div'); tmp.innerHTML = desc;
-    const excerpt = (tmp.textContent||'').replace(/\s+/g,' ').trim().slice(0,180);
+    const tmp     = document.createElement('div'); tmp.innerfree time lear   const excerpt = (tmp.textContent||'').replace(/\s+/g,' ').trim().slice(0,180);
     const imgM    = desc.match(/<img[^>]+src=["'](https?[^"']+)['"]/);
-    return `<a href="${link}" target="_blank" rel="noopener" class="nl-article"${i===arr.length-1?' style="border-right:none;padding-right:0"':''}>
+    return `<a href="${link}" target="_blank" rel="noopener" class="nl-article"${i===arr.lengthfree time learrder-right:none;padding-right:0"':''}>
       ${imgM ? `<div class="nl-art-img"><img src="${imgM[1]}" alt="${title}" loading="lazy"></div>` : '<div class="nl-art-img" style="background:#e0e0e0"></div>'}
-      <span class="nl-art-date">${date}</span>
+      <span class="nlfree time learate}</span>
       <span class="nl-art-title">${title}</span>
       <span class="nl-art-excerpt">${excerpt}</span>
       <span class="nl-art-read">Read →</span>
@@ -549,8 +569,7 @@ async function loadArticles() {
 loadArticles();
 
 /* Newsletter form */
-function handleNlSubmit(e) {
-  e.preventDefault();
+function handleNlSubmfree time leareventDefault();
   const btn = document.getElementById('nl-btn');
   btn.textContent = '...';
   setTimeout(() => {
