@@ -24,12 +24,11 @@
       height: 52px;
     }
 
-    /* LAYER 1: expanded — inset 40px each side to match NICO/VACA positions */
     #nav-expanded {
       position: absolute;
       top: 0;
-      left: 50px;   /* matches #hero-nico left: 40px */
-      right: 50px;  /* matches #hero-vaca right: 40px */
+      left: 50px;
+      right: 50px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -48,11 +47,10 @@
     }
     #nav-expanded a:hover { opacity: 1; }
 
-    /* LAYER 2: compact pill — anchored right: 40px to match VACA */
     #nav-compact {
       position: absolute;
       top: 0;
-      right: 40px;  /* matches #hero-vaca right: 40px */
+      right: 40px;
       display: flex;
       align-items: center;
       gap: 28px;
@@ -78,11 +76,9 @@
     #nav-compact a:first-child { font-weight: 800; letter-spacing: 0.02em; }
     #nav-compact a:hover { opacity: 1; }
 
-    /* Compact: crossfade layers */
     #nav.compact #nav-expanded { opacity: 0; pointer-events: none; }
     #nav.compact #nav-compact  { opacity: 1; pointer-events: auto; }
 
-    /* Light theme */
     #nav.light #nav-expanded { color: #1a1a1a; }
     #nav.light #nav-compact {
       color: #1a1a1a;
@@ -250,7 +246,7 @@
 
 <a href="#about" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)">Skip to content</a>
 
-<!-- NAV: two crossfading layers, both inset 40px to align with NICO/VACA -->
+<!-- NAV -->
 <nav id="nav">
   <div id="nav-expanded">
     <a href="#about-scroll-wrapper">ABOUT</a>
@@ -269,9 +265,7 @@
 
 <!-- HERO -->
 <section id="hero" aria-label="Hero">
-  <div style="position:absolute;inset:0;background:linear-gradient(160deg,#1a1a1a 0%,#2d2d2d 40%,#1a1a1a 100%);display:flex;align-items:center;justify-content:center;">
-    <span style="color:rgba(255,255,255,0.06);font-size:13px;letter-spacing:0.15em;text-transform:uppercase;font-family:'Fragment Mono',monospace;">→ place hero photo here ←</span>
-  </div>
+  <img src="images/HERO" alt="Nicolas Vaca" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top;" loading="eager">
   <span id="hero-nico" aria-hidden="true">NICO</span>
   <span id="hero-vaca" aria-hidden="true">VACA</span>
   <div id="hero-tagline">
@@ -295,9 +289,7 @@
 <!-- ABOUT BIO -->
 <section id="about" aria-label="About Nicolas Vaca">
   <div id="about-photo">
-    <div style="width:100%;height:100%;background:linear-gradient(160deg,#1c1c1c,#2a2a2a);display:flex;align-items:center;justify-content:center;">
-      <span style="color:rgba(255,255,255,0.06);font-size:13px;letter-spacing:0.15em;text-transform:uppercase;font-family:'Fragment Mono',monospace;text-align:center;padding:20px;">→ place<br>about photo<br>here ←</span>
-    </div>
+    <img src="images/cheeky-look" alt="Nicolas Vaca" loading="lazy">
   </div>
   <div id="about-text-col">
     <p class="about-para">As someone who since early on found pleasure in <span class="hi">knowing more than was necessary</span> about things only few found interesting I still spend my time filling my head with <span class="hi">fun facts</span> and <span class="hi">unknown stories</span>.</p>
