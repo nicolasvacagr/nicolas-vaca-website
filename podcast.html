@@ -11,57 +11,51 @@
     /* ─── HERO ─── */
     #pod-hero {
       position: relative;
-      width: 100%;
-      height: 100vh;
-      min-height: 500px;
-      overflow: hidden;
-      background: #111;
+      width: 100%; height: 100vh; min-height: 500px;
+      overflow: hidden; background: #111;
     }
     #pod-hero img {
       position: absolute; inset: 0;
       width: 100%; height: 100%;
       object-fit: cover; object-position: center center;
     }
-    /* Dark overlay so text is readable */
     #pod-hero::after {
       content: '';
       position: absolute; inset: 0;
-      background: linear-gradient(to left, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.18) 55%, rgba(0,0,0,0.04) 100%);
+      background: linear-gradient(to left, rgba(0,0,0,0.78) 0%, rgba(0,0,0,0.25) 50%, rgba(0,0,0,0.05) 100%);
       pointer-events: none;
     }
-    /* Text block — right-aligned */
     #pod-hero-text {
       position: absolute;
-      top: 50%; right: 8%;
+      top: 50%; right: 6%;
       transform: translateY(-50%);
       z-index: 2;
-      max-width: 480px;
-      display: flex; flex-direction: column; gap: 20px;
+      width: clamp(280px, 38%, 500px);
+      display: flex; flex-direction: column; gap: 18px;
       text-align: right;
     }
     #pod-hero-label {
-      font-size: 11px; letter-spacing: 0.32em; text-transform: uppercase;
-      color: rgba(255,255,255,0.5);
-      font-family: 'Fragment Mono', monospace;
+      font-size: 11px; letter-spacing: 0.3em; text-transform: uppercase;
+      color: rgba(255,255,255,0.5); font-family: 'Fragment Mono', monospace;
     }
     #pod-hero-title {
-      font-size: clamp(64px, 11vw, 140px);
-      font-weight: 900; letter-spacing: 0.18em; text-transform: uppercase;
-      line-height: 0.88; color: #fff;
+      font-size: clamp(52px, 8vw, 110px);
+      font-weight: 900; letter-spacing: 0.1em; text-transform: uppercase;
+      line-height: 0.9; color: #fff;
     }
     #pod-hero-desc {
-      font-size: clamp(14px, 1.3vw, 18px); line-height: 1.7;
-      color: rgba(255,255,255,0.65);
+      font-size: clamp(13px, 1.2vw, 16px); line-height: 1.75;
+      color: rgba(255,255,255,0.6);
     }
     #pod-platforms {
-      display: flex; gap: 10px; flex-wrap: wrap; justify-content: flex-end;
+      display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end;
     }
     .plat-btn {
       display: inline-flex; align-items: center; gap: 7px;
-      padding: 9px 16px; border-radius: 40px;
+      padding: 8px 14px; border-radius: 40px;
       border: 1px solid rgba(255,255,255,0.25);
       font-size: 12px; font-weight: 600; color: #fff;
-      letter-spacing: 0.02em; cursor: pointer; background: rgba(255,255,255,0.1);
+      cursor: pointer; background: rgba(255,255,255,0.1);
       backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
       transition: background 180ms, border-color 180ms;
       font-family: 'Plus Jakarta Sans', sans-serif;
@@ -69,61 +63,106 @@
     .plat-btn:hover { background: rgba(255,255,255,0.2); border-color: rgba(255,255,255,0.5); }
     .plat-btn svg { width: 14px; height: 14px; flex-shrink: 0; }
 
-    /* ─── EPISODES ─── */
-    #episodes-section { padding: 0 8%; }
-    .eps-header {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 48px 0 32px; border-bottom: 1px solid rgba(0,0,0,0.09);
-    }
-    .eps-header-title { font-size: 13px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; }
-    .eps-header-count { font-size: 13px; color: rgba(0,0,0,0.35); font-family: 'Fragment Mono', monospace; }
+    /* ─── EPISODES REEL ─── */
+    #episodes-section { padding: 60px 0 0; }
 
-    .ep-row {
-      display: grid;
-      grid-template-columns: 40px 1fr auto;
-      align-items: center; gap: 24px;
-      padding: 24px 0;
-      border-bottom: 1px solid rgba(0,0,0,0.07);
-      cursor: pointer; transition: opacity 180ms;
+    .eps-header {
+      display: flex; align-items: flex-end; justify-content: space-between;
+      padding: 0 8% 28px;
     }
-    .ep-row:hover { opacity: 0.55; }
-    .ep-num {
-      font-size: 13px; font-weight: 500; color: rgba(0,0,0,0.22);
-      font-family: 'Fragment Mono', monospace; text-align: right;
+    .eps-header-left { display: flex; flex-direction: column; gap: 4px; }
+    .eps-label {
+      font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+      color: rgba(0,0,0,0.35); font-family: 'Fragment Mono', monospace;
     }
-    .ep-info { display: flex; flex-direction: column; gap: 5px; min-width: 0; }
-    .ep-title {
-      font-size: 16px; font-weight: 700; line-height: 1.3;
+    .eps-title { font-size: 28px; font-weight: 800; letter-spacing: -0.03em; color: #000; }
+    .eps-nav { display: flex; gap: 8px; }
+    .eps-arrow {
+      width: 40px; height: 40px; border-radius: 50%;
+      border: 1px solid rgba(0,0,0,0.15); background: #fff;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; font-size: 16px; color: rgba(0,0,0,0.5);
+      transition: border-color 180ms, color 180ms;
+    }
+    .eps-arrow:hover { border-color: rgba(0,0,0,0.5); color: #000; }
+
+    /* Divider */
+    .eps-divider { width: 100%; height: 1px; background: rgba(0,0,0,0.08); margin-bottom: 0; }
+
+    /* Horizontal scroll reel */
+    #eps-reel-wrap {
+      position: relative;
+      overflow: hidden;
+    }
+    #eps-reel {
+      display: flex;
+      gap: 0;
+      overflow-x: auto;
+      scroll-behavior: smooth;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      padding: 0;
+    }
+    #eps-reel::-webkit-scrollbar { display: none; }
+
+    /* Episode card */
+    .ep-card {
+      flex: 0 0 calc(100% / 3);
+      min-width: 300px;
+      border-right: 1px solid rgba(0,0,0,0.08);
+      padding: 32px 36px;
+      display: flex; flex-direction: column; gap: 14px;
+      cursor: pointer; transition: background 180ms;
+      box-sizing: border-box;
+    }
+    .ep-card:hover { background: #fafafa; }
+    .ep-card:first-child { border-left: 1px solid rgba(0,0,0,0.08); }
+
+    .ep-card-top {
+      display: flex; align-items: center; gap: 12px;
+    }
+    .ep-thumb {
+      width: 52px; height: 52px; border-radius: 6px;
+      background: #e8e8e8; overflow: hidden; flex-shrink: 0;
+    }
+    .ep-thumb img { width: 100%; height: 100%; object-fit: cover; }
+    .ep-card-meta { display: flex; flex-direction: column; gap: 2px; }
+    .ep-card-num {
+      font-size: 11px; font-weight: 600; letter-spacing: 0.08em;
+      text-transform: uppercase; color: rgba(0,0,0,0.35);
+    }
+    .ep-card-date { font-size: 12px; color: rgba(0,0,0,0.4); }
+    .ep-card-duration { font-size: 12px; color: rgba(0,0,0,0.35); font-family: 'Fragment Mono', monospace; }
+
+    .ep-card-title {
+      font-size: 16px; font-weight: 700; line-height: 1.35;
       letter-spacing: -0.02em; color: #000;
-      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
     }
-    .ep-meta { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; }
-    .ep-date { font-size: 12px; color: rgba(0,0,0,0.35); font-weight: 500; }
-    .ep-tags { display: flex; gap: 6px; }
-    .ep-tag {
-      font-size: 11px; font-weight: 600; letter-spacing: 0.06em;
-      text-transform: uppercase; color: rgba(0,0,0,0.38);
-      padding: 2px 8px; border: 1px solid rgba(0,0,0,0.1); border-radius: 20px;
+    .ep-card-desc {
+      font-size: 13px; line-height: 1.65; color: rgba(0,0,0,0.45);
+      display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden;
+      flex: 1;
     }
-    .ep-duration {
-      font-size: 12px; color: rgba(0,0,0,0.32); font-weight: 500;
-      font-family: 'Fragment Mono', monospace; white-space: nowrap;
+    .ep-card-listen {
+      display: flex; align-items: center; gap: 6px;
+      font-size: 13px; font-weight: 700; color: #000;
+      padding-top: 4px;
     }
+    .ep-card-listen svg { width: 12px; height: 12px; }
+
     #eps-loading {
-      padding: 64px 0; text-align: center;
-      font-size: 12px; color: rgba(0,0,0,0.3); letter-spacing: 0.1em;
-      text-transform: uppercase; font-family: 'Fragment Mono', monospace;
+      padding: 64px 8%; font-size: 12px; color: rgba(0,0,0,0.3);
+      letter-spacing: 0.1em; text-transform: uppercase;
+      font-family: 'Fragment Mono', monospace;
     }
-    /* Spotify embed fallback */
-    #spotify-fallback {
-      display: none; padding: 32px 0;
-    }
+    #spotify-fallback { display: none; padding: 32px 8%; }
 
     /* ─── ABOUT THE SHOW ─── */
     #about-show {
       display: grid; grid-template-columns: 1fr 1fr;
       gap: 80px; padding: 80px 8%;
       border-top: 1px solid rgba(0,0,0,0.09);
+      margin-top: 60px;
     }
     #about-show-left { display: flex; flex-direction: column; gap: 24px; }
     .show-label {
@@ -134,10 +173,7 @@
       font-size: clamp(28px, 3.5vw, 48px); font-weight: 900;
       letter-spacing: -0.03em; line-height: 1.05; color: #000;
     }
-    .show-para {
-      font-size: clamp(15px, 1.3vw, 18px); line-height: 1.75;
-      color: rgba(0,0,0,0.5);
-    }
+    .show-para { font-size: clamp(15px, 1.3vw, 18px); line-height: 1.75; color: rgba(0,0,0,0.5); }
     #about-show-right { display: flex; flex-direction: column; gap: 20px; padding-top: 8px; }
     .show-quote {
       font-size: clamp(17px, 1.8vw, 24px); font-weight: 700; line-height: 1.35;
@@ -148,27 +184,22 @@
 
     /* ─── GUEST FORM ─── */
     #guest-section { background: #000; color: #fff; padding: 80px 8%; }
-    #guest-inner {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start;
-    }
+    #guest-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
     #guest-left { display: flex; flex-direction: column; gap: 20px; }
     .guest-label {
       font-size: 11px; letter-spacing: 0.32em; text-transform: uppercase;
       color: rgba(255,255,255,0.4); font-family: 'Fragment Mono', monospace;
     }
-    .guest-heading {
-      font-size: clamp(28px, 3.5vw, 48px); font-weight: 900;
-      letter-spacing: -0.03em; line-height: 1.05; color: #fff;
-    }
+    .guest-heading { font-size: clamp(28px, 3.5vw, 48px); font-weight: 900; letter-spacing: -0.03em; line-height: 1.05; color: #fff; }
     .guest-para { font-size: clamp(15px, 1.3vw, 18px); line-height: 1.75; color: rgba(255,255,255,0.5); }
     #guest-right { display: flex; flex-direction: column; gap: 16px; }
     .g-field { display: flex; flex-direction: column; gap: 6px; }
     .g-label { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.38); }
     .g-input, .g-textarea {
       background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 3px; color: #fff;
-      font-family: 'Plus Jakarta Sans', sans-serif; font-size: 14px;
-      padding: 12px 16px; outline: none; transition: border-color 180ms; width: 100%;
+      border-radius: 3px; color: #fff; font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 14px; padding: 12px 16px; outline: none;
+      transition: border-color 180ms; width: 100%;
     }
     .g-input::placeholder, .g-textarea::placeholder { color: rgba(255,255,255,0.22); }
     .g-input:focus, .g-textarea:focus { border-color: rgba(255,255,255,0.38); }
@@ -183,15 +214,17 @@
     .g-submit:hover { opacity: 0.8; }
 
     /* ─── RESPONSIVE ─── */
+    @media (max-width: 900px) {
+      .ep-card { flex: 0 0 80vw; }
+    }
     @media (max-width: 768px) {
-      #pod-hero-text { right: 5%; left: 5%; text-align: left; max-width: 100%; }
+      #pod-hero-text { right: 5%; left: 5%; width: auto; text-align: left; }
       #pod-platforms { justify-content: flex-start; }
-      #episodes-section { padding: 0 6%; }
-      .ep-row { grid-template-columns: 28px 1fr; }
-      .ep-duration { display: none; }
+      .ep-card { flex: 0 0 88vw; }
       #about-show { grid-template-columns: 1fr; gap: 40px; padding: 60px 6%; }
       #guest-inner { grid-template-columns: 1fr; gap: 40px; }
       #guest-section { padding: 60px 6%; }
+      .eps-header { padding: 0 6% 28px; }
     }
   </style>
 </head>
@@ -201,7 +234,7 @@
 
   <!-- ─── HERO ─── -->
   <section id="pod-hero">
-    <img src="images/Naked Thumbnail" alt="Untold Podcast">
+    <img src="images/naked-thumbnail" alt="Untold Podcast">
     <div id="pod-hero-text">
       <div id="pod-hero-label">The Podcast</div>
       <div id="pod-hero-title">Untold</div>
@@ -223,16 +256,24 @@
     </div>
   </section>
 
-  <!-- ─── EPISODES ─── -->
+  <!-- ─── EPISODES REEL ─── -->
   <section id="episodes-section">
     <div class="eps-header">
-      <span class="eps-header-title">All Episodes</span>
-      <span class="eps-header-count" id="eps-count"></span>
+      <div class="eps-header-left">
+        <div class="eps-label">All Episodes</div>
+        <div class="eps-title">Latest Conversations</div>
+      </div>
+      <div class="eps-nav">
+        <button class="eps-arrow" id="reel-prev" aria-label="Previous">&#8592;</button>
+        <button class="eps-arrow" id="reel-next" aria-label="Next">&#8594;</button>
+      </div>
     </div>
-    <div id="eps-list">
-      <div id="eps-loading">Fetching episodes…</div>
+    <div class="eps-divider"></div>
+    <div id="eps-reel-wrap">
+      <div id="eps-reel">
+        <div id="eps-loading">Fetching episodes…</div>
+      </div>
     </div>
-    <!-- Spotify embed shown if RSS fails -->
     <div id="spotify-fallback">
       <iframe style="border-radius:3px" src="https://open.spotify.com/embed/show/5FGKcMKTWyOAPTgkGNxATB?utm_source=generator&theme=0" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
     </div>
@@ -288,83 +329,100 @@
   <script>window.PAGE_DARK_SECTIONS = ['guest-section'];</script>
   <script src="components.js"></script>
   <script>
-    /* ─── LOAD EPISODES FROM RSS ─── */
+    /* ─── REEL ARROWS ─── */
+    const reel = document.getElementById('eps-reel');
+    document.getElementById('reel-next').addEventListener('click', () => {
+      const cardW = reel.querySelector('.ep-card')?.offsetWidth || 360;
+      reel.scrollBy({ left: cardW, behavior: 'smooth' });
+    });
+    document.getElementById('reel-prev').addEventListener('click', () => {
+      const cardW = reel.querySelector('.ep-card')?.offsetWidth || 360;
+      reel.scrollBy({ left: -cardW, behavior: 'smooth' });
+    });
+
+    /* ─── LOAD EPISODES ─── */
     async function loadEpisodes() {
-      const list    = document.getElementById('eps-list');
-      const counter = document.getElementById('eps-count');
       const loading = document.getElementById('eps-loading');
       const rssUrl  = 'https://anchor.fm/s/10e8379bc/podcast/rss';
       const proxies = [
         u => 'https://corsproxy.io/?url=' + encodeURIComponent(u),
         u => 'https://api.allorigins.win/raw?url=' + encodeURIComponent(u),
-        u => 'https://api.rss2json.com/v1/api.json?rss_url=' + encodeURIComponent(u),
       ];
+      const jsonProxy = u => 'https://api.rss2json.com/v1/api.json?rss_url=' + encodeURIComponent(u);
 
-      let xml = null;
+      let items = null;
 
-      // Try proxy 1 & 2 (return raw XML)
-      for (const p of proxies.slice(0, 2)) {
+      // Try raw XML proxies
+      for (const p of proxies) {
         try {
           const res = await fetch(p(rssUrl), { signal: AbortSignal.timeout(8000) });
           if (!res.ok) continue;
-          const text = await res.text();
-          const doc  = new DOMParser().parseFromString(text, 'text/xml');
-          if (doc.querySelector('item')) { xml = doc; break; }
+          const doc = new DOMParser().parseFromString(await res.text(), 'text/xml');
+          const els = doc.querySelectorAll('item');
+          if (els.length) {
+            items = Array.from(els).map(item => ({
+              title:    item.querySelector('title')?.textContent?.trim() ?? 'Untitled',
+              link:     item.querySelector('enclosure')?.getAttribute('url') ?? item.querySelector('link')?.textContent?.trim() ?? '#',
+              date:     item.querySelector('pubDate')?.textContent ?? '',
+              desc:     item.querySelector('description')?.textContent ?? '',
+              duration: item.getElementsByTagName('itunes:duration')[0]?.textContent?.trim() ?? '',
+              image:    item.getElementsByTagName('itunes:image')[0]?.getAttribute('href') ?? '',
+            }));
+            break;
+          }
         } catch { continue; }
       }
 
-      // Try proxy 3 (returns JSON)
-      if (!xml) {
+      // Try JSON proxy fallback
+      if (!items) {
         try {
-          const res  = await fetch(proxies[2](rssUrl), { signal: AbortSignal.timeout(8000) });
+          const res  = await fetch(jsonProxy(rssUrl), { signal: AbortSignal.timeout(8000) });
           const json = await res.json();
-          if (json.items && json.items.length) {
-            loading.style.display = 'none';
-            counter.textContent = json.items.length + ' episodes';
-            list.innerHTML = json.items.map((ep, i, arr) => {
-              const date = ep.pubDate ? new Date(ep.pubDate).toLocaleDateString('en-GB', { day:'numeric', month:'short', year:'numeric' }) : '';
-              return `<div class="ep-row" onclick="window.open('${ep.link || ep.enclosure?.link || '#'}','_blank')">
-                <span class="ep-num">${String(arr.length - i).padStart(2,'0')}</span>
-                <div class="ep-info">
-                  <span class="ep-title">${ep.title}</span>
-                  <div class="ep-meta"><span class="ep-date">${date}</span></div>
-                </div>
-                <span class="ep-duration"></span>
-              </div>`;
-            }).join('');
-            return;
+          if (json.items?.length) {
+            items = json.items.map(ep => ({
+              title:    ep.title ?? 'Untitled',
+              link:     ep.link ?? '#',
+              date:     ep.pubDate ?? '',
+              desc:     ep.description ?? ep.content ?? '',
+              duration: '',
+              image:    ep.thumbnail ?? ep.enclosure?.thumbnail ?? json.feed?.image ?? '',
+            }));
           }
         } catch {}
       }
 
-      // RSS parsed successfully
-      if (xml) {
-        const items = Array.from(xml.querySelectorAll('item'));
-        loading.style.display = 'none';
-        counter.textContent = items.length + ' episodes';
-        list.innerHTML = items.map((item, i) => {
-          const title  = item.querySelector('title')?.textContent?.trim() ?? 'Untitled';
-          const link   = item.querySelector('enclosure')?.getAttribute('url') ?? item.querySelector('link')?.textContent?.trim() ?? '#';
-          const pub    = item.querySelector('pubDate')?.textContent ?? '';
-          const date   = pub ? new Date(pub).toLocaleDateString('en-GB', { day:'numeric', month:'short', year:'numeric' }) : '';
-          const rawDur = item.getElementsByTagName('itunes:duration')[0]?.textContent?.trim() ?? '';
-          const dur    = formatDuration(rawDur);
-          return `<div class="ep-row" onclick="window.open('${link}','_blank')">
-            <span class="ep-num">${String(items.length - i).padStart(2,'0')}</span>
-            <div class="ep-info">
-              <span class="ep-title">${title}</span>
-              <div class="ep-meta"><span class="ep-date">${date}</span></div>
-            </div>
-            <span class="ep-duration">${dur}</span>
-          </div>`;
-        }).join('');
+      loading.style.display = 'none';
+
+      if (!items) {
+        document.getElementById('spotify-fallback').style.display = 'block';
         return;
       }
 
-      // All proxies failed — show Spotify embed
-      loading.style.display = 'none';
-      counter.textContent = '';
-      document.getElementById('spotify-fallback').style.display = 'block';
+      reel.innerHTML = items.map((ep, i) => {
+        const date = ep.date ? new Date(ep.date).toLocaleDateString('en-US', { month:'long', day:'numeric', year:'numeric' }) : '';
+        const dur  = formatDuration(ep.duration);
+        const tmp  = document.createElement('div'); tmp.innerHTML = ep.desc;
+        const excerpt = (tmp.textContent || '').replace(/\s+/g,' ').trim().slice(0, 160);
+        const num  = String(items.length - i).padStart(2, '0');
+        const thumb = ep.image
+          ? `<img src="${ep.image}" alt="${ep.title}" loading="lazy">`
+          : '';
+        return `<div class="ep-card" onclick="window.open('${ep.link}','_blank')">
+          <div class="ep-card-top">
+            <div class="ep-thumb">${thumb}</div>
+            <div class="ep-card-meta">
+              <span class="ep-card-num">Ep. ${items.length - i}</span>
+              <span class="ep-card-date">${date}${dur ? ' · ' + dur : ''}</span>
+            </div>
+          </div>
+          <div class="ep-card-title">${ep.title}</div>
+          <div class="ep-card-desc">${excerpt}</div>
+          <div class="ep-card-listen">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+            Listen
+          </div>
+        </div>`;
+      }).join('');
     }
 
     function formatDuration(raw) {
