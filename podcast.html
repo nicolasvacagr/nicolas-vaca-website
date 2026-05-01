@@ -84,10 +84,8 @@
       transition: border-color 180ms, color 180ms;
     }
     .eps-arrow:hover { border-color: rgba(0,0,0,0.5); color: #000; }
-
     .eps-divider { width: 100%; height: 1px; background: rgba(0,0,0,0.08); }
 
-    /* Horizontal scroll reel — padding so cards don't hug the edge */
     #eps-reel-wrap { position: relative; overflow: hidden; }
     #eps-reel {
       display: flex; gap: 16px;
@@ -97,9 +95,8 @@
     }
     #eps-reel::-webkit-scrollbar { display: none; }
 
-    /* ── CARD: now a real floating card with border + shadow ── */
     .ep-card {
-      flex: 0 0 clamp(220px, 22vw, 300px); /* ~4 cards visible at full width */
+      flex: 0 0 clamp(220px, 22vw, 300px);
       background: #fff;
       border: 1px solid rgba(0,0,0,0.09);
       border-radius: 8px;
@@ -110,11 +107,7 @@
       transition: box-shadow 200ms, transform 200ms;
       box-sizing: border-box;
     }
-    .ep-card:hover {
-      box-shadow: 0 6px 24px rgba(0,0,0,0.11);
-      transform: translateY(-2px);
-    }
-
+    .ep-card:hover { box-shadow: 0 6px 24px rgba(0,0,0,0.11); transform: translateY(-2px); }
     .ep-card-top { display: flex; align-items: center; gap: 10px; }
     .ep-thumb {
       width: 46px; height: 46px; border-radius: 6px;
@@ -122,25 +115,15 @@
     }
     .ep-thumb img { width: 100%; height: 100%; object-fit: cover; }
     .ep-card-meta { display: flex; flex-direction: column; gap: 2px; }
-    .ep-card-num {
-      font-size: 11px; font-weight: 600; letter-spacing: 0.08em;
-      text-transform: uppercase; color: rgba(0,0,0,0.35);
-    }
+    .ep-card-num { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(0,0,0,0.35); }
     .ep-card-date { font-size: 11px; color: rgba(0,0,0,0.4); }
-
-    .ep-card-title {
-      font-size: 14px; font-weight: 700; line-height: 1.35;
-      letter-spacing: -0.01em; color: #000;
-    }
+    .ep-card-title { font-size: 14px; font-weight: 700; line-height: 1.35; letter-spacing: -0.01em; color: #000; }
     .ep-card-desc {
       font-size: 12px; line-height: 1.65; color: rgba(0,0,0,0.45);
       display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical;
       overflow: hidden; flex: 1;
     }
-    .ep-card-listen {
-      display: flex; align-items: center; gap: 5px;
-      font-size: 12px; font-weight: 700; color: #000; padding-top: 2px;
-    }
+    .ep-card-listen { display: flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 700; color: #000; padding-top: 2px; }
     .ep-card-listen svg { width: 11px; height: 11px; }
 
     #eps-loading {
@@ -158,18 +141,11 @@
       margin-top: 20px;
     }
     #about-show-left { display: flex; flex-direction: column; gap: 24px; }
-    .show-label {
-      font-size: 11px; letter-spacing: 0.32em; text-transform: uppercase;
-      color: rgba(0,0,0,0.35); font-family: 'Fragment Mono', monospace;
-    }
+    .show-label { font-size: 11px; letter-spacing: 0.32em; text-transform: uppercase; color: rgba(0,0,0,0.35); font-family: 'Fragment Mono', monospace; }
     .show-heading { font-size: clamp(28px, 3.5vw, 48px); font-weight: 900; letter-spacing: -0.03em; line-height: 1.05; color: #000; }
     .show-para { font-size: clamp(15px, 1.3vw, 18px); line-height: 1.75; color: rgba(0,0,0,0.5); }
     #about-show-right { display: flex; flex-direction: column; gap: 20px; padding-top: 8px; }
-    .show-quote {
-      font-size: clamp(17px, 1.8vw, 24px); font-weight: 700; line-height: 1.35;
-      letter-spacing: -0.02em; color: #000; font-style: italic;
-      border-left: 3px solid #000; padding-left: 20px;
-    }
+    .show-quote { font-size: clamp(17px, 1.8vw, 24px); font-weight: 700; line-height: 1.35; letter-spacing: -0.02em; color: #000; font-style: italic; border-left: 3px solid #000; padding-left: 20px; }
     .show-quote-attr { font-size: 13px; color: rgba(0,0,0,0.38); padding-left: 23px; }
 
     /* ─── GUEST FORM ─── */
@@ -220,13 +196,7 @@
 
   <!-- ─── HERO ─── -->
   <section id="pod-hero">
-    <!-- Tries exact filename; onerror tries common extensions -->
-    <img id="hero-img" src="images/naked-thumbnail" alt="Untold Podcast"
-      onerror="this.onerror=null;
-        const tries=['images/Naked Thumbnail','images/Naked-Thumbnail','images/naked-thumbnail.jpg','images/Naked Thumbnail.jpg','images/Naked-Thumbnail.jpg','images/naked-thumbnail.png','images/Naked Thumbnail.png'];
-        let idx=0;
-        const next=()=>{ if(idx<tries.length){this.src=tries[idx++];} };
-        this.onerror=next; next();">
+    <img src="images/naked-thumbnail" alt="Untold Podcast">
     <div id="pod-hero-text">
       <div id="pod-hero-label">The Podcast</div>
       <div id="pod-hero-title">Untold</div>
@@ -332,26 +302,29 @@
       reel.scrollBy({ left: -cardW * 2, behavior: 'smooth' });
     });
 
-    /* ─── LOAD EPISODES ─── */
+    /* ─── LOAD EPISODES — parallel race, max 3s ─── */
     async function loadEpisodes() {
-      const loading = document.getElementById('eps-loading');
-      const rssUrl  = 'https://anchor.fm/s/10e8379bc/podcast/rss';
-      const proxies = [
-        u => 'https://corsproxy.io/?url=' + encodeURIComponent(u),
-        u => 'https://api.allorigins.win/raw?url=' + encodeURIComponent(u),
+      const loading   = document.getElementById('eps-loading');
+      const rssUrl    = 'https://anchor.fm/s/10e8379bc/podcast/rss';
+      const TIMEOUT   = 3000;
+
+      const rawProxies = [
+        'https://corsproxy.io/?url=' + encodeURIComponent(rssUrl),
+        'https://api.allorigins.win/raw?url=' + encodeURIComponent(rssUrl),
       ];
-      const jsonProxy = u => 'https://api.rss2json.com/v1/api.json?rss_url=' + encodeURIComponent(u);
+      const jsonUrl = 'https://api.rss2json.com/v1/api.json?rss_url=' + encodeURIComponent(rssUrl);
 
       let items = null;
 
-      for (const p of proxies) {
-        try {
-          const res = await fetch(p(rssUrl), { signal: AbortSignal.timeout(8000) });
-          if (!res.ok) continue;
-          const doc = new DOMParser().parseFromString(await res.text(), 'text/xml');
-          const els = doc.querySelectorAll('item');
-          if (els.length) {
-            items = Array.from(els).map(item => ({
+      /* Race all raw-XML proxies in parallel */
+      const xmlRace = rawProxies.map(url =>
+        fetch(url, { signal: AbortSignal.timeout(TIMEOUT) })
+          .then(r => r.ok ? r.text() : Promise.reject())
+          .then(text => {
+            const doc = new DOMParser().parseFromString(text, 'text/xml');
+            const els = doc.querySelectorAll('item');
+            if (!els.length) throw new Error('no items');
+            return Array.from(els).map(item => ({
               title:    item.querySelector('title')?.textContent?.trim() ?? 'Untitled',
               link:     item.querySelector('enclosure')?.getAttribute('url') ?? item.querySelector('link')?.textContent?.trim() ?? '#',
               date:     item.querySelector('pubDate')?.textContent ?? '',
@@ -359,14 +332,17 @@
               duration: item.getElementsByTagName('itunes:duration')[0]?.textContent?.trim() ?? '',
               image:    item.getElementsByTagName('itunes:image')[0]?.getAttribute('href') ?? '',
             }));
-            break;
-          }
-        } catch { continue; }
-      }
+          })
+      );
 
+      try {
+        items = await Promise.any(xmlRace);
+      } catch {}
+
+      /* JSON fallback if both XML proxies failed */
       if (!items) {
         try {
-          const res  = await fetch(jsonProxy(rssUrl), { signal: AbortSignal.timeout(8000) });
+          const res  = await fetch(jsonUrl, { signal: AbortSignal.timeout(TIMEOUT) });
           const json = await res.json();
           if (json.items?.length) {
             items = json.items.map(ep => ({
@@ -375,7 +351,7 @@
               date:     ep.pubDate ?? '',
               desc:     ep.description ?? ep.content ?? '',
               duration: '',
-              image:    ep.thumbnail ?? ep.enclosure?.thumbnail ?? json.feed?.image ?? '',
+              image:    ep.thumbnail ?? json.feed?.image ?? '',
             }));
           }
         } catch {}
@@ -388,29 +364,17 @@
         return;
       }
 
-      // Identify the preview (last item, or titled "Preview" / "Untold – Preview")
-      // We exclude it from episode numbering but still show it as a card
-      const isPreview = (item) => /preview/i.test(item.title);
+      const isPreview = ep => /preview/i.test(ep.title);
       const realEps   = items.filter(ep => !isPreview(ep));
-      const totalReal = realEps.length;
 
-      reel.innerHTML = items.map((ep) => {
+      reel.innerHTML = items.map(ep => {
         const preview = isPreview(ep);
-        // Episode number: count only real episodes, previews get "Preview" label
-        const epNum = preview
-          ? 'Preview'
-          : 'Ep. ' + (totalReal - realEps.indexOf(ep));
-
-        const date = ep.date
-          ? new Date(ep.date).toLocaleDateString('en-US', { month:'long', day:'numeric', year:'numeric' })
-          : '';
-        const dur  = formatDuration(ep.duration);
-        const tmp  = document.createElement('div'); tmp.innerHTML = ep.desc;
+        const epNum   = preview ? 'Preview' : 'Ep. ' + (realEps.length - realEps.indexOf(ep));
+        const date    = ep.date ? new Date(ep.date).toLocaleDateString('en-US', { month:'long', day:'numeric', year:'numeric' }) : '';
+        const dur     = formatDuration(ep.duration);
+        const tmp     = document.createElement('div'); tmp.innerHTML = ep.desc;
         const excerpt = (tmp.textContent || '').replace(/\s+/g,' ').trim().slice(0, 140);
-        const thumb = ep.image
-          ? `<img src="${ep.image}" alt="${ep.title}" loading="lazy">`
-          : '';
-
+        const thumb   = ep.image ? `<img src="${ep.image}" alt="${ep.title}" loading="lazy">` : '';
         return `<div class="ep-card" onclick="window.open('${ep.link}','_blank')">
           <div class="ep-card-top">
             <div class="ep-thumb">${thumb}</div>
