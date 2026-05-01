@@ -8,46 +8,66 @@
   <style>
     body { background: #fff; color: #1a1a1a; }
 
-    /* ─── PAGE TOP PADDING (for fixed nav pill) ─── */
-    .page-top { padding-top: 100px; }
-
     /* ─── HERO ─── */
     #pod-hero {
-      padding: 80px 8% 72px;
-      border-bottom: 1px solid rgba(0,0,0,0.09);
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      min-height: 500px;
+      overflow: hidden;
+      background: #111;
+    }
+    #pod-hero img {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: center center;
+    }
+    /* Dark overlay so text is readable */
+    #pod-hero::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(to left, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.18) 55%, rgba(0,0,0,0.04) 100%);
+      pointer-events: none;
+    }
+    /* Text block — right-aligned */
+    #pod-hero-text {
+      position: absolute;
+      top: 50%; right: 8%;
+      transform: translateY(-50%);
+      z-index: 2;
+      max-width: 480px;
+      display: flex; flex-direction: column; gap: 20px;
+      text-align: right;
     }
     #pod-hero-label {
       font-size: 11px; letter-spacing: 0.32em; text-transform: uppercase;
-      color: rgba(0,0,0,0.35); margin-bottom: 20px;
+      color: rgba(255,255,255,0.5);
       font-family: 'Fragment Mono', monospace;
     }
     #pod-hero-title {
       font-size: clamp(64px, 11vw, 140px);
       font-weight: 900; letter-spacing: 0.18em; text-transform: uppercase;
-      line-height: 0.88; color: #000; margin-bottom: 40px;
-    }
-    #pod-hero-row {
-      display: flex; align-items: flex-end; justify-content: space-between;
-      gap: 40px; flex-wrap: wrap;
+      line-height: 0.88; color: #fff;
     }
     #pod-hero-desc {
-      font-size: clamp(16px, 1.5vw, 20px); line-height: 1.7;
-      color: rgba(0,0,0,0.5); max-width: 560px;
+      font-size: clamp(14px, 1.3vw, 18px); line-height: 1.7;
+      color: rgba(255,255,255,0.65);
     }
     #pod-platforms {
-      display: flex; gap: 12px; flex-wrap: wrap; align-items: center;
+      display: flex; gap: 10px; flex-wrap: wrap; justify-content: flex-end;
     }
     .plat-btn {
-      display: inline-flex; align-items: center; gap: 8px;
-      padding: 10px 18px; border-radius: 40px;
-      border: 1px solid rgba(0,0,0,0.18); font-size: 13px;
-      font-weight: 600; color: #1a1a1a; letter-spacing: 0.02em;
+      display: inline-flex; align-items: center; gap: 7px;
+      padding: 9px 16px; border-radius: 40px;
+      border: 1px solid rgba(255,255,255,0.25);
+      font-size: 12px; font-weight: 600; color: #fff;
+      letter-spacing: 0.02em; cursor: pointer; background: rgba(255,255,255,0.1);
+      backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
       transition: background 180ms, border-color 180ms;
       font-family: 'Plus Jakarta Sans', sans-serif;
-      cursor: pointer; background: #fff;
     }
-    .plat-btn:hover { background: #f0f0f0; border-color: rgba(0,0,0,0.35); }
-    .plat-btn svg { width: 15px; height: 15px; flex-shrink: 0; }
+    .plat-btn:hover { background: rgba(255,255,255,0.2); border-color: rgba(255,255,255,0.5); }
+    .plat-btn svg { width: 14px; height: 14px; flex-shrink: 0; }
 
     /* ─── EPISODES ─── */
     #episodes-section { padding: 0 8%; }
@@ -56,45 +76,47 @@
       padding: 48px 0 32px; border-bottom: 1px solid rgba(0,0,0,0.09);
     }
     .eps-header-title { font-size: 13px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; }
-    .eps-header-count { font-size: 13px; color: rgba(0,0,0,0.35); }
+    .eps-header-count { font-size: 13px; color: rgba(0,0,0,0.35); font-family: 'Fragment Mono', monospace; }
 
-    /* Episode row */
     .ep-row {
       display: grid;
       grid-template-columns: 40px 1fr auto;
       align-items: center; gap: 24px;
-      padding: 28px 0;
+      padding: 24px 0;
       border-bottom: 1px solid rgba(0,0,0,0.07);
-      transition: opacity 180ms;
-      cursor: pointer;
+      cursor: pointer; transition: opacity 180ms;
     }
-    .ep-row:hover { opacity: 0.6; }
+    .ep-row:hover { opacity: 0.55; }
     .ep-num {
-      font-size: 13px; font-weight: 500; color: rgba(0,0,0,0.25);
+      font-size: 13px; font-weight: 500; color: rgba(0,0,0,0.22);
       font-family: 'Fragment Mono', monospace; text-align: right;
     }
-    .ep-info { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+    .ep-info { display: flex; flex-direction: column; gap: 5px; min-width: 0; }
     .ep-title {
-      font-size: 17px; font-weight: 700; line-height: 1.3;
+      font-size: 16px; font-weight: 700; line-height: 1.3;
       letter-spacing: -0.02em; color: #000;
       white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
     }
-    .ep-meta { display: flex; gap: 16px; align-items: center; }
+    .ep-meta { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; }
     .ep-date { font-size: 12px; color: rgba(0,0,0,0.35); font-weight: 500; }
-    .ep-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+    .ep-tags { display: flex; gap: 6px; }
     .ep-tag {
       font-size: 11px; font-weight: 600; letter-spacing: 0.06em;
-      text-transform: uppercase; color: rgba(0,0,0,0.4);
-      padding: 2px 8px; border: 1px solid rgba(0,0,0,0.12); border-radius: 20px;
+      text-transform: uppercase; color: rgba(0,0,0,0.38);
+      padding: 2px 8px; border: 1px solid rgba(0,0,0,0.1); border-radius: 20px;
     }
     .ep-duration {
-      font-size: 12px; color: rgba(0,0,0,0.35); font-weight: 500;
+      font-size: 12px; color: rgba(0,0,0,0.32); font-weight: 500;
       font-family: 'Fragment Mono', monospace; white-space: nowrap;
     }
     #eps-loading {
-      padding: 48px 0; text-align: center;
-      font-size: 13px; color: rgba(0,0,0,0.35); letter-spacing: 0.08em;
+      padding: 64px 0; text-align: center;
+      font-size: 12px; color: rgba(0,0,0,0.3); letter-spacing: 0.1em;
       text-transform: uppercase; font-family: 'Fragment Mono', monospace;
+    }
+    /* Spotify embed fallback */
+    #spotify-fallback {
+      display: none; padding: 32px 0;
     }
 
     /* ─── ABOUT THE SHOW ─── */
@@ -103,34 +125,29 @@
       gap: 80px; padding: 80px 8%;
       border-top: 1px solid rgba(0,0,0,0.09);
     }
-    #about-show-left { display: flex; flex-direction: column; gap: 28px; }
+    #about-show-left { display: flex; flex-direction: column; gap: 24px; }
     .show-label {
       font-size: 11px; letter-spacing: 0.32em; text-transform: uppercase;
       color: rgba(0,0,0,0.35); font-family: 'Fragment Mono', monospace;
     }
     .show-heading {
-      font-size: clamp(32px, 4vw, 52px); font-weight: 900;
+      font-size: clamp(28px, 3.5vw, 48px); font-weight: 900;
       letter-spacing: -0.03em; line-height: 1.05; color: #000;
     }
     .show-para {
-      font-size: clamp(15px, 1.4vw, 18px); line-height: 1.75;
+      font-size: clamp(15px, 1.3vw, 18px); line-height: 1.75;
       color: rgba(0,0,0,0.5);
     }
-    #about-show-right { display: flex; flex-direction: column; gap: 24px; padding-top: 8px; }
+    #about-show-right { display: flex; flex-direction: column; gap: 20px; padding-top: 8px; }
     .show-quote {
-      font-size: clamp(18px, 2vw, 26px); font-weight: 700; line-height: 1.3;
+      font-size: clamp(17px, 1.8vw, 24px); font-weight: 700; line-height: 1.35;
       letter-spacing: -0.02em; color: #000; font-style: italic;
       border-left: 3px solid #000; padding-left: 20px;
     }
-    .show-quote-attr {
-      font-size: 13px; color: rgba(0,0,0,0.4); padding-left: 23px;
-    }
+    .show-quote-attr { font-size: 13px; color: rgba(0,0,0,0.38); padding-left: 23px; }
 
     /* ─── GUEST FORM ─── */
-    #guest-section {
-      background: #000; color: #fff;
-      padding: 80px 8%;
-    }
+    #guest-section { background: #000; color: #fff; padding: 80px 8%; }
     #guest-inner {
       display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start;
     }
@@ -140,41 +157,37 @@
       color: rgba(255,255,255,0.4); font-family: 'Fragment Mono', monospace;
     }
     .guest-heading {
-      font-size: clamp(32px, 4vw, 52px); font-weight: 900;
+      font-size: clamp(28px, 3.5vw, 48px); font-weight: 900;
       letter-spacing: -0.03em; line-height: 1.05; color: #fff;
     }
-    .guest-para { font-size: clamp(15px, 1.4vw, 18px); line-height: 1.75; color: rgba(255,255,255,0.5); }
+    .guest-para { font-size: clamp(15px, 1.3vw, 18px); line-height: 1.75; color: rgba(255,255,255,0.5); }
     #guest-right { display: flex; flex-direction: column; gap: 16px; }
     .g-field { display: flex; flex-direction: column; gap: 6px; }
-    .g-label { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.4); }
+    .g-label { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.38); }
     .g-input, .g-textarea {
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
       border-radius: 3px; color: #fff;
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: 14px; padding: 12px 16px;
-      outline: none; transition: border-color 180ms; width: 100%;
+      font-family: 'Plus Jakarta Sans', sans-serif; font-size: 14px;
+      padding: 12px 16px; outline: none; transition: border-color 180ms; width: 100%;
     }
-    .g-input::placeholder, .g-textarea::placeholder { color: rgba(255,255,255,0.25); }
-    .g-input:focus, .g-textarea:focus { border-color: rgba(255,255,255,0.4); }
+    .g-input::placeholder, .g-textarea::placeholder { color: rgba(255,255,255,0.22); }
+    .g-input:focus, .g-textarea:focus { border-color: rgba(255,255,255,0.38); }
     .g-textarea { resize: vertical; min-height: 120px; }
     .g-submit {
       margin-top: 8px; height: 48px; padding: 0 28px;
       background: #fff; color: #000; border-radius: 3px;
-      font-size: 13px; font-weight: 700; letter-spacing: 0.06em;
-      text-transform: uppercase; font-family: 'Plus Jakarta Sans', sans-serif;
-      cursor: pointer; border: none; align-self: flex-start;
-      transition: opacity 180ms;
+      font-size: 13px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+      font-family: 'Plus Jakarta Sans', sans-serif; cursor: pointer; border: none;
+      align-self: flex-start; transition: opacity 180ms;
     }
     .g-submit:hover { opacity: 0.8; }
 
     /* ─── RESPONSIVE ─── */
     @media (max-width: 768px) {
-      #pod-hero { padding: 60px 6% 48px; }
-      #pod-hero-title { margin-bottom: 28px; }
-      #pod-hero-row { flex-direction: column; align-items: flex-start; }
+      #pod-hero-text { right: 5%; left: 5%; text-align: left; max-width: 100%; }
+      #pod-platforms { justify-content: flex-start; }
       #episodes-section { padding: 0 6%; }
-      .ep-row { grid-template-columns: 32px 1fr; }
+      .ep-row { grid-template-columns: 28px 1fr; }
       .ep-duration { display: none; }
       #about-show { grid-template-columns: 1fr; gap: 40px; padding: 60px 6%; }
       #guest-inner { grid-template-columns: 1fr; gap: 40px; }
@@ -182,15 +195,16 @@
     }
   </style>
 </head>
-<body class="page-top">
+<body>
 
   <!-- nav + footer injected by components.js -->
 
   <!-- ─── HERO ─── -->
   <section id="pod-hero">
-    <div id="pod-hero-label">The Podcast</div>
-    <div id="pod-hero-title">Untold</div>
-    <div id="pod-hero-row">
+    <img src="images/Naked Thumbnail" alt="Untold Podcast">
+    <div id="pod-hero-text">
+      <div id="pod-hero-label">The Podcast</div>
+      <div id="pod-hero-title">Untold</div>
       <p id="pod-hero-desc">Words unspoken. Thoughts to explore. Long-form conversations with researchers, explorers, and thinkers — following curiosity wherever it leads.</p>
       <div id="pod-platforms">
         <button class="plat-btn" onclick="window.open('https://open.spotify.com/show/5FGKcMKTWyOAPTgkGNxATB','_blank')">
@@ -213,10 +227,14 @@
   <section id="episodes-section">
     <div class="eps-header">
       <span class="eps-header-title">All Episodes</span>
-      <span class="eps-header-count" id="eps-count">Loading…</span>
+      <span class="eps-header-count" id="eps-count"></span>
     </div>
     <div id="eps-list">
       <div id="eps-loading">Fetching episodes…</div>
+    </div>
+    <!-- Spotify embed shown if RSS fails -->
+    <div id="spotify-fallback">
+      <iframe style="border-radius:3px" src="https://open.spotify.com/embed/show/5FGKcMKTWyOAPTgkGNxATB?utm_source=generator&theme=0" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
     </div>
   </section>
 
@@ -266,73 +284,100 @@
     </div>
   </section>
 
-  <script>window.PAGE_LIGHT_SECTIONS = ['pod-hero', 'episodes-section', 'about-show'];</script>
+  <script>window.PAGE_LIGHT_SECTIONS = ['episodes-section', 'about-show'];</script>
+  <script>window.PAGE_DARK_SECTIONS = ['guest-section'];</script>
   <script src="components.js"></script>
   <script>
     /* ─── LOAD EPISODES FROM RSS ─── */
     async function loadEpisodes() {
       const list    = document.getElementById('eps-list');
       const counter = document.getElementById('eps-count');
+      const loading = document.getElementById('eps-loading');
       const rssUrl  = 'https://anchor.fm/s/10e8379bc/podcast/rss';
       const proxies = [
         u => 'https://corsproxy.io/?url=' + encodeURIComponent(u),
         u => 'https://api.allorigins.win/raw?url=' + encodeURIComponent(u),
+        u => 'https://api.rss2json.com/v1/api.json?rss_url=' + encodeURIComponent(u),
       ];
 
       let xml = null;
-      for (const p of proxies) {
+
+      // Try proxy 1 & 2 (return raw XML)
+      for (const p of proxies.slice(0, 2)) {
         try {
-          const res = await fetch(p(rssUrl), { signal: AbortSignal.timeout(7000) });
+          const res = await fetch(p(rssUrl), { signal: AbortSignal.timeout(8000) });
           if (!res.ok) continue;
-          const doc = new DOMParser().parseFromString(await res.text(), 'text/xml');
+          const text = await res.text();
+          const doc  = new DOMParser().parseFromString(text, 'text/xml');
           if (doc.querySelector('item')) { xml = doc; break; }
         } catch { continue; }
       }
 
+      // Try proxy 3 (returns JSON)
       if (!xml) {
-        list.innerHTML = '<div style="padding:48px 0;color:rgba(0,0,0,0.35);font-size:14px;">Could not load episodes. <a href="https://open.spotify.com/show/5FGKcMKTWyOAPTgkGNxATB" target="_blank" style="color:#000;text-decoration:underline;">Listen on Spotify →</a></div>';
-        counter.textContent = '';
+        try {
+          const res  = await fetch(proxies[2](rssUrl), { signal: AbortSignal.timeout(8000) });
+          const json = await res.json();
+          if (json.items && json.items.length) {
+            loading.style.display = 'none';
+            counter.textContent = json.items.length + ' episodes';
+            list.innerHTML = json.items.map((ep, i, arr) => {
+              const date = ep.pubDate ? new Date(ep.pubDate).toLocaleDateString('en-GB', { day:'numeric', month:'short', year:'numeric' }) : '';
+              return `<div class="ep-row" onclick="window.open('${ep.link || ep.enclosure?.link || '#'}','_blank')">
+                <span class="ep-num">${String(arr.length - i).padStart(2,'0')}</span>
+                <div class="ep-info">
+                  <span class="ep-title">${ep.title}</span>
+                  <div class="ep-meta"><span class="ep-date">${date}</span></div>
+                </div>
+                <span class="ep-duration"></span>
+              </div>`;
+            }).join('');
+            return;
+          }
+        } catch {}
+      }
+
+      // RSS parsed successfully
+      if (xml) {
+        const items = Array.from(xml.querySelectorAll('item'));
+        loading.style.display = 'none';
+        counter.textContent = items.length + ' episodes';
+        list.innerHTML = items.map((item, i) => {
+          const title  = item.querySelector('title')?.textContent?.trim() ?? 'Untitled';
+          const link   = item.querySelector('enclosure')?.getAttribute('url') ?? item.querySelector('link')?.textContent?.trim() ?? '#';
+          const pub    = item.querySelector('pubDate')?.textContent ?? '';
+          const date   = pub ? new Date(pub).toLocaleDateString('en-GB', { day:'numeric', month:'short', year:'numeric' }) : '';
+          const rawDur = item.getElementsByTagName('itunes:duration')[0]?.textContent?.trim() ?? '';
+          const dur    = formatDuration(rawDur);
+          return `<div class="ep-row" onclick="window.open('${link}','_blank')">
+            <span class="ep-num">${String(items.length - i).padStart(2,'0')}</span>
+            <div class="ep-info">
+              <span class="ep-title">${title}</span>
+              <div class="ep-meta"><span class="ep-date">${date}</span></div>
+            </div>
+            <span class="ep-duration">${dur}</span>
+          </div>`;
+        }).join('');
         return;
       }
 
-      const items = Array.from(xml.querySelectorAll('item'));
-      counter.textContent = items.length + ' episodes';
-
-      list.innerHTML = items.map((item, i) => {
-        const title   = item.querySelector('title')?.textContent?.trim() ?? 'Untitled';
-        const link    = item.querySelector('enclosure')?.getAttribute('url') ?? item.querySelector('link')?.textContent?.trim() ?? '#';
-        const pub     = item.querySelector('pubDate')?.textContent ?? '';
-        const date    = pub ? new Date(pub).toLocaleDateString('en-GB', { day:'numeric', month:'short', year:'numeric' }) : '';
-        const rawDur  = item.getElementsByTagName('itunes:duration')[0]?.textContent?.trim() ?? '';
-        const dur     = formatDuration(rawDur);
-        const cats    = Array.from(item.getElementsByTagName('itunes:category')).map(c => c.getAttribute('text')).filter(Boolean).slice(0,2);
-
-        return `<div class="ep-row" onclick="window.open('${link}','_blank')">
-          <span class="ep-num">${String(items.length - i).padStart(2,'0')}</span>
-          <div class="ep-info">
-            <span class="ep-title">${title}</span>
-            <div class="ep-meta">
-              <span class="ep-date">${date}</span>
-              ${cats.length ? `<div class="ep-tags">${cats.map(c=>`<span class="ep-tag">${c}</span>`).join('')}</div>` : ''}
-            </div>
-          </div>
-          <span class="ep-duration">${dur}</span>
-        </div>`;
-      }).join('');
+      // All proxies failed — show Spotify embed
+      loading.style.display = 'none';
+      counter.textContent = '';
+      document.getElementById('spotify-fallback').style.display = 'block';
     }
 
     function formatDuration(raw) {
       if (!raw) return '';
       if (raw.includes(':')) {
-        const parts = raw.split(':').map(Number);
-        if (parts.length === 3) return `${parts[0]}h ${String(parts[1]).padStart(2,'0')}m`;
-        if (parts.length === 2) return `${parts[0]}m`;
+        const p = raw.split(':').map(Number);
+        if (p.length === 3) return `${p[0]}h ${String(p[1]).padStart(2,'0')}m`;
+        if (p.length === 2) return `${p[0]}m`;
         return raw;
       }
-      const secs = parseInt(raw);
-      if (isNaN(secs)) return raw;
-      const h = Math.floor(secs / 3600);
-      const m = Math.floor((secs % 3600) / 60);
+      const s = parseInt(raw);
+      if (isNaN(s)) return raw;
+      const h = Math.floor(s / 3600), m = Math.floor((s % 3600) / 60);
       return h > 0 ? `${h}h ${String(m).padStart(2,'0')}m` : `${m}m`;
     }
 
@@ -342,8 +387,7 @@
     function handleGuestSubmit(e) {
       e.preventDefault();
       const btn = document.getElementById('g-btn');
-      btn.textContent = 'Sending…';
-      btn.disabled = true;
+      btn.textContent = 'Sending…'; btn.disabled = true;
       setTimeout(() => {
         btn.textContent = 'Sent ✓';
         setTimeout(() => { btn.textContent = 'Send it →'; btn.disabled = false; }, 3000);
