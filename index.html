@@ -48,7 +48,7 @@
     }
     #nav-expanded a:hover { opacity: 1; }
 
-    /* LAYER 2: compact pill — dark tint by default */
+    /* LAYER 2: compact pill — dark tint by default (over hero) */
     #nav-compact {
       position: absolute;
       top: 0;
@@ -82,7 +82,7 @@
     #nav.compact #nav-expanded { opacity: 0; pointer-events: none; }
     #nav.compact #nav-compact  { opacity: 1; pointer-events: auto; }
 
-    /* Dark theme (about/scroll sections) — white pill */
+    /* Dark sections (about) — flip pill to white tint */
     #nav.dark-section #nav-expanded { color: #fff; }
     #nav.dark-section #nav-compact {
       color: #fff;
@@ -90,7 +90,7 @@
       border-color: rgba(255, 255, 255, 0.15);
     }
 
-    /* Light theme (podcast/newsletter/footer) */
+    /* Light sections (podcast/newsletter/footer) */
     #nav.light #nav-expanded { color: #1a1a1a; }
     #nav.light #nav-compact {
       color: #1a1a1a;
@@ -439,9 +439,8 @@ const heroEl    = document.getElementById('hero');
 const THRESHOLD = 80;
 let ticking = false;
 
-// Sections that need dark (white) pill
-const darkSections  = ['hero', 'about-scroll-wrapper', 'about'];
-// Sections that need light (black) pill
+// Only dark BG sections (NOT hero — hero is default black-text state)
+const darkSections  = ['about-scroll-wrapper', 'about'];
 const lightSections = ['podcast-section', 'newsletter-section', 'contact'];
 
 function getNavTheme() {
@@ -454,7 +453,7 @@ function getNavTheme() {
     const el = document.getElementById(id);
     if (el && mid >= el.offsetTop && mid < el.offsetTop + el.offsetHeight) return 'dark-section';
   }
-  return 'default'; // hero — black text, no pill class needed
+  return 'default'; // hero — black text, dark pill (default CSS state)
 }
 
 function update() {
@@ -531,7 +530,8 @@ loadPodcast();
 
 /* Substack articles */
 async function loadArticles() {
-  const container = document.getElementById('nl-artifree time leart feedUrl   = 'https://nicolasvaca.substack.com/feed';
+  const container = document.getElementById('nl-articles');
+  const feedUrl   = 'https://nicolasvaca.substack.com/feed';
   const proxies   = [
     u => 'https://corsproxy.io/?url=' + encodeURIComponent(u),
     u => 'https://api.allorigins.win/raw?url=' + encodeURIComponent(u),
@@ -543,7 +543,7 @@ async function loadArticles() {
       const res = await fetch(p(feedUrl), { signal: AbortSignal.timeout(6000) });
       if (!res.ok) continue;
       const doc = new DOMParser().parseFromString(await res.text(), 'text/xml');
-      if (doc.querySelector('item'free time lear; break; }
+      if (doc.querySelector('item')) { xml = doc; break; }
     } catch { continue; }
   }
   if (!xml) {
@@ -551,15 +551,17 @@ async function loadArticles() {
     return;
   }
   container.innerHTML = Array.from(xml.querySelectorAll('item')).slice(0, 3).map((item, i, arr) => {
-    const title   = item.querySelector('title')?.textContent?.trim() ??free time lear link    = item.querySelector('link')?.textContent?.trim() ?? '#';
+    const title   = item.querySelector('title')?.textContent?.trim() ?? '';
+    const link    = item.querySelector('link')?.textContent?.trim() ?? '#';
     const pub     = item.querySelector('pubDate')?.textContent ?? '';
     const date    = pub ? new Date(pub).toLocaleDateString('en-GB', { day:'numeric', month:'long', year:'numeric' }) : '';
     const desc    = item.querySelector('description')?.textContent ?? '';
-    const tmp     = document.createElement('div'); tmp.innerfree time lear   const excerpt = (tmp.textContent||'').replace(/\s+/g,' ').trim().slice(0,180);
+    const tmp     = document.createElement('div'); tmp.innerHTML = desc;
+    const excerpt = (tmp.textContent||'').replace(/\s+/g,' ').trim().slice(0,180);
     const imgM    = desc.match(/<img[^>]+src=["'](https?[^"']+)['"]/);
-    return `<a href="${link}" target="_blank" rel="noopener" class="nl-article"${i===arr.lengthfree time learrder-right:none;padding-right:0"':''}>
+    return `<a href="${link}" target="_blank" rel="noopener" class="nl-article"${i===arr.length-1?' style="border-right:none;padding-right:0"':''}>
       ${imgM ? `<div class="nl-art-img"><img src="${imgM[1]}" alt="${title}" loading="lazy"></div>` : '<div class="nl-art-img" style="background:#e0e0e0"></div>'}
-      <span class="nlfree time learate}</span>
+      <span class="nl-art-date">${date}</span>
       <span class="nl-art-title">${title}</span>
       <span class="nl-art-excerpt">${excerpt}</span>
       <span class="nl-art-read">Read →</span>
@@ -569,7 +571,8 @@ async function loadArticles() {
 loadArticles();
 
 /* Newsletter form */
-function handleNlSubmfree time leareventDefault();
+function handleNlSubmit(e) {
+  e.preventDefault();
   const btn = document.getElementById('nl-btn');
   btn.textContent = '...';
   setTimeout(() => {
