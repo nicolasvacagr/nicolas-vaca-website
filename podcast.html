@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Untold Podcast — Nicolas Vaca</title>
+  <link rel="stylesheet" href="shared.css">
+  <style>
+    body { background: #fff; color: #1a1a1a; }
+
+    /* ─── PAGE TOP PADDING (for fixed nav pill) ─── */
+    .page-top { padding-top: 100px; }
+
+    /* ─── HERO ─── */
+    #pod-hero {
+      padding: 80px 8% 72px;
+      border-bottom: 1px solid rgba(0,0,0,0.09);
+    }
+    #pod-hero-label {
+      font-size: 11px; letter-spacing: 0.32em; text-transform: uppercase;
+      color: rgba(0,0,0,0.35); margin-bottom: 20px;
+      font-family: 'Fragment Mono', monospace;
+    }
+    #pod-hero-title {
+      font-size: clamp(64px, 11vw, 140px);
+      font-weight: 900; letter-spacing: 0.18em; text-transform: uppercase;
+      line-height: 0.88; color: #000; margin-bottom: 40px;
+    }
+    #pod-hero-row {
+      display: flex; align-items: flex-end; justify-content: space-between;
+      gap: 40px; flex-wrap: wrap;
+    }
+    #pod-hero-desc {
+      font-size: clamp(16px, 1.5vw, 20px); line-height: 1.7;
+      color: rgba(0,0,0,0.5); max-width: 560px;
+    }
+    #pod-platforms {
+      display: flex; gap: 12px; flex-wrap: wrap; align-items: center;
+    }
+    .plat-btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 10px 18px; border-radius: 40px;
+      border: 1px solid rgba(0,0,0,0.18); font-size: 13px;
+      font-weight: 600; color: #1a1a1a; letter-spacing: 0.02em;
+      transition: background 180ms, border-color 180ms;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      cursor: pointer; background: #fff;
+    }
+    .plat-btn:hover { background: #f0f0f0; border-color: rgba(0,0,0,0.35); }
+    .plat-btn svg { width: 15px; height: 15px; flex-shrink: 0; }
+
+    /* ─── EPISODES ─── */
+    #episodes-section { padding: 0 8%; }
+    .eps-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 48px 0 32px; border-bottom: 1px solid rgba(0,0,0,0.09);
+    }
+    .eps-header-title { font-size: 13px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; }
+    .eps-header-count { font-size: 13px; color: rgba(0,0,0,0.35); }
+
+    /* Episode row */
+    .ep-row {
+      display: grid;
+      grid-template-columns: 40px 1fr auto;
+      align-items: center; gap: 24px;
+      padding: 28px 0;
+      border-bottom: 1px solid rgba(0,0,0,0.07);
+      transition: opacity 180ms;
+      cursor: pointer;
+    }
+    .ep-row:hover { opacity: 0.6; }
+    .ep-num {
+      font-size: 13px; font-weight: 500; color: rgba(0,0,0,0.25);
+      font-family: 'Fragment Mono', monospace; text-align: right;
+    }
+    .ep-info { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+    .ep-title {
+      font-size: 17px; font-weight: 700; line-height: 1.3;
+      letter-spacing: -0.02em; color: #000;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .ep-meta { display: flex; gap: 16px; align-items: center; }
+    .ep-date { font-size: 12px; color: rgba(0,0,0,0.35); font-weight: 500; }
+    .ep-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+    .ep-tag {
+      font-size: 11px; font-weight: 600; letter-spacing: 0.06em;
+      text-transform: uppercase; color: rgba(0,0,0,0.4);
+      padding: 2px 8px; border: 1px solid rgba(0,0,0,0.12); border-radius: 20px;
+    }
+    .ep-duration {
+      font-size: 12px; color: rgba(0,0,0,0.35); font-weight: 500;
+      font-family: 'Fragment Mono', monospace; white-space: nowrap;
+    }
+    #eps-loading {
+      padding: 48px 0; text-align: center;
+      font-size: 13px; color: rgba(0,0,0,0.35); letter-spacing: 0.08em;
+      text-transform: uppercase; font-family: 'Fragment Mono', monospace;
+    }
+
+    /* ─── ABOUT THE SHOW ─── */
+    #about-show {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 80px; padding: 80px 8%;
+      border-top: 1px solid rgba(0,0,0,0.09);
+    }
+    #about-show-left { display: flex; flex-direction: column; gap: 28px; }
+    .show-label {
+      font-size: 11px; letter-spacing: 0.32em; text-transform: uppercase;
+      color: rgba(0,0,0,0.35); font-family: 'Fragment Mono', monospace;
+    }
+    .show-heading {
+      font-size: clamp(32px, 4vw, 52px); font-weight: 900;
+      letter-spacing: -0.03em; line-height: 1.05; color: #000;
+    }
+    .show-para {
+      font-size: clamp(15px, 1.4vw, 18px); line-height: 1.75;
+      color: rgba(0,0,0,0.5);
+    }
+    #about-show-right { display: flex; flex-direction: column; gap: 24px; padding-top: 8px; }
+    .show-quote {
+      font-size: clamp(18px, 2vw, 26px); font-weight: 700; line-height: 1.3;
+      letter-spacing: -0.02em; color: #000; font-style: italic;
+      border-left: 3px solid #000; padding-left: 20px;
+    }
+    .show-quote-attr {
+      font-size: 13px; color: rgba(0,0,0,0.4); padding-left: 23px;
+    }
+
+    /* ─── GUEST FORM ─── */
+    #guest-section {
+      background: #000; color: #fff;
+      padding: 80px 8%;
+    }
+    #guest-inner {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start;
+    }
+    #guest-left { display: flex; flex-direction: column; gap: 20px; }
+    .guest-label {
+      font-size: 11px; letter-spacing: 0.32em; text-transform: uppercase;
+      color: rgba(255,255,255,0.4); font-family: 'Fragment Mono', monospace;
+    }
+    .guest-heading {
+      font-size: clamp(32px, 4vw, 52px); font-weight: 900;
+      letter-spacing: -0.03em; line-height: 1.05; color: #fff;
+    }
+    .guest-para { font-size: clamp(15px, 1.4vw, 18px); line-height: 1.75; color: rgba(255,255,255,0.5); }
+    #guest-right { display: flex; flex-direction: column; gap: 16px; }
+    .g-field { display: flex; flex-direction: column; gap: 6px; }
+    .g-label { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.4); }
+    .g-input, .g-textarea {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 3px; color: #fff;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 14px; padding: 12px 16px;
+      outline: none; transition: border-color 180ms; width: 100%;
+    }
+    .g-input::placeholder, .g-textarea::placeholder { color: rgba(255,255,255,0.25); }
+    .g-input:focus, .g-textarea:focus { border-color: rgba(255,255,255,0.4); }
+    .g-textarea { resize: vertical; min-height: 120px; }
+    .g-submit {
+      margin-top: 8px; height: 48px; padding: 0 28px;
+      background: #fff; color: #000; border-radius: 3px;
+      font-size: 13px; font-weight: 700; letter-spacing: 0.06em;
+      text-transform: uppercase; font-family: 'Plus Jakarta Sans', sans-serif;
+      cursor: pointer; border: none; align-self: flex-start;
+      transition: opacity 180ms;
+    }
+    .g-submit:hover { opacity: 0.8; }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 768px) {
+      #pod-hero { padding: 60px 6% 48px; }
+      #pod-hero-title { margin-bottom: 28px; }
+      #pod-hero-row { flex-direction: column; align-items: flex-start; }
+      #episodes-section { padding: 0 6%; }
+      .ep-row { grid-template-columns: 32px 1fr; }
+      .ep-duration { display: none; }
+      #about-show { grid-template-columns: 1fr; gap: 40px; padding: 60px 6%; }
+      #guest-inner { grid-template-columns: 1fr; gap: 40px; }
+      #guest-section { padding: 60px 6%; }
+    }
+  </style>
+</head>
+<body class="page-top">
+
+  <!-- nav + footer injected by components.js -->
+
+  <!-- ─── HERO ─── -->
+  <section id="pod-hero">
+    <div id="pod-hero-label">The Podcast</div>
+    <div id="pod-hero-title">Untold</div>
+    <div id="pod-hero-row">
+      <p id="pod-hero-desc">Words unspoken. Thoughts to explore. Long-form conversations with researchers, explorers, and thinkers — following curiosity wherever it leads.</p>
+      <div id="pod-platforms">
+        <button class="plat-btn" onclick="window.open('https://open.spotify.com/show/5FGKcMKTWyOAPTgkGNxATB','_blank')">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+          Spotify
+        </button>
+        <button class="plat-btn" onclick="window.open('https://podcasts.apple.com/co/podcast/untold/id1881240541','_blank')">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm0 4.5c2.21 0 4 1.79 4 4 0 1.48-.81 2.77-2 3.46V13c0 .55-.45 1-1 1h-2c-.55 0-1-.45-1-1v-1.04C8.81 11.27 8 9.98 8 8.5c0-2.21 1.79-4 4-4zm-1 11h2v1.5c.7.32 1.2.95 1.36 1.71l.14.79H9.5l.14-.79c.16-.76.66-1.39 1.36-1.71V15.5z"/></svg>
+          Apple Podcasts
+        </button>
+        <button class="plat-btn" onclick="window.open('https://youtube.com/@nicolasvacagr','_blank')">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+          YouTube
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── EPISODES ─── -->
+  <section id="episodes-section">
+    <div class="eps-header">
+      <span class="eps-header-title">All Episodes</span>
+      <span class="eps-header-count" id="eps-count">Loading…</span>
+    </div>
+    <div id="eps-list">
+      <div id="eps-loading">Fetching episodes…</div>
+    </div>
+  </section>
+
+  <!-- ─── ABOUT THE SHOW ─── -->
+  <section id="about-show">
+    <div id="about-show-left">
+      <div class="show-label">About the Show</div>
+      <div class="show-heading">The quiet engine behind Untold</div>
+      <p class="show-para">André Gide once wrote: "Everything that needs to be said has already been said. But since no one was listening, everything must be said again." That is what drives this show.</p>
+      <p class="show-para">I started it because I kept coming across ideas that deserved a bigger audience — research buried in papers, questions people should ask themselves but aren't, stories that never made it to the mainstream.</p>
+      <p class="show-para">The format is simple: long-form, unscripted. No agenda. Just following the conversation wherever it goes.</p>
+    </div>
+    <div id="about-show-right">
+      <div class="show-quote">"In the minds of geniuses, we find our own neglected thoughts."</div>
+      <div class="show-quote-attr">— Ralph Waldo Emerson</div>
+      <p class="show-para" style="margin-top:16px;">My audience are the people who, when they encounter something interesting, immediately want to note it down, dive deeper, and share it with the people they care about. If that sounds like you, you are in the right place.</p>
+    </div>
+  </section>
+
+  <!-- ─── GUEST FORM ─── -->
+  <section id="guest-section">
+    <div id="guest-inner">
+      <div id="guest-left">
+        <div class="guest-label">Be a Guest</div>
+        <div class="guest-heading">Is your story worth telling?</div>
+        <p class="guest-para">Is your approach to life unconventional? Have an idea to expose to the world? You do not need a big following. If it is interesting, we can speak about it. Dare to fill out the form — you might just be my new favourite conversation.</p>
+      </div>
+      <form id="guest-right" onsubmit="handleGuestSubmit(event)">
+        <div class="g-field">
+          <label class="g-label" for="g-name">Your Name</label>
+          <input class="g-input" type="text" id="g-name" placeholder="Nicolas Vaca" required>
+        </div>
+        <div class="g-field">
+          <label class="g-label" for="g-email">Email</label>
+          <input class="g-input" type="email" id="g-email" placeholder="you@example.com" required>
+        </div>
+        <div class="g-field">
+          <label class="g-label" for="g-topic">What's your story / idea?</label>
+          <textarea class="g-textarea" id="g-topic" placeholder="Tell me what you'd like to talk about…" required></textarea>
+        </div>
+        <div class="g-field">
+          <label class="g-label" for="g-link">Link (optional)</label>
+          <input class="g-input" type="url" id="g-link" placeholder="https://yoursite.com">
+        </div>
+        <button class="g-submit" type="submit" id="g-btn">Send it →</button>
+      </form>
+    </div>
+  </section>
+
+  <script>window.PAGE_LIGHT_SECTIONS = ['pod-hero', 'episodes-section', 'about-show'];</script>
+  <script src="components.js"></script>
+  <script>
+    /* ─── LOAD EPISODES FROM RSS ─── */
+    async function loadEpisodes() {
+      const list    = document.getElementById('eps-list');
+      const counter = document.getElementById('eps-count');
+      const rssUrl  = 'https://anchor.fm/s/10e8379bc/podcast/rss';
+      const proxies = [
+        u => 'https://corsproxy.io/?url=' + encodeURIComponent(u),
+        u => 'https://api.allorigins.win/raw?url=' + encodeURIComponent(u),
+      ];
+
+      let xml = null;
+      for (const p of proxies) {
+        try {
+          const res = await fetch(p(rssUrl), { signal: AbortSignal.timeout(7000) });
+          if (!res.ok) continue;
+          const doc = new DOMParser().parseFromString(await res.text(), 'text/xml');
+          if (doc.querySelector('item')) { xml = doc; break; }
+        } catch { continue; }
+      }
+
+      if (!xml) {
+        list.innerHTML = '<div style="padding:48px 0;color:rgba(0,0,0,0.35);font-size:14px;">Could not load episodes. <a href="https://open.spotify.com/show/5FGKcMKTWyOAPTgkGNxATB" target="_blank" style="color:#000;text-decoration:underline;">Listen on Spotify →</a></div>';
+        counter.textContent = '';
+        return;
+      }
+
+      const items = Array.from(xml.querySelectorAll('item'));
+      counter.textContent = items.length + ' episodes';
+
+      list.innerHTML = items.map((item, i) => {
+        const title   = item.querySelector('title')?.textContent?.trim() ?? 'Untitled';
+        const link    = item.querySelector('enclosure')?.getAttribute('url') ?? item.querySelector('link')?.textContent?.trim() ?? '#';
+        const pub     = item.querySelector('pubDate')?.textContent ?? '';
+        const date    = pub ? new Date(pub).toLocaleDateString('en-GB', { day:'numeric', month:'short', year:'numeric' }) : '';
+        const rawDur  = item.getElementsByTagName('itunes:duration')[0]?.textContent?.trim() ?? '';
+        const dur     = formatDuration(rawDur);
+        const cats    = Array.from(item.getElementsByTagName('itunes:category')).map(c => c.getAttribute('text')).filter(Boolean).slice(0,2);
+
+        return `<div class="ep-row" onclick="window.open('${link}','_blank')">
+          <span class="ep-num">${String(items.length - i).padStart(2,'0')}</span>
+          <div class="ep-info">
+            <span class="ep-title">${title}</span>
+            <div class="ep-meta">
+              <span class="ep-date">${date}</span>
+              ${cats.length ? `<div class="ep-tags">${cats.map(c=>`<span class="ep-tag">${c}</span>`).join('')}</div>` : ''}
+            </div>
+          </div>
+          <span class="ep-duration">${dur}</span>
+        </div>`;
+      }).join('');
+    }
+
+    function formatDuration(raw) {
+      if (!raw) return '';
+      if (raw.includes(':')) {
+        const parts = raw.split(':').map(Number);
+        if (parts.length === 3) return `${parts[0]}h ${String(parts[1]).padStart(2,'0')}m`;
+        if (parts.length === 2) return `${parts[0]}m`;
+        return raw;
+      }
+      const secs = parseInt(raw);
+      if (isNaN(secs)) return raw;
+      const h = Math.floor(secs / 3600);
+      const m = Math.floor((secs % 3600) / 60);
+      return h > 0 ? `${h}h ${String(m).padStart(2,'0')}m` : `${m}m`;
+    }
+
+    loadEpisodes();
+
+    /* ─── GUEST FORM ─── */
+    function handleGuestSubmit(e) {
+      e.preventDefault();
+      const btn = document.getElementById('g-btn');
+      btn.textContent = 'Sending…';
+      btn.disabled = true;
+      setTimeout(() => {
+        btn.textContent = 'Sent ✓';
+        setTimeout(() => { btn.textContent = 'Send it →'; btn.disabled = false; }, 3000);
+      }, 1200);
+    }
+  </script>
+</body>
+</html>
