@@ -48,12 +48,28 @@
     .plat-btn:hover { background: rgba(255,255,255,0.2); border-color: rgba(255,255,255,0.5); }
     .plat-btn svg { width: 14px; height: 14px; flex-shrink: 0; }
 
+    /* ─── SHARED SECTION TITLE STYLE ─── */
+    .section-label {
+      font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+      color: rgba(0,0,0,0.35); font-family: 'Fragment Mono', monospace;
+      margin-bottom: 4px;
+    }
+    .section-title {
+      font-size: 28px; font-weight: 800; letter-spacing: -0.03em;
+      color: #000; text-transform: none;
+    }
+
     /* ─── FEATURED PREVIEW ─── */
     #pod-featured { background: #fff; color: #1a1a1a; padding: 80px 8%; }
-    .pod-feat-header { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 32px; flex-wrap: wrap; gap: 12px; }
-    .pod-feat-label { font-size: 11px; letter-spacing: 0.32em; text-transform: uppercase; color: rgba(0,0,0,0.35); margin-bottom: 4px; font-family: 'Fragment Mono', monospace; }
-    .pod-feat-title { font-size: clamp(44px, 7vw, 80px); font-weight: 900; letter-spacing: 0.22em; text-transform: uppercase; line-height: 0.88; }
-    .pod-feat-cta { font-size: 13px; font-weight: 600; border-bottom: 1px solid rgba(0,0,0,0.18); padding-bottom: 2px; transition: opacity 180ms; cursor: pointer; }
+    .pod-feat-header {
+      display: flex; align-items: flex-end; justify-content: space-between;
+      margin-bottom: 32px; flex-wrap: wrap; gap: 12px;
+    }
+    .pod-feat-cta {
+      font-size: 13px; font-weight: 600;
+      border-bottom: 1px solid rgba(0,0,0,0.18); padding-bottom: 2px;
+      transition: opacity 180ms; cursor: pointer; color: #000; text-decoration: none;
+    }
     .pod-feat-cta:hover { opacity: 0.5; }
     .pod-feat-divider { width: 100%; height: 1px; background: rgba(0,0,0,0.09); border: none; margin: 0; }
     .pod-feat-grid { display: grid; grid-template-columns: 1fr 1fr; align-items: start; }
@@ -79,8 +95,6 @@
     #episodes-section { padding: 60px 0 0; }
     .eps-header { display: flex; align-items: flex-end; justify-content: space-between; padding: 0 8% 28px; }
     .eps-header-left { display: flex; flex-direction: column; gap: 4px; }
-    .eps-label { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(0,0,0,0.35); font-family: 'Fragment Mono', monospace; }
-    .eps-title { font-size: 28px; font-weight: 800; letter-spacing: -0.03em; color: #000; }
     .eps-nav { display: flex; gap: 8px; }
     .eps-arrow {
       width: 40px; height: 40px; border-radius: 50%;
@@ -123,10 +137,8 @@
     /* ─── ABOUT THE SHOW ─── */
     #about-show { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; padding: 80px 8%; border-top: 1px solid rgba(0,0,0,0.09); margin-top: 20px; }
     #about-show-left { display: flex; flex-direction: column; gap: 24px; }
-    .show-label { font-size: 11px; letter-spacing: 0.32em; text-transform: uppercase; color: rgba(0,0,0,0.35); font-family: 'Fragment Mono', monospace; }
-    .show-heading { font-size: clamp(28px, 3.5vw, 48px); font-weight: 900; letter-spacing: -0.03em; line-height: 1.05; color: #000; }
-    .show-para { font-size: clamp(15px, 1.3vw, 18px); line-height: 1.75; color: rgba(0,0,0,0.5); }
     #about-show-right { display: flex; flex-direction: column; gap: 20px; padding-top: 8px; }
+    .show-para { font-size: clamp(15px, 1.3vw, 18px); line-height: 1.75; color: rgba(0,0,0,0.5); }
     .show-quote { font-size: clamp(17px, 1.8vw, 24px); font-weight: 700; line-height: 1.35; letter-spacing: -0.02em; color: #000; font-style: italic; border-left: 3px solid #000; padding-left: 20px; }
     .show-quote-attr { font-size: 13px; color: rgba(0,0,0,0.38); padding-left: 23px; }
 
@@ -195,11 +207,9 @@
   <section id="pod-featured">
     <div class="pod-feat-header">
       <div>
-        <div class="pod-feat-label">Motivation</div>
-        <div class="pod-feat-title">Podcast Preview</div>
+        <div class="section-label">Motivation</div>
+        <div class="section-title">Podcast Preview</div>
       </div>
-      <a href="#episodes-section" class="pod-feat-cta">All Episodes ↓</a>
-  </div>
       <a href="#episodes-section" class="pod-feat-cta">All Episodes ↓</a>
     </div>
     <hr class="pod-feat-divider">
@@ -209,14 +219,14 @@
           <div style="position:absolute;inset:0;background:#e0e0e0;display:flex;align-items:center;justify-content:center;color:rgba(0,0,0,0.2);font-size:13px;letter-spacing:0.1em;text-transform:uppercase;font-family:'Fragment Mono',monospace;">Podcast Preview</div>
           <div class="pod-play-overlay">
             <button class="pod-play-btn" aria-label="Play preview"
-              onclick="this.closest('.pod-video-wrap').innerHTML='<iframe src=\'https://www.youtube.com/embed/Jyq0goeYNwg?rel=0&autoplay=1\' frameborder=\'0\' allow=\'autoplay;encrypted-media\' allowfullscreen style=\'position:absolute;inset:0;width:100%;height:100%;\'></iframe>'">
+              onclick="this.closest('.pod-video-wrap').innerHTML='<iframe src=\'https://www.youtube.com/embed/Jyq0goeYNwg?rel=0&autoplay=1&modestbranding=1\' frameborder=\'0\' allow=\'autoplay;encrypted-media\' allowfullscreen style=\'position:absolute;inset:0;width:100%;height:100%;\'></iframe>'">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
             </button>
           </div>
         </div>
-        <div class="pod-ep-label">Podcast Preview</div>
-        <div class="pod-ep-title">Untold: An Introduction</div>
-        <div class="pod-ep-meta">What Untold is, and why I started it!</div>
+        <div class="pod-preview-label">Podcast Preview</div>
+        <div class="pod-preview-title">Untold — An Introduction</div>
+        <div class="pod-preview-meta">What is Untold, and why did I start it?</div>
         <div class="pod-plat-links">
           <button class="pod-plat-link" onclick="window.open('https://open.spotify.com/show/5FGKcMKTWyOAPTgkGNxATB','_blank')">→ Spotify</button>
           <button class="pod-plat-link" onclick="window.open('https://podcasts.apple.com/co/podcast/untold/id1881240541','_blank')">→ Apple Podcasts</button>
@@ -235,8 +245,8 @@
   <section id="episodes-section">
     <div class="eps-header">
       <div class="eps-header-left">
-        <div class="eps-label">All Episodes</div>
-        <div class="eps-title">Latest Conversations</div>
+        <div class="section-label">All Episodes</div>
+        <div class="section-title">Latest Conversations</div>
       </div>
       <div class="eps-nav">
         <button class="eps-arrow" id="reel-prev" aria-label="Previous">&#8592;</button>
@@ -257,9 +267,9 @@
   <!-- ─── ABOUT THE SHOW ─── -->
   <section id="about-show">
     <div id="about-show-left">
-      <div class="show-label">About the Show</div>
-      <div class="show-heading">The quiet engine behind Untold</div>
-      <p class="show-para">André Gide once wrote: "Everything that needs to be said has already been said. But since no one was listening, everything must be said again." That is what drives this show.</p>
+      <div class="section-label">About the Show</div>
+      <div class="section-title">The quiet engine behind Untold</div>
+      <p class="show-para" style="margin-top:12px;">André Gide once wrote: "Everything that needs to be said has already been said. But since no one was listening, everything must be said again." That is what drives this show.</p>
       <p class="show-para">I started it because I kept coming across ideas that deserved a bigger audience — research buried in papers, questions people should ask themselves but aren't, stories that never made it to the mainstream.</p>
       <p class="show-para">The format is simple: long-form, unscripted. No agenda. Just following the conversation wherever it goes.</p>
     </div>
@@ -292,9 +302,8 @@
   <script>window.PAGE_DARK_SECTIONS = ['guest-section'];</script>
   <script src="components.js"></script>
   <script>
-    /* Start fetching immediately — before DOM interaction */
-    const RSS_URL   = 'https://anchor.fm/s/10e8379bc/podcast/rss';
-    const TIMEOUT   = 3000;
+    const RSS_URL  = 'https://anchor.fm/s/10e8379bc/podcast/rss';
+    const TIMEOUT  = 3000;
     const rawProxies = [
       'https://corsproxy.io/?url=' + encodeURIComponent(RSS_URL),
       'https://api.allorigins.win/raw?url=' + encodeURIComponent(RSS_URL),
@@ -319,7 +328,6 @@
         .catch(() => null)
     );
 
-    /* ─── REEL ARROWS ─── */
     const reel = document.getElementById('eps-reel');
     document.getElementById('reel-next').addEventListener('click', () => {
       const cardW = (reel.querySelector('.ep-card')?.offsetWidth || 280) + 16;
@@ -336,7 +344,6 @@
       loading.style.display = 'none';
 
       let items = null;
-
       if (result?.type === 'xml') {
         items = Array.from(result.els).map(item => ({
           title:    item.querySelector('title')?.textContent?.trim() ?? 'Untitled',
@@ -358,10 +365,7 @@
         }));
       }
 
-      if (!items) {
-        document.getElementById('spotify-fallback').style.display = 'block';
-        return;
-      }
+      if (!items) { document.getElementById('spotify-fallback').style.display = 'block'; return; }
 
       const isPreview = ep => /preview/i.test(ep.title);
       const realEps   = items.filter(ep => !isPreview(ep));
