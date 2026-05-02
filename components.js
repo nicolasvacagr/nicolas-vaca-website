@@ -64,21 +64,18 @@
   document.body.insertAdjacentHTML('afterbegin', navHTML);
   document.body.insertAdjacentHTML('beforeend', footerHTML);
 
-  // ── NAV SCROLL BEHAVIOUR (inner pages) ──
-  // Pill starts visible. Flips to light theme over white sections.
+  // ── NAV SCROLL BEHAVIOUR ──
   const navEl = document.getElementById('nav');
   const lightSections = ['contact']; // footer is always light
   let ticking = false;
 
   function getNavTheme() {
     const mid = window.scrollY + 30;
-    // Check for any light-bg sections the page defines
     const pageLightSections = (window.PAGE_LIGHT_SECTIONS || []).concat(lightSections);
     for (const id of pageLightSections) {
       const el = document.getElementById(id);
       if (el && mid >= el.offsetTop && mid < el.offsetTop + el.offsetHeight) return 'light';
     }
-    // Check for any dark-bg sections the page defines
     const pageDarkSections = window.PAGE_DARK_SECTIONS || [];
     for (const id of pageDarkSections) {
       const el = document.getElementById(id);
@@ -101,7 +98,6 @@
   updateNav();
 
   // ── ACTIVE NAV LINK ──
-  // Highlights the current page link in the pill
   const currentPage = window.location.pathname.split('/').pop() || 'index.html';
   document.querySelectorAll('#nav-compact a, #nav-expanded a').forEach(a => {
     if (a.getAttribute('href') === currentPage) {
