@@ -135,15 +135,22 @@
     #spotify-fallback { display: none; padding: 32px 8%; }
 
     /* ─── ABOUT THE SHOW ─── */
-    #about-show { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; padding: 80px 8%; border-top: 1px solid rgba(0,0,0,0.09); margin-top: 20px; }
-    #about-show-left { display: flex; flex-direction: column; gap: 24px; }
-    #about-show-right { display: flex; flex-direction: column; gap: 20px; padding-top: 8px; }
-    .show-para { font-size: clamp(15px, 1.3vw, 18px); line-height: 1.75; color: rgba(0,0,0,0.5); }
-    .show-quote { font-size: clamp(17px, 1.8vw, 24px); font-weight: 700; line-height: 1.35; letter-spacing: -0.02em; color: #000; font-style: italic; border-left: 3px solid #000; padding-left: 20px; }
-    .show-quote-attr { font-size: 13px; color: rgba(0,0,0,0.38); padding-left: 23px; }
+    #about-show { border-top: 1px solid rgba(0,0,0,0.09); margin-top: 20px; background: #000; color: #fff; }
+    .about-row-1 { display: grid; grid-template-columns: 1fr 1fr; min-height: 520px; }
+    .about-img-main { position: relative; overflow: hidden; }
+    .about-img-main img { width: 100%; height: 100%; object-fit: cover; object-position: center top; display: block; filter: grayscale(100%); }
+    .about-text-main { padding: 72px 8%; display: flex; flex-direction: column; justify-content: center; gap: 28px; }
+    .about-text-main .section-label { color: rgba(255,255,255,0.35); }
+    .show-para-dark { font-size: clamp(15px, 1.3vw, 18px); line-height: 1.75; color: rgba(255,255,255,0.5); }
+    .about-row-2 { display: grid; grid-template-columns: 1fr 1fr 1fr; border-top: 1px solid rgba(255,255,255,0.08); }
+    .about-img-sm { position: relative; overflow: hidden; aspect-ratio: 3/4; border-right: 1px solid rgba(255,255,255,0.08); }
+    .about-img-sm:last-child { border-right: none; }
+    .about-img-sm img { width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; filter: grayscale(100%); transition: transform 600ms ease, filter 400ms ease; }
+    .about-img-sm:hover img { transform: scale(1.04); filter: grayscale(0%); }
+    .about-img-sm-caption { position: absolute; bottom: 0; left: 0; right: 0; padding: 20px 20px 16px; background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 100%); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.5); font-family: 'Fragment Mono', monospace; }
 
     /* ─── GUEST FORM ─── */
-    #guest-section { background: #000; color: #fff; padding: 80px 8%; }
+    #guest-section { background: #000; color: #fff; padding: 80px 8%; border-top: 1px solid rgba(255,255,255,0.08); }
     #guest-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
     #guest-left { display: flex; flex-direction: column; gap: 20px; }
     .guest-label { font-size: 11px; letter-spacing: 0.32em; text-transform: uppercase; color: rgba(255,255,255,0.4); font-family: 'Fragment Mono', monospace; }
@@ -161,17 +168,31 @@
 
     /* ─── RESPONSIVE ─── */
     @media (max-width: 1100px) { .ep-card { flex: 0 0 clamp(220px, 28vw, 280px); } }
-    @media (max-width: 900px)  { .ep-card { flex: 0 0 72vw; } .pod-feat-grid { grid-template-columns: 1fr; } .pod-feat-left { border-right: none; border-bottom: 1px solid rgba(0,0,0,0.09); padding: 28px 0; } .pod-feat-right { padding: 28px 0 0; } }
+    @media (max-width: 900px) {
+      .ep-card { flex: 0 0 72vw; }
+      .pod-feat-grid { grid-template-columns: 1fr; }
+      .pod-feat-left { border-right: none; border-bottom: 1px solid rgba(0,0,0,0.09); padding: 28px 0; }
+      .pod-feat-right { padding: 28px 0 0; }
+      .about-row-1 { grid-template-columns: 1fr; }
+      .about-img-main { min-height: 380px; }
+      .about-row-2 { grid-template-columns: 1fr 1fr; }
+      .about-img-sm:nth-child(2) { border-right: none; }
+      .about-img-sm:nth-child(3) { grid-column: 1 / -1; border-right: none; border-top: 1px solid rgba(255,255,255,0.08); aspect-ratio: 16/9; }
+      #guest-inner { grid-template-columns: 1fr; gap: 40px; }
+      #guest-section { padding: 60px 6%; }
+    }
     @media (max-width: 768px) {
       #pod-hero-text { right: 5%; left: 5%; width: auto; text-align: left; }
       #pod-platforms { justify-content: flex-start; }
       .ep-card { flex: 0 0 84vw; }
       #eps-reel { padding: 24px 6% 32px; }
-      #about-show { grid-template-columns: 1fr; gap: 40px; padding: 60px 6%; }
-      #guest-inner { grid-template-columns: 1fr; gap: 40px; }
-      #guest-section { padding: 60px 6%; }
       .eps-header { padding: 0 6% 28px; }
       #pod-featured { padding: 60px 6%; }
+    }
+    @media (max-width: 600px) {
+      .about-row-2 { grid-template-columns: 1fr; }
+      .about-img-sm { border-right: none; border-top: 1px solid rgba(255,255,255,0.08); aspect-ratio: 4/3; }
+      .about-text-main { padding: 48px 6%; }
     }
   </style>
 </head>
@@ -266,17 +287,33 @@
 
   <!-- ─── ABOUT THE SHOW ─── -->
   <section id="about-show">
-    <div id="about-show-left">
-      <div class="section-label">About the Show</div>
-      <div class="section-title">The quiet engine behind Untold</div>
-      <p class="show-para" style="margin-top:12px;">André Gide once wrote: "Everything that needs to be said has already been said. But since no one was listening, everything must be said again." That is what drives this show.</p>
-      <p class="show-para">I started it because I kept coming across ideas that deserved a bigger audience — research buried in papers, questions people should ask themselves but aren't, stories that never made it to the mainstream.</p>
-      <p class="show-para">The format is simple: long-form, unscripted. No agenda. Just following the conversation wherever it goes.</p>
+    <div class="about-row-1">
+      <div class="about-img-main">
+        <img src="images/cool-fixing-glases-close-up" alt="Nicolas Vaca">
+      </div>
+      <div class="about-text-main">
+        <div>
+          <div class="section-label">About the Show</div>
+          <div class="section-title" style="color:#fff;">The quiet engine behind Untold</div>
+        </div>
+        <p class="show-para-dark">André Gide once wrote: "Everything that needs to be said has already been said. But since no one was listening, everything must be said again." That is what drives this show.</p>
+        <p class="show-para-dark">I started it because I kept coming across ideas that deserved a bigger audience — research buried in papers, questions people should ask themselves but aren't, stories that never made it to the mainstream.</p>
+        <p class="show-para-dark">The format is simple: long-form, unscripted. No agenda. Just following the conversation wherever it goes.</p>
+      </div>
     </div>
-    <div id="about-show-right">
-      <div class="show-quote">"In the minds of geniuses, we find our own neglected thoughts."</div>
-      <div class="show-quote-attr">— Ralph Waldo Emerson</div>
-      <p class="show-para" style="margin-top:16px;">My audience are the people who, when they encounter something interesting, immediately want to note it down, dive deeper, and share it with the people they care about. If that sounds like you, you are in the right place.</p>
+    <div class="about-row-2">
+      <div class="about-img-sm">
+        <img src="images/cool-fixing-glases-close-up" alt="Nicolas Vaca">
+        <div class="about-img-sm-caption">The Host</div>
+      </div>
+      <div class="about-img-sm">
+        <img src="images/cap-vertical-fixing-cap" alt="Nicolas Vaca">
+        <div class="about-img-sm-caption">One conversation at a time</div>
+      </div>
+      <div class="about-img-sm">
+        <img src="images/cheeky-look" alt="Nicolas Vaca">
+        <div class="about-img-sm-caption">Untold</div>
+      </div>
     </div>
   </section>
 
@@ -298,8 +335,8 @@
     </div>
   </section>
 
-  <script>window.PAGE_LIGHT_SECTIONS = ['pod-featured', 'episodes-section', 'about-show'];</script>
-  <script>window.PAGE_DARK_SECTIONS = ['guest-section'];</script>
+  <script>window.PAGE_LIGHT_SECTIONS = ['pod-featured', 'episodes-section'];</script>
+  <script>window.PAGE_DARK_SECTIONS = ['about-show', 'guest-section'];</script>
   <script src="components.js"></script>
   <script>
     const RSS_URL  = 'https://anchor.fm/s/10e8379bc/podcast/rss';
