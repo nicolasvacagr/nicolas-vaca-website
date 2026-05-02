@@ -11,14 +11,14 @@
       <a href="about.html">ABOUT</a>
       <a href="podcast.html">PODCAST</a>
       <a href="thoughts.html">THOUGHTS</a>
-      <a href="index.html#contact">CONTACT</a>
+      <a href="contact.html">CONTACT</a>
     </div>
     <div id="nav-compact">
       <a href="index.html">NICOLAS VACA</a>
       <a href="about.html">ABOUT</a>
       <a href="podcast.html">PODCAST</a>
       <a href="thoughts.html">THOUGHTS</a>
-      <a href="index.html#contact">CONTACT</a>
+      <a href="contact.html">CONTACT</a>
     </div>
   </nav>`;
 
