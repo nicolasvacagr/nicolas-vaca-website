@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About — Nicolas Vaca</title>
+  <link rel="stylesheet" href="shared.css">
+  <style>
+    body { background: #fff; color: #1a1a1a; }
+
+    /* ─── HERO ─── */
+    #about-hero {
+      position: relative; width: 100%; height: 100vh; min-height: 500px;
+      overflow: hidden; background: #111;
+    }
+    .hero-slide {
+      position: absolute; inset: 0;
+      opacity: 0; transition: opacity 1200ms ease;
+      z-index: 0;
+    }
+    .hero-slide.active { opacity: 1; z-index: 1; }
+    .hero-slide img {
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: center 20%;
+      display: block;
+    }
+    .hero-slide.bw img { filter: grayscale(100%); }
+    #about-hero::after {
+      content: '';
+      position: absolute; inset: 0; z-index: 2;
+      background: linear-gradient(to right, rgba(0,0,0,0.82) 0%, rgba(0,0,0,0.35) 55%, rgba(0,0,0,0.05) 100%);
+      pointer-events: none;
+    }
+    #about-hero-text {
+      position: absolute; top: 50%; left: 8%;
+      transform: translateY(-50%); z-index: 3;
+      display: flex; flex-direction: column; gap: 10px;
+    }
+    #about-hero-label {
+      font-size: 11px; letter-spacing: 0.3em; text-transform: uppercase;
+      color: rgba(255,255,255,0.5); font-family: 'Fragment Mono', monospace;
+      margin-bottom: 6px;
+    }
+    .hero-identity-line {
+      font-size: clamp(44px, 7.5vw, 108px); font-weight: 900;
+      letter-spacing: -0.02em; line-height: 0.9; color: #fff;
+      display: block;
+    }
+    #about-hero-sub {
+      font-size: clamp(13px, 1.2vw, 16px); line-height: 1.75;
+      color: rgba(255,255,255,0.55); margin-top: 16px; max-width: 440px;
+    }
+
+    /* ─── INTRO ─── */
+    #about-intro {
+      padding: 80px 8%;
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 80px; align-items: start;
+      border-bottom: 1px solid rgba(0,0,0,0.08);
+    }
+    #about-intro-left { display: flex; flex-direction: column; gap: 6px; }
+    .section-label {
+      font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+      color: rgba(0,0,0,0.35); font-family: 'Fragment Mono', monospace; margin-bottom: 4px;
+    }
+    .section-title { font-size: 28px; font-weight: 800; letter-spacing: -0.03em; color: #000; }
+    #about-intro-right { display: flex; flex-direction: column; gap: 20px; }
+    #about-intro-right p { font-size: 17px; line-height: 1.85; color: rgba(0,0,0,0.55); }
+
+    /* ─── TIMELINE ─── */
+    #timeline-section { padding: 80px 8% 100px; }
+    #timeline-header { margin-bottom: 60px; }
+    #timeline { position: relative; }
+    #timeline::before {
+      content: ''; position: absolute;
+      left: 120px; top: 0; bottom: 0; width: 1px;
+      background: rgba(0,0,0,0.1);
+    }
+    .tl-entry {
+      display: grid; grid-template-columns: 120px 1fr;
+      gap: 0; margin-bottom: 0; position: relative;
+    }
+    .tl-year-col {
+      display: flex; align-items: flex-start;
+      padding-top: 2px; padding-right: 32px;
+      justify-content: flex-end;
+    }
+    .tl-year {
+      font-size: 13px; font-weight: 700; color: rgba(0,0,0,0.3);
+      font-family: 'Fragment Mono', monospace; letter-spacing: 0.04em;
+      white-space: nowrap;
+    }
+    .tl-body-col {
+      padding-left: 40px; padding-bottom: 52px;
+      border-left: none; position: relative;
+    }
+    .tl-dot {
+      position: absolute; left: -5px; top: 6px;
+      width: 9px; height: 9px; border-radius: 50%;
+      background: #fff; border: 2px solid rgba(0,0,0,0.3);
+      transition: border-color 300ms, background 300ms;
+    }
+    .tl-entry:hover .tl-dot { background: #000; border-color: #000; }
+    .tl-title {
+      font-size: 18px; font-weight: 800; letter-spacing: -0.02em;
+      color: #000; margin-bottom: 8px; line-height: 1.2;
+    }
+    .tl-desc {
+      font-size: 15px; line-height: 1.8; color: rgba(0,0,0,0.5);
+      max-width: 600px;
+    }
+    .tl-image {
+      margin-top: 16px; border-radius: 6px; overflow: hidden;
+      max-width: 420px; aspect-ratio: 4/3; background: #f0f0f0;
+    }
+    .tl-image img {
+      width: 100%; height: 100%; object-fit: cover;
+      object-position: center top; display: block;
+      transition: transform 400ms ease;
+    }
+    .tl-entry:hover .tl-image img { transform: scale(1.03); }
+    .tl-divider {
+      grid-column: 1 / -1;
+      height: 1px; background: rgba(0,0,0,0.06);
+      margin-bottom: 52px;
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 900px) {
+      #about-intro { grid-template-columns: 1fr; gap: 40px; }
+      #timeline::before { left: 72px; }
+      .tl-entry { grid-template-columns: 72px 1fr; }
+      .tl-year { font-size: 11px; }
+    }
+    @media (max-width: 600px) {
+      #about-intro { padding: 60px 6%; }
+      #timeline-section { padding: 60px 6% 80px; }
+      #about-hero-text { left: 6%; right: 6%; }
+      #timeline::before { left: 56px; }
+      .tl-entry { grid-template-columns: 56px 1fr; }
+      .tl-year-col { padding-right: 16px; }
+      .tl-image { max-width: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- nav + footer injected by components.js -->
+
+  <!-- ─── HERO ─── -->
+  <section id="about-hero">
+    <div class="hero-slide active" id="slide-0">
+      <img src="images/hyrox-row" alt="Nicolas Vaca">
+    </div>
+    <div class="hero-slide" id="slide-1">
+      <img src="images/graduation-walk" alt="Nicolas Vaca">
+    </div>
+    <div class="hero-slide" id="slide-2">
+      <img src="images/juan-nico.jpeg" alt="Nicolas Vaca">
+    </div>
+    <div class="hero-slide bw" id="slide-3">
+      <img src="images/young-tennis" alt="Nicolas Vaca">
+    </div>
+    <div id="about-hero-text">
+      <div id="about-hero-label">Nicolas Vaca</div>
+      <span class="hero-identity-line">Tennis Player.</span>
+      <span class="hero-identity-line">Curious Mind.</span>
+      <span class="hero-identity-line">Podcast Host.</span>
+      <p id="about-hero-sub">Born in Bogotá. Built in Madrid. Driven by curiosity.</p>
+    </div>
+  </section>
+
+  <!-- ─── INTRO ─── -->
+  <section id="about-intro">
+    <div id="about-intro-left">
+      <div class="section-label">Who I am</div>
+      <div class="section-title">A few honest lines.</div>
+    </div>
+    <div id="about-intro-right">
+      <p>I grew up in Bogotá, Colombia, the youngest of five in a loud, loving family. Sport taught me discipline before school did — years on the tennis court shaped how I think about effort, pressure, and what it means to keep going.</p>
+      <p>A move to Mallorca, then Madrid, then a degree in Economics at IE University pulled me toward business and ideas. An internship at AWS turned tech into a career path I hadn't expected. Today I work in the startup ecosystem at Amazon, and host Untold — a podcast about ideas, people, and the questions worth asking out loud.</p>
+      <p>This page is a record of how I got here.</p>
+    </div>
+  </section>
+
+  <!-- ─── TIMELINE ─── -->
+  <section id="timeline-section">
+    <div id="timeline-header">
+      <div class="section-label">From the beginning</div>
+      <div class="section-title">The story so far</div>
+    </div>
+
+    <div id="timeline">
+
+      <!-- 2003 -->
+      <div class="tl-entry">
+        <div class="tl-year-col"><span class="tl-year">2003</span></div>
+        <div class="tl-body-col">
+          <div class="tl-dot"></div>
+          <div class="tl-title">Born in Bogotá, Colombia</div>
+          <div class="tl-desc">Born on the evening of June 14th, Nicolas is the youngest in a big family of five children. His parents, Viviana and Oscar, raised him in Bogotá surrounded by siblings, sport, and a strong sense of family.</div>
+          <div class="tl-image"><img src="images/2003" alt="2003"></div>
+        </div>
+      </div>
+      <div class="tl-divider"></div>
+
+      <!-- 2009 -->
+      <div class="tl-entry">
+        <div class="tl-year-col"><span class="tl-year">2009</span></div>
+        <div class="tl-body-col">
+          <div class="tl-dot"></div>
+          <div class="tl-title">Colegio San Carlos, Bogotá</div>
+          <div class="tl-desc">Starts school at Colegio San Carlos in Bogotá, where he would spend the next eleven years. Raised in a catholic institution, Nicolas learned early the value of discipline, hard work, and community.</div>
+          <div class="tl-image"><img src="images/2009" alt="2009"></div>
+        </div>
+      </div>
+      <div class="tl-divider"></div>
+
+      <!-- 2012–2019 -->
+      <div class="tl-entry">
+        <div class="tl-year-col"><span class="tl-year">2012–2019</span></div>
+        <div class="tl-body-col">
+          <div class="tl-dot"></div>
+          <div class="tl-title">The tennis years</div>
+          <div class="tl-desc">During his late childhood and most of his teens, Nicolas dedicated himself to becoming a better tennis player in his home city of Bogotá. The court was where he spent most of his time — competing, training, and learning what it means to be relentless.</div>
+          <div class="tl-image"><img src="images/2012-1" alt="Tennis 1"></div>
+          <div class="tl-image" style="margin-top:12px;"><img src="images/2012-2" alt="Tennis 2"></div>
+        </div>
+      </div>
+      <div class="tl-divider"></div>
+
+      <!-- 2020–2021 -->
+      <div class="tl-entry">
+        <div class="tl-year-col"><span class="tl-year">2020–2021</span></div>
+        <div class="tl-body-col">
+          <div class="tl-dot"></div>
+          <div class="tl-title">Rafa Nadal Academy, Manacor</div>
+          <div class="tl-desc">Nicolas moves to the small town of Manacor on the Mediterranean island of Mallorca to finish high school and double down on his dream of becoming a professional tennis player at the Rafa Nadal Academy.</div>
+          <div class="tl-image"><img src="images/2020-1" alt="Rafa Nadal Academy 1"></div>
+          <div class="tl-image" style="margin-top:12px;"><img src="images/2020-2" alt="Rafa Nadal Academy 2"></div>
+        </div>
+      </div>
+      <div class="tl-divider"></div>
+
+      <!-- 2021 -->
+      <div class="tl-entry">
+        <div class="tl-year-col"><span class="tl-year">2021</span></div>
+        <div class="tl-body-col">
+          <div class="tl-dot"></div>
+          <div class="tl-title">Economics degree, IE University — Madrid</div>
+          <div class="tl-desc">Decides to stay in Spain to complete his undergraduate studies. He moves to Madrid and begins his Economics degree at IE University — a new chapter, a new city, and a new direction.</div>
+          <div class="tl-image"><img src="images/2021" alt="2021"></div>
+        </div>
+      </div>
+      <div class="tl-divider"></div>
+
+      <!-- 2023 a -->
+      <div class="tl-entry">
+        <div class="tl-year-col"><span class="tl-year">2023</span></div>
+        <div class="tl-body-col">
+          <div class="tl-dot"></div>
+          <div class="tl-title">First race — Half Marathon</div>
+          <div class="tl-desc">Completes his first ever race: a half marathon, finishing in 1:38:49. The first of many finish lines.</div>
+          <div class="tl-image"><img src="images/2023-1" alt="Half Marathon"></div>
+        </div>
+      </div>
+      <div class="tl-divider"></div>
+
+      <!-- 2023 b -->
+      <div class="tl-entry">
+        <div class="tl-year-col"><span class="tl-year">2023</span></div>
+        <div class="tl-body-col">
+          <div class="tl-dot"></div>
+          <div class="tl-title">First job — SP Developments, Miami</div>
+          <div class="tl-desc">Works his first job with Miami-based real estate development company SP Developments, supporting the CEO in daily tasks. His first taste of how business is actually run.</div>
+          <div class="tl-image"><img src="images/2023-2" alt="SP Developments"></div>
+        </div>
+      </div>
+      <div class="tl-divider"></div>
+
+      <!-- 2024 a -->
+      <div class="tl-entry">
+        <div class="tl-year-col"><span class="tl-year">2024</span></div>
+        <div class="tl-body-col">
+          <div class="tl-dot"></div>
+          <div class="tl-title">Copenhagen Marathon — on a whim</div>
+          <div class="tl-desc">Spontaneously runs the Copenhagen Marathon during a weekend visit to friends in Denmark — with essentially no prior training. Classic.</div>
+          <div class="tl-image"><img src="images/2024-1" alt="Copenhagen Marathon"></div>
+        </div>
+      </div>
+      <div class="tl-divider"></div>
+
+      <!-- 2024 b -->
+      <div class="tl-entry">
+        <div class="tl-year-col"><span class="tl-year">2024</span></div>
+        <div class="tl-body-col">
+          <div class="tl-dot"></div>
+          <div class="tl-title">AWS Internship</div>
+          <div class="tl-desc">Spends the summer interning at Amazon Web Services. The corporate and Big Tech world had an unexpected impact on his career direction — making tech a serious option where wealth management and real estate had previously dominated.</div>
+          <div class="tl-image"><img src="images/2024-2" alt="AWS Internship"></div>
+        </div>
+      </div>
+      <div class="tl-divider"></div>
+
+      <!-- 2025 a -->
+      <div class="tl-entry">
+        <div class="tl-year-col"><span class="tl-year">2025</span></div>
+        <div class="tl-body-col">
+          <div class="tl-dot"></div>
+          <div class="tl-title">Hyrox Doubles, Málaga</div>
+          <div class="tl-desc">Competes in a Hyrox doubles race with his best friend and brother Juan in Málaga, Spain. They cross the finish line in 1:01:52.</div>
+          <div class="tl-image"><img src="images/2025-1" alt="Hyrox Málaga"></div>
+        </div>
+      </div>
+      <div class="tl-divider"></div>
+
+      <!-- 2025 b -->
+      <div class="tl-entry">
+        <div class="tl-year-col"><span class="tl-year">2025</span></div>
+        <div class="tl-body-col">
+          <div class="tl-dot"></div>
+          <div class="tl-title">Economics graduate — Dean's List · AWS full time</div>
+          <div class="tl-desc">Graduates from his Economics degree as part of the Dean's List — the top of his class. Transitions directly into a full-time role at Amazon Web Services.</div>
+          <div class="tl-image"><img src="images/2025-2" alt="Graduation"></div>
+        </div>
+      </div>
+      <div class="tl-divider"></div>
+
+      <!-- 2026 -->
+      <div class="tl-entry">
+        <div class="tl-year-col"><span class="tl-year">2026</span></div>
+        <div class="tl-body-col">
+          <div class="tl-dot"></div>
+          <div class="tl-title">Untold — the podcast begins</div>
+          <div class="tl-desc">Starts Untold and realises the things we want from life no one will give us. We need to go for them.</div>
+          <div class="tl-image"><img src="images/2026" alt="Untold Podcast"></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <script>window.PAGE_LIGHT_SECTIONS = ['about-intro', 'timeline-section'];</script>
+  <script>window.PAGE_DARK_SECTIONS = [];</script>
+  <script src="components.js"></script>
+  <script>
+    // ─── HERO SLIDESHOW ───
+    const slides = document.querySelectorAll('.hero-slide');
+    let currentSlide = 0;
+    setInterval(() => {
+      slides[currentSlide].classList.remove('active');
+      currentSlide = (currentSlide + 1) % slides.length;
+      slides[currentSlide].classList.add('active');
+    }, 3000);
+  </script>
+</body>
+</html>
