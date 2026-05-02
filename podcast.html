@@ -99,19 +99,45 @@
     #eps-reel { display: flex; gap: 16px; overflow-x: auto; scroll-behavior: smooth; scrollbar-width: none; -ms-overflow-style: none; padding: 28px 8% 36px; }
     #eps-reel::-webkit-scrollbar { display: none; }
 
-    /* ─── EPISODE CARDS (UPDATED) ─── */
-    .ep-card { flex: 0 0 clamp(260px, 26vw, 360px); background: #fff; border: 1px solid rgba(0,0,0,0.09); border-radius: 8px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); padding: 22px 24px 20px; display: flex; flex-direction: column; gap: 12px; cursor: pointer; transition: box-shadow 200ms, transform 200ms; box-sizing: border-box; }
-    .ep-card:hover { box-shadow: 0 6px 24px rgba(0,0,0,0.11); transform: translateY(-2px); }
-    .ep-card-top { display: flex; align-items: center; gap: 10px; }
-    .ep-thumb { width: 44px; height: 44px; border-radius: 6px; background: #e8e8e8; overflow: hidden; flex-shrink: 0; }
-    .ep-thumb img { width: 100%; height: 100%; object-fit: cover; }
-    .ep-card-meta { display: flex; flex-direction: column; gap: 2px; }
+    /* ─── EPISODE CARDS — SPOTIFY STYLE ─── */
+    .ep-card {
+      flex: 0 0 clamp(200px, 22vw, 280px);
+      background: #fff;
+      border: 1px solid rgba(0,0,0,0.09);
+      border-radius: 10px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+      display: flex; flex-direction: column;
+      cursor: pointer;
+      transition: box-shadow 200ms, transform 200ms;
+      box-sizing: border-box;
+      overflow: hidden;
+    }
+    .ep-card:hover { box-shadow: 0 8px 28px rgba(0,0,0,0.13); transform: translateY(-3px); }
+    .ep-cover {
+      width: 100%; aspect-ratio: 1/1;
+      background: #e8e8e8;
+      overflow: hidden; flex-shrink: 0;
+      position: relative;
+    }
+    .ep-cover img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 400ms ease; }
+    .ep-card:hover .ep-cover img { transform: scale(1.04); }
+    .ep-cover-placeholder {
+      width: 100%; height: 100%;
+      display: flex; align-items: center; justify-content: center;
+      background: #f0f0f0;
+      font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+      color: rgba(0,0,0,0.2); font-family: 'Fragment Mono', monospace;
+    }
+    .ep-body { padding: 16px 18px 14px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
+    .ep-card-meta { display: flex; align-items: center; gap: 8px; }
     .ep-card-num { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(0,0,0,0.35); }
+    .ep-card-dot { width: 3px; height: 3px; border-radius: 50%; background: rgba(0,0,0,0.25); flex-shrink: 0; }
     .ep-card-date { font-size: 11px; color: rgba(0,0,0,0.4); }
-    .ep-card-title { font-size: 15px; font-weight: 700; line-height: 1.35; letter-spacing: -0.01em; color: #000; }
-    .ep-card-desc { font-size: 13px; line-height: 1.6; color: rgba(0,0,0,0.45); display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; flex: 1; }
-    .ep-card-listen { display: flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 700; color: #000; padding-top: 2px; }
+    .ep-card-title { font-size: 14px; font-weight: 700; line-height: 1.35; letter-spacing: -0.01em; color: #000; }
+    .ep-card-desc { font-size: 12px; line-height: 1.6; color: rgba(0,0,0,0.45); display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; flex: 1; }
+    .ep-card-listen { display: flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 700; color: #000; padding-top: 4px; }
     .ep-card-listen svg { width: 11px; height: 11px; }
+
     #eps-loading { padding: 48px 8%; font-size: 12px; color: rgba(0,0,0,0.3); letter-spacing: 0.1em; text-transform: uppercase; font-family: 'Fragment Mono', monospace; }
     #spotify-fallback { display: none; padding: 32px 8%; }
 
@@ -145,9 +171,9 @@
     .g-submit:hover { opacity: 0.8; }
 
     /* ─── RESPONSIVE ─── */
-    @media (max-width: 1100px) { .ep-card { flex: 0 0 clamp(240px, 30vw, 320px); } }
+    @media (max-width: 1100px) { .ep-card { flex: 0 0 clamp(200px, 28vw, 260px); } }
     @media (max-width: 900px) {
-      .ep-card { flex: 0 0 72vw; }
+      .ep-card { flex: 0 0 60vw; }
       .pod-feat-grid { grid-template-columns: 1fr; }
       .pod-feat-left { border-right: none; border-bottom: 1px solid rgba(0,0,0,0.09); padding: 24px 0; }
       .pod-feat-right { padding: 24px 0 0; }
@@ -162,7 +188,7 @@
     @media (max-width: 768px) {
       #pod-hero-text { right: 5%; left: 5%; width: auto; text-align: left; }
       #pod-platforms { justify-content: flex-start; }
-      .ep-card { flex: 0 0 84vw; }
+      .ep-card { flex: 0 0 72vw; }
       #eps-reel { padding: 20px 6% 28px; }
       .eps-header { padding: 0 6% 20px; }
       #pod-featured { padding: 48px 6%; }
@@ -345,11 +371,11 @@
 
     const reel = document.getElementById('eps-reel');
     document.getElementById('reel-next').addEventListener('click', () => {
-      const cardW = (reel.querySelector('.ep-card')?.offsetWidth || 300) + 16;
+      const cardW = (reel.querySelector('.ep-card')?.offsetWidth || 260) + 16;
       reel.scrollBy({ left: cardW * 2, behavior: 'smooth' });
     });
     document.getElementById('reel-prev').addEventListener('click', () => {
-      const cardW = (reel.querySelector('.ep-card')?.offsetWidth || 300) + 16;
+      const cardW = (reel.querySelector('.ep-card')?.offsetWidth || 260) + 16;
       reel.scrollBy({ left: -cardW * 2, behavior: 'smooth' });
     });
 
@@ -391,21 +417,24 @@
         const date    = ep.date ? new Date(ep.date).toLocaleDateString('en-US', { month:'long', day:'numeric', year:'numeric' }) : '';
         const dur     = formatDuration(ep.duration);
         const tmp     = document.createElement('div'); tmp.innerHTML = ep.desc;
-        const excerpt = (tmp.textContent || '').replace(/\s+/g,' ').trim().slice(0, 140);
-        const thumb   = ep.image ? `<img src="${ep.image}" alt="${ep.title}" loading="lazy">` : '';
+        const excerpt = (tmp.textContent || '').replace(/\s+/g,' ').trim().slice(0, 160);
+        const coverImg = ep.image
+          ? `<img src="${ep.image}" alt="${ep.title}" loading="lazy">`
+          : `<div class="ep-cover-placeholder">Untold</div>`;
         return `<div class="ep-card" onclick="window.open('${ep.link}','_blank')">
-          <div class="ep-card-top">
-            <div class="ep-thumb">${thumb}</div>
+          <div class="ep-cover">${coverImg}</div>
+          <div class="ep-body">
             <div class="ep-card-meta">
               <span class="ep-card-num">${epNum}</span>
+              <span class="ep-card-dot"></span>
               <span class="ep-card-date">${date}${dur ? ' · ' + dur : ''}</span>
             </div>
-          </div>
-          <div class="ep-card-title">${ep.title}</div>
-          <div class="ep-card-desc">${excerpt}</div>
-          <div class="ep-card-listen">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-            Listen
+            <div class="ep-card-title">${ep.title}</div>
+            <div class="ep-card-desc">${excerpt}</div>
+            <div class="ep-card-listen">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+              Listen
+            </div>
           </div>
         </div>`;
       }).join('');
