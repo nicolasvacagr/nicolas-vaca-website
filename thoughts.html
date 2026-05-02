@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thoughts — Nicolas Vaca</title>
+  <link rel="stylesheet" href="shared.css">
+  <style>
+    body { background: #fff; color: #1a1a1a; }
+
+    /* ─── HERO ─── */
+    #thoughts-hero {
+      position: relative; width: 100%; height: 100vh; min-height: 500px;
+      overflow: hidden; background: #111;
+    }
+    #thoughts-hero img {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: center 30%;
+    }
+    #thoughts-hero::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(to right, rgba(0,0,0,0.82) 0%, rgba(0,0,0,0.3) 60%, rgba(0,0,0,0.05) 100%);
+      pointer-events: none;
+    }
+    #thoughts-hero-text {
+      position: absolute; top: 50%; left: 8%;
+      transform: translateY(-50%); z-index: 2;
+      width: clamp(280px, 42%, 560px);
+      display: flex; flex-direction: column; gap: 18px;
+    }
+    #thoughts-hero-label { font-size: 11px; letter-spacing: 0.3em; text-transform: uppercase; color: rgba(255,255,255,0.5); font-family: 'Fragment Mono', monospace; }
+    #thoughts-hero-title { font-size: clamp(48px, 8vw, 110px); font-weight: 900; letter-spacing: -0.02em; line-height: 0.9; color: #fff; }
+    #thoughts-hero-desc { font-size: clamp(13px, 1.2vw, 16px); line-height: 1.75; color: rgba(255,255,255,0.6); }
+    #thoughts-hero-cta {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 10px 20px; border-radius: 40px;
+      border: 1px solid rgba(255,255,255,0.3);
+      font-size: 12px; font-weight: 700; color: #fff; letter-spacing: 0.05em;
+      text-transform: uppercase; background: rgba(255,255,255,0.1);
+      backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+      cursor: pointer; transition: background 180ms, border-color 180ms;
+      text-decoration: none; width: fit-content;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    #thoughts-hero-cta:hover { background: rgba(255,255,255,0.2); border-color: rgba(255,255,255,0.6); }
+
+    /* ─── SHARED ─── */
+    .section-label {
+      font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+      color: rgba(0,0,0,0.35); font-family: 'Fragment Mono', monospace; margin-bottom: 4px;
+    }
+    .section-title { font-size: 28px; font-weight: 800; letter-spacing: -0.03em; color: #000; }
+
+    /* ─── FEATURED POST ─── */
+    #featured-post {
+      padding: 60px 8%;
+      border-bottom: 1px solid rgba(0,0,0,0.08);
+    }
+    #featured-post-header {
+      display: flex; align-items: flex-end; justify-content: space-between;
+      margin-bottom: 28px; flex-wrap: wrap; gap: 12px;
+    }
+    .substack-link {
+      font-size: 13px; font-weight: 600;
+      border-bottom: 1px solid rgba(0,0,0,0.18); padding-bottom: 2px;
+      transition: opacity 180ms; color: #000; text-decoration: none;
+    }
+    .substack-link:hover { opacity: 0.5; }
+    #featured-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 0;
+      border: 1px solid rgba(0,0,0,0.09); border-radius: 6px; overflow: hidden;
+    }
+    #featured-image {
+      aspect-ratio: 4/3; overflow: hidden; background: #e8e8e8;
+    }
+    #featured-image img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 500ms ease; }
+    #featured-grid:hover #featured-image img { transform: scale(1.03); }
+    #featured-text {
+      padding: 40px 44px; display: flex; flex-direction: column;
+      justify-content: center; gap: 16px; background: #fff;
+    }
+    #featured-tag {
+      font-size: 11px; font-weight: 600; letter-spacing: 0.14em;
+      text-transform: uppercase; color: rgba(0,0,0,0.35);
+      font-family: 'Fragment Mono', monospace;
+    }
+    #featured-title {
+      font-size: clamp(20px, 2.4vw, 30px); font-weight: 800;
+      letter-spacing: -0.03em; line-height: 1.2; color: #000;
+    }
+    #featured-excerpt {
+      font-size: 15px; line-height: 1.75; color: rgba(0,0,0,0.5);
+    }
+    #featured-meta {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 12px; color: rgba(0,0,0,0.4);
+      font-family: 'Fragment Mono', monospace;
+    }
+    #featured-meta span { display: flex; align-items: center; gap: 4px; }
+    .meta-dot { width: 3px; height: 3px; border-radius: 50%; background: rgba(0,0,0,0.25); }
+    #featured-read {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 12px; font-weight: 700; color: #000; text-decoration: none;
+      letter-spacing: 0.03em; width: fit-content;
+      border-bottom: 1px solid rgba(0,0,0,0.15); padding-bottom: 2px;
+      transition: opacity 180ms;
+    }
+    #featured-read:hover { opacity: 0.5; }
+
+    /* ─── POSTS GRID ─── */
+    #posts-section { padding: 60px 8%; }
+    #posts-header {
+      display: flex; align-items: flex-end; justify-content: space-between;
+      margin-bottom: 32px; flex-wrap: wrap; gap: 12px;
+    }
+    #posts-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px;
+    }
+    .post-card {
+      display: flex; flex-direction: column; gap: 0;
+      border: 1px solid rgba(0,0,0,0.09); border-radius: 8px;
+      overflow: hidden; cursor: pointer; text-decoration: none; color: inherit;
+      transition: box-shadow 200ms, transform 200ms;
+    }
+    .post-card:hover { box-shadow: 0 8px 28px rgba(0,0,0,0.1); transform: translateY(-2px); }
+    .post-card-cover {
+      aspect-ratio: 16/9; overflow: hidden; background: #e8e8e8;
+      flex-shrink: 0;
+    }
+    .post-card-cover img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 400ms ease; }
+    .post-card:hover .post-card-cover img { transform: scale(1.04); }
+    .post-card-cover-placeholder {
+      width: 100%; height: 100%; background: #f2f2f2;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+      color: rgba(0,0,0,0.18); font-family: 'Fragment Mono', monospace;
+    }
+    .post-card-body { padding: 20px 22px 18px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
+    .post-card-meta {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 11px; color: rgba(0,0,0,0.4);
+      font-family: 'Fragment Mono', monospace;
+    }
+    .post-card-title { font-size: 15px; font-weight: 800; line-height: 1.3; letter-spacing: -0.02em; color: #000; }
+    .post-card-excerpt { font-size: 13px; line-height: 1.65; color: rgba(0,0,0,0.45); display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; flex: 1; }
+    .post-card-read { font-size: 12px; font-weight: 700; color: #000; padding-top: 6px; display: flex; align-items: center; gap: 4px; }
+
+    #posts-loading { padding: 40px 0; font-size: 12px; color: rgba(0,0,0,0.3); letter-spacing: 0.1em; text-transform: uppercase; font-family: 'Fragment Mono', monospace; }
+    #posts-empty { display: none; padding: 40px 0; font-size: 14px; color: rgba(0,0,0,0.4); }
+
+    /* ─── RAFA-NICO BREAK ─── */
+    #rafa-break {
+      display: grid; grid-template-columns: 1fr 2fr;
+      border-top: 1px solid rgba(0,0,0,0.08);
+      border-bottom: 1px solid rgba(0,0,0,0.08);
+    }
+    #rafa-img { overflow: hidden; aspect-ratio: 3/4; }
+    #rafa-img img { width: 100%; height: 100%; object-fit: cover; object-position: center top; display: block; filter: grayscale(100%); transition: filter 500ms ease; }
+    #rafa-break:hover #rafa-img img { filter: grayscale(0%); }
+    #rafa-text {
+      padding: 60px 8%; display: flex; flex-direction: column;
+      justify-content: center; gap: 20px; background: #000; color: #fff;
+    }
+    #rafa-text .section-label { color: rgba(255,255,255,0.35); }
+    #rafa-text .section-title { color: #fff; }
+    #rafa-quote {
+      font-size: clamp(16px, 1.8vw, 22px); font-style: italic;
+      line-height: 1.6; color: rgba(255,255,255,0.65); font-weight: 500;
+    }
+    #rafa-quote::before { content: '\201C'; }
+    #rafa-quote::after  { content: '\201D'; }
+    #rafa-attr {
+      font-size: 12px; font-family: 'Fragment Mono', monospace;
+      letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.3);
+    }
+
+    /* ─── SUBSCRIBE ─── */
+    #subscribe-section {
+      background: #000; color: #fff;
+      padding: 80px 8%;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+    #subscribe-inner {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+    }
+    #subscribe-left { display: flex; flex-direction: column; gap: 16px; }
+    #subscribe-left .section-label { color: rgba(255,255,255,0.35); }
+    #subscribe-left .section-title { color: #fff; }
+    #subscribe-left p { font-size: 16px; line-height: 1.8; color: rgba(255,255,255,0.5); }
+    #subscribe-right { display: flex; flex-direction: column; gap: 12px; }
+    #subscribe-form { display: flex; gap: 10px; flex-wrap: wrap; }
+    #sub-email {
+      flex: 1; min-width: 200px; padding: 13px 16px;
+      background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 4px; color: #fff; font-size: 14px;
+      font-family: 'Plus Jakarta Sans', sans-serif; outline: none;
+      transition: border-color 180ms;
+    }
+    #sub-email::placeholder { color: rgba(255,255,255,0.25); }
+    #sub-email:focus { border-color: rgba(255,255,255,0.5); }
+    #sub-btn {
+      padding: 13px 24px; background: #fff; color: #000;
+      border: none; border-radius: 4px; font-size: 12px; font-weight: 700;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      cursor: pointer; transition: opacity 180ms; white-space: nowrap;
+    }
+    #sub-btn:hover { opacity: 0.8; }
+    #sub-note { font-size: 11px; color: rgba(255,255,255,0.25); font-family: 'Fragment Mono', monospace; letter-spacing: 0.05em; }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 1100px) { #posts-grid { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 900px) {
+      #featured-grid { grid-template-columns: 1fr; }
+      #featured-text { padding: 32px; }
+      #posts-grid { grid-template-columns: 1fr 1fr; }
+      #rafa-break { grid-template-columns: 1fr; }
+      #rafa-img { aspect-ratio: 4/3; }
+      #subscribe-inner { grid-template-columns: 1fr; gap: 40px; }
+      #subscribe-section { padding: 60px 6%; }
+    }
+    @media (max-width: 600px) {
+      #posts-grid { grid-template-columns: 1fr; }
+      #featured-post { padding: 48px 6%; }
+      #posts-section { padding: 48px 6%; }
+      #rafa-text { padding: 48px 6%; }
+      #thoughts-hero-text { left: 5%; right: 5%; width: auto; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- nav + footer injected by components.js -->
+
+  <!-- ─── HERO ─── -->
+  <section id="thoughts-hero">
+    <img src="images/deans-list" alt="Thoughts by Nicolas Vaca">
+    <div id="thoughts-hero-text">
+      <div id="thoughts-hero-label">The Writing</div>
+      <div id="thoughts-hero-title">Thoughts</div>
+      <p id="thoughts-hero-desc">Ideas worth writing down. Essays on curiosity, ambition, and the things I keep coming back to.</p>
+      <a id="thoughts-hero-cta" href="https://nicolasvaca.substack.com" target="_blank" rel="noopener">
+        Read on Substack ↗
+      </a>
+    </div>
+  </section>
+
+  <!-- ─── FEATURED POST ─── -->
+  <section id="featured-post">
+    <div id="featured-post-header">
+      <div>
+        <div class="section-label">Editor's pick</div>
+        <div class="section-title">Featured</div>
+      </div>
+      <a class="substack-link" href="https://nicolasvaca.substack.com" target="_blank" rel="noopener">All posts on Substack ↗</a>
+    </div>
+    <div id="featured-grid">
+      <div id="featured-image">
+        <img id="featured-img-el" src="" alt="">
+      </div>
+      <div id="featured-text">
+        <div id="featured-tag">Loading…</div>
+        <div id="featured-title"></div>
+        <div id="featured-excerpt"></div>
+        <div id="featured-meta">
+          <span id="featured-date"></span>
+          <span class="meta-dot"></span>
+          <span id="featured-read-time"></span>
+        </div>
+        <a id="featured-read" href="#" target="_blank" rel="noopener">Read on Substack →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── POSTS GRID ─── -->
+  <section id="posts-section">
+    <div id="posts-header">
+      <div>
+        <div class="section-label">All writing</div>
+        <div class="section-title">Recent Posts</div>
+      </div>
+      <a class="substack-link" href="https://nicolasvaca.substack.com" target="_blank" rel="noopener">View all ↗</a>
+    </div>
+    <div id="posts-grid">
+      <div id="posts-loading">Fetching posts…</div>
+    </div>
+    <div id="posts-empty">Could not load posts. <a href="https://nicolasvaca.substack.com" target="_blank" style="color:#000;font-weight:700;">Read on Substack ↗</a></div>
+  </section>
+
+  <!-- ─── RAFA NICO BREAK ─── -->
+  <div id="rafa-break">
+    <div id="rafa-img">
+      <img src="images/rafa-nico" alt="Nicolas Vaca with Rafael Nadal">
+    </div>
+    <div id="rafa-text">
+      <div>
+        <div class="section-label">On inspiration</div>
+        <div class="section-title">Why I write</div>
+      </div>
+      <p id="rafa-quote">The winner and the loser both had the courage to try. The sidelines are safe, but sterile. Nothing grows there.</p>
+      <div id="rafa-attr">— James Clear</div>
+      <p style="font-size:15px;line-height:1.8;color:rgba(255,255,255,0.45);margin-top:8px;">Writing is how I process what I learn. Every post is an attempt to make a foggy idea sharp enough to share — because if it's worth thinking, it's worth saying.</p>
+    </div>
+  </div>
+
+  <!-- ─── SUBSCRIBE ─── -->
+  <section id="subscribe-section">
+    <div id="subscribe-inner">
+      <div id="subscribe-left">
+        <div>
+          <div class="section-label">Stay in the loop</div>
+          <div class="section-title">Get new posts in your inbox</div>
+        </div>
+        <p>No noise. Just the essays I write, whenever I write them. Unsubscribe anytime.</p>
+      </div>
+      <div id="subscribe-right">
+        <form id="subscribe-form" onsubmit="handleSubscribe(event)">
+          <input type="email" id="sub-email" placeholder="your@email.com" required>
+          <button type="submit" id="sub-btn">Subscribe →</button>
+        </form>
+        <div id="sub-note">Powered by Substack · No spam, ever</div>
+      </div>
+    </div>
+  </section>
+
+  <script>window.PAGE_LIGHT_SECTIONS = ['featured-post', 'posts-section'];</script>
+  <script>window.PAGE_DARK_SECTIONS = ['rafa-break', 'subscribe-section'];</script>
+  <script src="components.js"></script>
+  <script>
+    const SUBSTACK_URL = 'https://nicolasvaca.substack.com';
+    const RSS_URL = SUBSTACK_URL + '/feed';
+    const PROXY_URL = 'https://corsproxy.io/?url=' + encodeURIComponent(RSS_URL);
+    const PROXY2_URL = 'https://api.allorigins.win/raw?url=' + encodeURIComponent(RSS_URL);
+
+    function estimateReadTime(text) {
+      const words = (text || '').replace(/<[^>]*>/g, '').split(/\s+/).length;
+      const mins = Math.max(1, Math.round(words / 220));
+      return mins + ' min read';
+    }
+
+    function parseItems(xmlText) {
+      const doc = new DOMParser().parseFromString(xmlText, 'text/xml');
+      const items = doc.querySelectorAll('item');
+      return Array.from(items).map(item => {
+        const content = item.getElementsByTagName('content:encoded')[0]?.textContent
+          || item.querySelector('description')?.textContent || '';
+        const imgMatch = content.match(/<img[^>]+src=["']([^"']+)["']/);
+        return {
+          title:   item.querySelector('title')?.textContent?.trim() ?? 'Untitled',
+          link:    item.querySelector('link')?.textContent?.trim() ?? SUBSTACK_URL,
+          date:    item.querySelector('pubDate')?.textContent ?? '',
+          excerpt: item.querySelector('description')?.textContent?.replace(/<[^>]*>/g,'').trim().slice(0,180) ?? '',
+          image:   imgMatch ? imgMatch[1] : '',
+          readTime: estimateReadTime(content),
+        };
+      });
+    }
+
+    async function loadPosts() {
+      let items = null;
+      try {
+        const r = await fetch(PROXY_URL, { signal: AbortSignal.timeout(4000) });
+        if (r.ok) items = parseItems(await r.text());
+      } catch (_) {}
+      if (!items) {
+        try {
+          const r = await fetch(PROXY2_URL, { signal: AbortSignal.timeout(4000) });
+          if (r.ok) items = parseItems(await r.text());
+        } catch (_) {}
+      }
+
+      if (!items || !items.length) {
+        document.getElementById('posts-loading').style.display = 'none';
+        document.getElementById('posts-empty').style.display = 'block';
+        setFeaturedFallback();
+        return;
+      }
+
+      setFeatured(items[0]);
+      renderGrid(items.slice(1));
+    }
+
+    function setFeatured(post) {
+      const date = post.date ? new Date(post.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) : '';
+      document.getElementById('featured-tag').textContent = 'Latest post';
+      document.getElementById('featured-title').textContent = post.title;
+      document.getElementById('featured-excerpt').textContent = post.excerpt;
+      document.getElementById('featured-date').textContent = date;
+      document.getElementById('featured-read-time').textContent = post.readTime;
+      document.getElementById('featured-read').href = post.link;
+      const imgEl = document.getElementById('featured-img-el');
+      if (post.image) {
+        imgEl.src = post.image;
+        imgEl.alt = post.title;
+      } else {
+        imgEl.parentElement.innerHTML = '<div style="width:100%;height:100%;background:#f0f0f0;display:flex;align-items:center;justify-content:center;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(0,0,0,0.2);font-family:Fragment Mono,monospace;">Thoughts</div>';
+      }
+      document.getElementById('featured-grid').style.cursor = 'pointer';
+      document.getElementById('featured-grid').onclick = () => window.open(post.link, '_blank');
+    }
+
+    function setFeaturedFallback() {
+      document.getElementById('featured-tag').textContent = 'On Substack';
+      document.getElementById('featured-title').textContent = 'Read my writing on Substack';
+      document.getElementById('featured-excerpt').textContent = 'Essays on curiosity, ambition, startups, and the things worth thinking about.';
+      document.getElementById('featured-read').href = SUBSTACK_URL;
+    }
+
+    function renderGrid(posts) {
+      const grid = document.getElementById('posts-grid');
+      document.getElementById('posts-loading').style.display = 'none';
+      if (!posts.length) { grid.innerHTML = ''; return; }
+      grid.innerHTML = posts.map(post => {
+        const date = post.date ? new Date(post.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : '';
+        const cover = post.image
+          ? `<img src="${post.image}" alt="${post.title}" loading="lazy">`
+          : `<div class="post-card-cover-placeholder">Thoughts</div>`;
+        return `<a class="post-card" href="${post.link}" target="_blank" rel="noopener">
+          <div class="post-card-cover">${cover}</div>
+          <div class="post-card-body">
+            <div class="post-card-meta">
+              <span>${date}</span>
+              <span class="meta-dot" style="display:inline-block;width:3px;height:3px;border-radius:50%;background:rgba(0,0,0,0.25);"></span>
+              <span>${post.readTime}</span>
+            </div>
+            <div class="post-card-title">${post.title}</div>
+            <div class="post-card-excerpt">${post.excerpt}</div>
+            <div class="post-card-read">Read →</div>
+          </div>
+        </a>`;
+      }).join('');
+    }
+
+    function handleSubscribe(e) {
+      e.preventDefault();
+      const email = document.getElementById('sub-email').value;
+      const btn = document.getElementById('sub-btn');
+      btn.textContent = 'Subscribing…'; btn.disabled = true;
+      window.open(`${SUBSTACK_URL}?email=${encodeURIComponent(email)}`, '_blank');
+      setTimeout(() => {
+        btn.textContent = 'Done ✓';
+        setTimeout(() => { btn.textContent = 'Subscribe →'; btn.disabled = false; }, 3000);
+      }, 800);
+    }
+
+    loadPosts();
+  </script>
+</body>
+</html>
