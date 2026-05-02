@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact — Nicolas Vaca</title>
+  <link rel="stylesheet" href="shared.css">
+  <style>
+    body { background: #fff; color: #1a1a1a; }
+
+    /* ─── HERO ─── */
+    #contact-hero {
+      padding: 120px 8% 80px;
+      border-bottom: 1px solid rgba(0,0,0,0.08);
+    }
+    #contact-hero-label {
+      font-size: 11px; letter-spacing: 0.3em; text-transform: uppercase;
+      color: rgba(0,0,0,0.35); font-family: 'Fragment Mono', monospace;
+      margin-bottom: 16px;
+    }
+    #contact-hero-title {
+      font-size: clamp(42px, 7vw, 96px); font-weight: 900;
+      letter-spacing: -0.03em; line-height: 0.92; color: #000;
+      max-width: 700px;
+    }
+
+    /* ─── SHARED ─── */
+    .section-label {
+      font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+      color: rgba(0,0,0,0.35); font-family: 'Fragment Mono', monospace; margin-bottom: 4px;
+    }
+    .section-title {
+      font-size: 28px; font-weight: 800; letter-spacing: -0.03em; color: #000;
+    }
+    .body-text { font-size: 17px; line-height: 1.8; color: rgba(0,0,0,0.5); }
+    .body-text-dark { font-size: 17px; line-height: 1.8; color: rgba(255,255,255,0.5); }
+
+    /* ─── QUOTE ROTATOR ─── */
+    #quote-section {
+      background: #000; color: #fff;
+      padding: 80px 8%;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    #quote-inner {
+      display: grid; grid-template-columns: 1fr 2fr; gap: 80px; align-items: center;
+    }
+    #quote-left { display: flex; flex-direction: column; gap: 24px; }
+    #quote-left .section-label { color: rgba(255,255,255,0.35); }
+    #quote-left .section-title { color: #fff; }
+    #quote-left p { font-size: 14px; line-height: 1.8; color: rgba(255,255,255,0.4); }
+    #quote-nav { display: flex; gap: 10px; align-items: center; }
+    .q-arrow {
+      width: 36px; height: 36px; border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.2); background: transparent;
+      color: rgba(255,255,255,0.6); font-size: 15px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; transition: border-color 180ms, color 180ms;
+    }
+    .q-arrow:hover { border-color: rgba(255,255,255,0.7); color: #fff; }
+    #quote-counter {
+      font-size: 11px; font-family: 'Fragment Mono', monospace;
+      color: rgba(255,255,255,0.3); letter-spacing: 0.1em;
+    }
+    #quote-right { position: relative; min-height: 180px; }
+    #quote-display {
+      display: flex; flex-direction: column; gap: 20px;
+      animation: quoteFadeIn 400ms ease;
+    }
+    @keyframes quoteFadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    #quote-text {
+      font-size: clamp(18px, 2.2vw, 26px); font-weight: 600;
+      line-height: 1.5; letter-spacing: -0.02em; color: #fff;
+      font-style: italic;
+    }
+    #quote-text::before { content: '\201C'; }
+    #quote-text::after  { content: '\201D'; }
+    #quote-author {
+      font-size: 13px; font-weight: 600; letter-spacing: 0.06em;
+      text-transform: uppercase; color: rgba(255,255,255,0.4);
+      font-family: 'Fragment Mono', monospace;
+    }
+    #quote-dots {
+      display: flex; gap: 6px; margin-top: 8px;
+    }
+    .q-dot {
+      width: 5px; height: 5px; border-radius: 50%;
+      background: rgba(255,255,255,0.2); cursor: pointer;
+      transition: background 200ms, transform 200ms;
+    }
+    .q-dot.active { background: #fff; transform: scale(1.3); }
+
+    /* ─── CONTACT GRID ─── */
+    #contact-main {
+      display: grid; grid-template-columns: 1fr 1fr;
+      border-top: 1px solid rgba(0,0,0,0.08);
+    }
+    #contact-left {
+      padding: 60px 8%; border-right: 1px solid rgba(0,0,0,0.08);
+      display: flex; flex-direction: column; gap: 32px;
+    }
+    #contact-right { padding: 60px 8%; display: flex; flex-direction: column; gap: 14px; }
+
+    /* Prompt starters */
+    #prompt-starters { display: flex; flex-direction: column; gap: 8px; }
+    #prompt-starters-label {
+      font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase;
+      color: rgba(0,0,0,0.3); font-family: 'Fragment Mono', monospace;
+      margin-bottom: 4px;
+    }
+    .prompt-btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 9px 14px; border-radius: 40px;
+      border: 1px solid rgba(0,0,0,0.12); background: #fff;
+      font-size: 12px; font-weight: 600; color: rgba(0,0,0,0.55);
+      cursor: pointer; text-align: left; font-family: 'Plus Jakarta Sans', sans-serif;
+      transition: border-color 180ms, color 180ms, background 180ms;
+      width: fit-content;
+    }
+    .prompt-btn:hover { border-color: #000; color: #000; background: #f8f8f8; }
+    .prompt-btn::before { content: '→'; font-size: 11px; color: rgba(0,0,0,0.3); }
+
+    /* Socials */
+    #socials-block { display: flex; flex-direction: column; gap: 10px; }
+    .social-row {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 12px 0; border-bottom: 1px solid rgba(0,0,0,0.07);
+      text-decoration: none; color: #000;
+      transition: opacity 180ms; cursor: pointer;
+    }
+    .social-row:hover { opacity: 0.5; }
+    .social-name { font-size: 14px; font-weight: 700; letter-spacing: -0.01em; }
+    .social-handle { font-size: 12px; color: rgba(0,0,0,0.35); font-family: 'Fragment Mono', monospace; }
+    .social-arrow { font-size: 14px; color: rgba(0,0,0,0.3); }
+
+    /* Email copy */
+    #email-block {
+      display: flex; align-items: center; gap: 10px;
+      padding: 14px 16px; border: 1px solid rgba(0,0,0,0.1);
+      border-radius: 6px; background: #f9f9f9;
+    }
+    #email-addr {
+      font-size: 14px; font-weight: 600; color: #000;
+      font-family: 'Fragment Mono', monospace; flex: 1;
+    }
+    #copy-btn {
+      font-size: 11px; font-weight: 700; letter-spacing: 0.08em;
+      text-transform: uppercase; border: none; background: #000;
+      color: #fff; padding: 6px 12px; border-radius: 4px;
+      cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif;
+      transition: opacity 180ms; flex-shrink: 0;
+    }
+    #copy-btn:hover { opacity: 0.7; }
+
+    /* Form */
+    .g-field { display: flex; flex-direction: column; gap: 6px; }
+    .g-label {
+      font-size: 11px; font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase; color: rgba(0,0,0,0.38);
+    }
+    .g-input, .g-textarea {
+      background: #fff; border: 1px solid rgba(0,0,0,0.12);
+      border-radius: 3px; color: #1a1a1a;
+      font-family: 'Plus Jakarta Sans', sans-serif; font-size: 14px;
+      padding: 11px 14px; outline: none; transition: border-color 180ms;
+      width: 100%; box-sizing: border-box;
+    }
+    .g-input::placeholder, .g-textarea::placeholder { color: rgba(0,0,0,0.25); }
+    .g-input:focus, .g-textarea:focus { border-color: rgba(0,0,0,0.5); }
+    .g-textarea { resize: vertical; min-height: 110px; }
+    .g-submit {
+      margin-top: 6px; height: 44px; padding: 0 24px;
+      background: #000; color: #fff; border-radius: 3px;
+      font-size: 12px; font-weight: 700; letter-spacing: 0.06em;
+      text-transform: uppercase; font-family: 'Plus Jakarta Sans', sans-serif;
+      cursor: pointer; border: none; align-self: flex-start;
+      transition: opacity 180ms;
+    }
+    .g-submit:hover { opacity: 0.7; }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 900px) {
+      #quote-inner { grid-template-columns: 1fr; gap: 40px; }
+      #contact-main { grid-template-columns: 1fr; }
+      #contact-left { border-right: none; border-bottom: 1px solid rgba(0,0,0,0.08); padding: 48px 6%; }
+      #contact-right { padding: 48px 6%; }
+      #contact-hero { padding: 100px 6% 60px; }
+    }
+    @media (max-width: 600px) {
+      #quote-section { padding: 60px 6%; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- nav + footer injected by components.js -->
+
+  <!-- ─── HERO ─── -->
+  <section id="contact-hero">
+    <div id="contact-hero-label">Get in touch</div>
+    <div id="contact-hero-title">Let's talk.</div>
+  </section>
+
+  <!-- ─── QUOTE ROTATOR ─── -->
+  <section id="quote-section">
+    <div id="quote-inner">
+      <div id="quote-left">
+        <div>
+          <div class="section-label">Words that stuck</div>
+          <div class="section-title" style="color:#fff;">Quotes I return to</div>
+        </div>
+        <p>A few lines that have shaped how I think. Click through — one might land differently for you today than it did for me.</p>
+        <div id="quote-nav">
+          <button class="q-arrow" id="q-prev" aria-label="Previous quote">&#8592;</button>
+          <span id="quote-counter">1 / 7</span>
+          <button class="q-arrow" id="q-next" aria-label="Next quote">&#8594;</button>
+        </div>
+        <div id="quote-dots"></div>
+      </div>
+      <div id="quote-right">
+        <div id="quote-display">
+          <div id="quote-text"></div>
+          <div id="quote-author"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── CONTACT MAIN ─── -->
+  <section id="contact-main">
+
+    <!-- LEFT: info + socials -->
+    <div id="contact-left">
+      <div>
+        <div class="section-label">Say hello</div>
+        <div class="section-title">Drop me a line</div>
+      </div>
+
+      <div>
+        <div id="prompt-starters-label">What's on your mind?</div>
+        <div id="prompt-starters">
+          <button class="prompt-btn" data-prompt="I'd love to be a guest on Untold.">I'd love to be a guest on Untold</button>
+          <button class="prompt-btn" data-prompt="I want to talk about startups and the ecosystem.">Let's talk startups</button>
+          <button class="prompt-btn" data-prompt="I have a collaboration idea I'd like to share.">I have a collaboration idea</button>
+          <button class="prompt-btn" data-prompt="I just wanted to reach out and say hi.">Just saying hi</button>
+        </div>
+      </div>
+
+      <div>
+        <div class="section-label" style="margin-bottom:12px;">Email</div>
+        <div id="email-block">
+          <span id="email-addr">nicolas@nicolasvaca.com</span>
+          <button id="copy-btn" onclick="copyEmail()">Copy</button>
+        </div>
+      </div>
+
+      <div>
+        <div class="section-label" style="margin-bottom:4px;">Elsewhere</div>
+        <div id="socials-block">
+          <a class="social-row" href="https://linkedin.com/in/nicolasvacagr" target="_blank">
+            <span class="social-name">LinkedIn</span>
+            <span class="social-handle">nicolasvacagr</span>
+            <span class="social-arrow">↗</span>
+          </a>
+          <a class="social-row" href="https://instagram.com/nicolasvacagr" target="_blank">
+            <span class="social-name">Instagram</span>
+            <span class="social-handle">@nicolasvacagr</span>
+            <span class="social-arrow">↗</span>
+          </a>
+          <a class="social-row" href="https://youtube.com/@nicolasvacagr" target="_blank">
+            <span class="social-name">YouTube</span>
+            <span class="social-handle">@nicolasvacagr</span>
+            <span class="social-arrow">↗</span>
+          </a>
+          <a class="social-row" href="https://open.spotify.com/show/5FGKcMKTWyOAPTgkGNxATB" target="_blank">
+            <span class="social-name">Spotify Podcast</span>
+            <span class="social-handle">Untold</span>
+            <span class="social-arrow">↗</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: form -->
+    <div id="contact-right">
+      <div>
+        <div class="section-label">Message</div>
+        <div class="section-title">Send it over</div>
+      </div>
+      <form id="contact-form" onsubmit="handleSubmit(event)" style="display:flex;flex-direction:column;gap:14px;margin-top:8px;">
+        <div class="g-field">
+          <label class="g-label" for="c-name">Your Name</label>
+          <input class="g-input" type="text" id="c-name" placeholder="Rafael Nadal" required>
+        </div>
+        <div class="g-field">
+          <label class="g-label" for="c-email">Email</label>
+          <input class="g-input" type="email" id="c-email" placeholder="you@example.com" required>
+        </div>
+        <div class="g-field">
+          <label class="g-label" for="c-message">Message</label>
+          <textarea class="g-textarea" id="c-message" placeholder="What's on your mind…" required></textarea>
+        </div>
+        <button class="g-submit" type="submit" id="c-btn">Send →</button>
+      </form>
+    </div>
+
+  </section>
+
+  <script>window.PAGE_LIGHT_SECTIONS = ['contact-hero', 'contact-main'];</script>
+  <script>window.PAGE_DARK_SECTIONS = ['quote-section'];</script>
+  <script src="components.js"></script>
+  <script>
+    // ─── QUOTES ───
+    const QUOTES = [
+      {
+        text: "You need to do at least a bit of what you care about now, as opposed to banking on finding time for it in the future, once the decks are clear and life's duties are out of the way. Life's duties will never be out of the way. And so if you really mean it when you say you'd like to write a novel or spend more of your time with your ageing parents or fighting climate change (or having fun), at some point you're just going to have to start doing it.",
+        author: "Oliver Burkeman"
+      },
+      {
+        text: "The loser has more in common with the winner than with the person sitting on the sidelines. The winner and the loser each had the courage to try. Both risked embarrassment. Both were willing to face uncertainty. Both were stubborn enough to continue. Success is endurance in disguise. It belongs to the person who can absorb the losses without absorbing the identity of 'loser.' The sidelines are safe, but sterile. Nothing grows there.",
+        author: "James Clear"
+      },
+      {
+        text: "Most people never pick up the phone and call. Most people never ask. And that's what sometimes separates the people who do things from the people who just dream about them. You gotta act. And you gotta be willing to fail, you gotta be ready to crash and burn. I've never found anyone who said no or hung up the phone when I called. I just asked.",
+        author: "Steve Jobs"
+      },
+      {
+        text: "You cannot stay on the summit forever; you have to come down again. So why bother in the first place? Just this: What is above knows what is below, but what is below does not know what is above. One climbs, one sees. One descends, one sees no longer, but one has seen. There is an art of conducting oneself in the lower regions by the memory of what one saw higher up. When one can no longer see, one can at least still know.",
+        author: "René Daumal"
+      },
+      {
+        text: "When you can, ask yourself if you want to before you do.",
+        author: "Matthew McConaughey"
+      },
+      {
+        text: "The master in the art of living draws no distinction between his work and his play. His labor and his leisure, his mind and his body, his education and his recreation, his love and his religion. He hardly knows which is which. He simply pursues his vision of excellence through whatever he is doing. And leaves it up to others to decide whether he is working or playing. To himself he's always doing both.",
+        author: "Lawrence Pearsall Jacks"
+      },
+      {
+        text: "If it is peace you want, seek to change yourself, not other people. It is easier to protect your feet with slippers than to carpet the whole of the earth.",
+        author: "Anthony de Mello"
+      }
+    ];
+
+    let currentQuote = 0;
+
+    function renderQuote(index, animate = true) {
+      const q = QUOTES[index];
+      const display = document.getElementById('quote-display');
+      if (animate) {
+        display.style.animation = 'none';
+        display.offsetHeight; // reflow
+        display.style.animation = 'quoteFadeIn 400ms ease';
+      }
+      document.getElementById('quote-text').textContent = q.text;
+      document.getElementById('quote-author').textContent = '— ' + q.author;
+      document.getElementById('quote-counter').textContent = (index + 1) + ' / ' + QUOTES.length;
+      document.querySelectorAll('.q-dot').forEach((d, i) => d.classList.toggle('active', i === index));
+    }
+
+    function buildDots() {
+      const container = document.getElementById('quote-dots');
+      QUOTES.forEach((_, i) => {
+        const dot = document.createElement('button');
+        dot.className = 'q-dot' + (i === 0 ? ' active' : '');
+        dot.setAttribute('aria-label', 'Quote ' + (i + 1));
+        dot.addEventListener('click', () => { currentQuote = i; renderQuote(i); });
+        container.appendChild(dot);
+      });
+    }
+
+    document.getElementById('q-next').addEventListener('click', () => {
+      currentQuote = (currentQuote + 1) % QUOTES.length;
+      renderQuote(currentQuote);
+    });
+    document.getElementById('q-prev').addEventListener('click', () => {
+      currentQuote = (currentQuote - 1 + QUOTES.length) % QUOTES.length;
+      renderQuote(currentQuote);
+    });
+
+    // Auto-rotate every 8 seconds
+    setInterval(() => {
+      currentQuote = (currentQuote + 1) % QUOTES.length;
+      renderQuote(currentQuote);
+    }, 8000);
+
+    buildDots();
+    renderQuote(0, false);
+
+    // ─── PROMPT STARTERS ───
+    document.querySelectorAll('.prompt-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const msg = document.getElementById('c-message');
+        msg.value = btn.dataset.prompt;
+        msg.focus();
+        document.getElementById('contact-right').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+
+    // ─── EMAIL COPY ───
+    function copyEmail() {
+      navigator.clipboard.writeText('nicolas@nicolasvaca.com').then(() => {
+        const btn = document.getElementById('copy-btn');
+        btn.textContent = 'Copied ✓';
+        setTimeout(() => btn.textContent = 'Copy', 2000);
+      });
+    }
+
+    // ─── FORM SUBMIT ───
+    function handleSubmit(e) {
+      e.preventDefault();
+      const btn = document.getElementById('c-btn');
+      btn.textContent = 'Sending…'; btn.disabled = true;
+      setTimeout(() => {
+        btn.textContent = 'Sent ✓';
+        setTimeout(() => { btn.textContent = 'Send →'; btn.disabled = false; }, 3000);
+      }, 1200);
+    }
+  </script>
+</body>
+</html>
