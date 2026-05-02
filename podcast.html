@@ -98,17 +98,15 @@
     #eps-reel-wrap { position: relative; overflow: hidden; }
     #eps-reel { display: flex; gap: 16px; overflow-x: auto; scroll-behavior: smooth; scrollbar-width: none; -ms-overflow-style: none; padding: 28px 8% 36px; }
     #eps-reel::-webkit-scrollbar { display: none; }
-    .ep-card { flex: 0 0 clamp(220px, 22vw, 300px); background: #fff; border: 1px solid rgba(0,0,0,0.09); border-radius: 8px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); padding: 18px 20px 16px; display: flex; flex-direction: column; gap: 10px; cursor: pointer; transition: box-shadow 200ms, transform 200ms; box-sizing: border-box; }
-    .ep-card:hover { box-shadow: 0 6px 24px rgba(0,0,0,0.11); transform: translateY(-2px); }
+    .ep-card { flex: 0 0 clamp(260px, 26vw, 360px); background: #fff; border: 1px solid rgba(0,0,0,0.09); border-radius: 8px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); padding: 22px 24px 20px; display: flex; flex-direction: column; gap: 12px; cursor: pointer; transition: box-shadow 200ms, transform 200ms; box-sizing: border-box; }    .ep-card:hover { box-shadow: 0 6px 24px rgba(0,0,0,0.11); transform: translateY(-2px); }
     .ep-card-top { display: flex; align-items: center; gap: 10px; }
     .ep-thumb { width: 44px; height: 44px; border-radius: 6px; background: #e8e8e8; overflow: hidden; flex-shrink: 0; }
     .ep-thumb img { width: 100%; height: 100%; object-fit: cover; }
     .ep-card-meta { display: flex; flex-direction: column; gap: 2px; }
     .ep-card-num { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(0,0,0,0.35); }
     .ep-card-date { font-size: 11px; color: rgba(0,0,0,0.4); }
-    .ep-card-title { font-size: 13px; font-weight: 700; line-height: 1.35; letter-spacing: -0.01em; color: #000; }
-    .ep-card-desc { font-size: 12px; line-height: 1.6; color: rgba(0,0,0,0.45); display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; flex: 1; }
-    .ep-card-listen { display: flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 700; color: #000; padding-top: 2px; }
+    .ep-card-title { font-size: 15px; font-weight: 700; line-height: 1.35; letter-spacing: -0.01em; color: #000; }
+    .ep-card-desc { font-size: 13px; line-height: 1.6; color: rgba(0,0,0,0.45); display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; flex: 1; }    .ep-card-listen { display: flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 700; color: #000; padding-top: 2px; }
     .ep-card-listen svg { width: 11px; height: 11px; }
     #eps-loading { padding: 48px 8%; font-size: 12px; color: rgba(0,0,0,0.3); letter-spacing: 0.1em; text-transform: uppercase; font-family: 'Fragment Mono', monospace; }
     #spotify-fallback { display: none; padding: 32px 8%; }
