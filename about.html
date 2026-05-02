@@ -73,7 +73,7 @@
     .tl-entry {
       display: grid;
       grid-template-columns: 1fr 60px 1fr;
-      gap: 0; align-items: start;
+      gap: 0; align-items: center;
       padding: 52px 0;
       border-bottom: 1px solid rgba(0,0,0,0.06);
       position: relative;
@@ -98,12 +98,12 @@
     .tl-entry:hover .tl-dot { background: #000; border-color: #000; }
 
     .tl-text {
-      display: flex; flex-direction: column; gap: 10px; padding: 0 32px;
+      display: flex; flex-direction: column; gap: 12px; padding: 0 40px;
     }
-    .tl-title { font-size: 20px; font-weight: 800; letter-spacing: -0.02em; color: #000; line-height: 1.2; }
-    .tl-desc { font-size: 15px; line-height: 1.8; color: rgba(0,0,0,0.5); }
+    .tl-title { font-size: 26px; font-weight: 800; letter-spacing: -0.02em; color: #000; line-height: 1.2; }
+    .tl-desc { font-size: 17px; line-height: 1.85; color: rgba(0,0,0,0.5); }
 
-    .tl-image-wrap { padding: 0 32px; }
+    .tl-image-wrap { padding: 0 32px; max-width: 320px; width: 100%; }
     .tl-image {
       border-radius: 6px; overflow: hidden;
       background: #f0f0f0; aspect-ratio: 3/4; width: 100%;
@@ -115,20 +115,20 @@
     }
     .tl-entry:hover .tl-image img { transform: scale(1.03); }
 
-    .tl-image-double { display: flex; flex-direction: column; gap: 12px; padding: 0 32px; }
+    .tl-image-double { display: flex; flex-direction: column; gap: 12px; padding: 0 32px; max-width: 320px; width: 100%; }
     .tl-image-double .tl-image { aspect-ratio: 3/4; }
 
     /* ODD: text left, image right */
     .tl-entry.odd .tl-text { order: 1; text-align: left; }
     .tl-entry.odd .tl-spine { order: 2; }
     .tl-entry.odd .tl-image-wrap,
-    .tl-entry.odd .tl-image-double { order: 3; }
+    .tl-entry.odd .tl-image-double { order: 3; margin-left: auto; }
 
     /* EVEN: image left, text right */
     .tl-entry.even .tl-text { order: 3; text-align: right; align-items: flex-end; }
     .tl-entry.even .tl-spine { order: 2; }
     .tl-entry.even .tl-image-wrap,
-    .tl-entry.even .tl-image-double { order: 1; }
+    .tl-entry.even .tl-image-double { order: 1; margin-right: auto; }
 
     /* ─── RESPONSIVE ─── */
     @media (max-width: 900px) {
@@ -148,7 +148,7 @@
       .tl-entry.odd .tl-image-wrap,
       .tl-entry.even .tl-image-wrap,
       .tl-entry.odd .tl-image-double,
-      .tl-entry.even .tl-image-double { order: 3; grid-column: 2; padding: 12px 0 0 20px; }
+      .tl-entry.even .tl-image-double { order: 3; grid-column: 2; padding: 12px 0 0 20px; max-width: 100%; margin: 0; }
     }
     @media (max-width: 600px) {
       #about-intro { padding: 60px 6%; }
@@ -206,7 +206,7 @@
 
     <div id="timeline">
 
-      <!-- 2003 — ODD: text left, image right (horizontal) -->
+      <!-- 2003 — ODD -->
       <div class="tl-entry odd">
         <div class="tl-text">
           <div class="tl-title">Born in Bogotá, Colombia</div>
@@ -216,7 +216,7 @@
         <div class="tl-image-wrap"><div class="tl-image" style="aspect-ratio:4/3;"><img src="images/2003" alt="2003"></div></div>
       </div>
 
-      <!-- 2009 — EVEN: image left, text right -->
+      <!-- 2009 — EVEN -->
       <div class="tl-entry even">
         <div class="tl-text">
           <div class="tl-title">Colegio San Carlos, Bogotá</div>
@@ -226,7 +226,7 @@
         <div class="tl-image-wrap"><div class="tl-image"><img src="images/2009" alt="2009"></div></div>
       </div>
 
-      <!-- 2012–2019 — ODD: text left, double image right -->
+      <!-- 2012–2019 — ODD -->
       <div class="tl-entry odd">
         <div class="tl-text">
           <div class="tl-title">The tennis years</div>
@@ -239,7 +239,7 @@
         </div>
       </div>
 
-      <!-- 2020–2021 — EVEN: double image left, text right -->
+      <!-- 2020–2021 — EVEN -->
       <div class="tl-entry even">
         <div class="tl-text">
           <div class="tl-title">Rafa Nadal Academy, Manacor</div>
@@ -252,7 +252,7 @@
         </div>
       </div>
 
-      <!-- 2021 — ODD: text left, image right -->
+      <!-- 2021 — ODD -->
       <div class="tl-entry odd">
         <div class="tl-text">
           <div class="tl-title">Economics degree, IE University — Madrid</div>
@@ -262,7 +262,7 @@
         <div class="tl-image-wrap"><div class="tl-image"><img src="images/2021" alt="2021"></div></div>
       </div>
 
-      <!-- 2023 half marathon — EVEN: image left, text right -->
+      <!-- 2023 half marathon — EVEN -->
       <div class="tl-entry even">
         <div class="tl-text">
           <div class="tl-title">First race — Half Marathon</div>
@@ -272,7 +272,7 @@
         <div class="tl-image-wrap"><div class="tl-image"><img src="images/2023-1" alt="Half Marathon"></div></div>
       </div>
 
-      <!-- 2023 SP Developments — ODD: text left, image right (horizontal) -->
+      <!-- 2023 SP Developments — ODD -->
       <div class="tl-entry odd">
         <div class="tl-text">
           <div class="tl-title">First job — SP Developments, Miami</div>
@@ -282,7 +282,7 @@
         <div class="tl-image-wrap"><div class="tl-image" style="aspect-ratio:4/3;"><img src="images/2023-2" alt="SP Developments"></div></div>
       </div>
 
-      <!-- 2024 Copenhagen — EVEN: image left, text right -->
+      <!-- 2024 Copenhagen — EVEN -->
       <div class="tl-entry even">
         <div class="tl-text">
           <div class="tl-title">Copenhagen Marathon — on a whim</div>
@@ -292,7 +292,7 @@
         <div class="tl-image-wrap"><div class="tl-image"><img src="images/2024-1" alt="Copenhagen Marathon"></div></div>
       </div>
 
-      <!-- 2024 AWS — ODD: text left, image right -->
+      <!-- 2024 AWS — ODD -->
       <div class="tl-entry odd">
         <div class="tl-text">
           <div class="tl-title">AWS Internship</div>
@@ -302,7 +302,7 @@
         <div class="tl-image-wrap"><div class="tl-image"><img src="images/2024-2" alt="AWS Internship"></div></div>
       </div>
 
-      <!-- 2025 Hyrox — EVEN: image left, text right -->
+      <!-- 2025 Hyrox — EVEN -->
       <div class="tl-entry even">
         <div class="tl-text">
           <div class="tl-title">Hyrox Doubles, Málaga</div>
@@ -312,7 +312,7 @@
         <div class="tl-image-wrap"><div class="tl-image"><img src="images/2025-1" alt="Hyrox Málaga"></div></div>
       </div>
 
-      <!-- 2025 Graduation — ODD: text left, image right -->
+      <!-- 2025 Graduation — ODD -->
       <div class="tl-entry odd">
         <div class="tl-text">
           <div class="tl-title">Dean's List graduate · AWS full time</div>
@@ -322,7 +322,7 @@
         <div class="tl-image-wrap"><div class="tl-image"><img src="images/2025-2" alt="Graduation"></div></div>
       </div>
 
-      <!-- 2026 Untold — EVEN: image left, text right -->
+      <!-- 2026 Untold — EVEN -->
       <div class="tl-entry even">
         <div class="tl-text">
           <div class="tl-title">Untold — the podcast begins</div>
