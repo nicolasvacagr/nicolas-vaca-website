@@ -48,122 +48,99 @@
     .plat-btn:hover { background: rgba(255,255,255,0.2); border-color: rgba(255,255,255,0.5); }
     .plat-btn svg { width: 14px; height: 14px; flex-shrink: 0; }
 
-    /* ─── SHARED SECTION TITLE STYLE ─── */
+    /* ─── SHARED TITLE SYSTEM ─── */
     .section-label {
       font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
-      color: rgba(0,0,0,0.35); font-family: 'Fragment Mono', monospace;
-      margin-bottom: 4px;
+      color: rgba(0,0,0,0.35); font-family: 'Fragment Mono', monospace; margin-bottom: 4px;
     }
     .section-title {
       font-size: 28px; font-weight: 800; letter-spacing: -0.03em;
       color: #000; text-transform: none;
     }
+    /* Unified body text size across ALL sections */
+    .body-text {
+      font-size: 15px; line-height: 1.75; color: rgba(0,0,0,0.5);
+    }
+    .body-text-dark {
+      font-size: 15px; line-height: 1.75; color: rgba(255,255,255,0.5);
+    }
 
     /* ─── FEATURED PREVIEW ─── */
-    #pod-featured { background: #fff; color: #1a1a1a; padding: 80px 8%; }
+    #pod-featured { background: #fff; color: #1a1a1a; padding: 60px 8%; }
     .pod-feat-header {
       display: flex; align-items: flex-end; justify-content: space-between;
-      margin-bottom: 32px; flex-wrap: wrap; gap: 12px;
+      margin-bottom: 28px; flex-wrap: wrap; gap: 12px;
     }
-    .pod-feat-cta {
-      font-size: 13px; font-weight: 600;
-      border-bottom: 1px solid rgba(0,0,0,0.18); padding-bottom: 2px;
-      transition: opacity 180ms; cursor: pointer; color: #000; text-decoration: none;
-    }
+    .pod-feat-cta { font-size: 13px; font-weight: 600; border-bottom: 1px solid rgba(0,0,0,0.18); padding-bottom: 2px; transition: opacity 180ms; cursor: pointer; color: #000; text-decoration: none; }
     .pod-feat-cta:hover { opacity: 0.5; }
     .pod-feat-divider { width: 100%; height: 1px; background: rgba(0,0,0,0.09); border: none; margin: 0; }
     .pod-feat-grid { display: grid; grid-template-columns: 1fr 1fr; align-items: start; }
-    .pod-feat-left { border-right: 1px solid rgba(0,0,0,0.09); padding: 36px 40px 36px 0; }
-    .pod-feat-right { padding: 36px 0 36px 40px; display: flex; flex-direction: column; gap: 24px; }
+    .pod-feat-left { border-right: 1px solid rgba(0,0,0,0.09); padding: 28px 36px 28px 0; }
+    .pod-feat-right { padding: 28px 0 28px 36px; display: flex; flex-direction: column; gap: 18px; }
     .pod-video-wrap { position: relative; border-radius: 3px; overflow: hidden; aspect-ratio: 16/9; background: #e8e8e8; }
     .pod-play-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.12); display: flex; align-items: center; justify-content: center; }
-    .pod-play-btn {
-      width: 52px; height: 52px; border-radius: 50%; background: rgba(255,255,255,0.93);
-      display: flex; align-items: center; justify-content: center; color: #1a1a1a;
-      box-shadow: 0 2px 20px rgba(0,0,0,0.18); transition: transform 200ms; cursor: pointer; border: none;
-    }
+    .pod-play-btn { width: 52px; height: 52px; border-radius: 50%; background: rgba(255,255,255,0.93); display: flex; align-items: center; justify-content: center; color: #1a1a1a; box-shadow: 0 2px 20px rgba(0,0,0,0.18); transition: transform 200ms; cursor: pointer; border: none; }
     .pod-play-btn:hover { transform: scale(1.06); }
-    .pod-desc-text { font-size: clamp(16px, 1.6vw, 20px); line-height: 1.7; color: #1a1a1a; }
-    .pod-preview-label { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(0,0,0,0.32); font-weight: 600; margin-bottom: 6px; margin-top: 20px; }
-    .pod-preview-title { font-size: 16px; line-height: 1.38; letter-spacing: -0.02em; font-weight: 700; margin-bottom: 5px; }
+    .pod-preview-label { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(0,0,0,0.32); font-weight: 600; margin-bottom: 4px; margin-top: 16px; }
+    .pod-preview-title { font-size: 15px; line-height: 1.38; letter-spacing: -0.02em; font-weight: 700; margin-bottom: 4px; }
     .pod-preview-meta { font-size: 12px; color: rgba(0,0,0,0.36); font-weight: 500; }
-    .pod-plat-links { display: flex; gap: 20px; margin-top: 16px; flex-wrap: wrap; }
+    .pod-plat-links { display: flex; gap: 20px; margin-top: 12px; flex-wrap: wrap; }
     .pod-plat-link { font-size: 12px; font-weight: 600; letter-spacing: 0.03em; color: rgba(0,0,0,0.4); transition: color 180ms; cursor: pointer; background: none; border: none; font-family: inherit; }
     .pod-plat-link:hover { color: #1a1a1a; }
 
     /* ─── EPISODES REEL ─── */
-    #episodes-section { padding: 60px 0 0; }
-    .eps-header { display: flex; align-items: flex-end; justify-content: space-between; padding: 0 8% 28px; }
+    #episodes-section { padding: 48px 0 0; }
+    .eps-header { display: flex; align-items: flex-end; justify-content: space-between; padding: 0 8% 24px; }
     .eps-header-left { display: flex; flex-direction: column; gap: 4px; }
     .eps-nav { display: flex; gap: 8px; }
-    .eps-arrow {
-      width: 40px; height: 40px; border-radius: 50%;
-      border: 1px solid rgba(0,0,0,0.15); background: #fff;
-      display: flex; align-items: center; justify-content: center;
-      cursor: pointer; font-size: 16px; color: rgba(0,0,0,0.5);
-      transition: border-color 180ms, color 180ms;
-    }
+    .eps-arrow { width: 40px; height: 40px; border-radius: 50%; border: 1px solid rgba(0,0,0,0.15); background: #fff; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 16px; color: rgba(0,0,0,0.5); transition: border-color 180ms, color 180ms; }
     .eps-arrow:hover { border-color: rgba(0,0,0,0.5); color: #000; }
     .eps-divider { width: 100%; height: 1px; background: rgba(0,0,0,0.08); }
     #eps-reel-wrap { position: relative; overflow: hidden; }
-    #eps-reel {
-      display: flex; gap: 16px;
-      overflow-x: auto; scroll-behavior: smooth;
-      scrollbar-width: none; -ms-overflow-style: none;
-      padding: 32px 8% 40px;
-    }
+    #eps-reel { display: flex; gap: 16px; overflow-x: auto; scroll-behavior: smooth; scrollbar-width: none; -ms-overflow-style: none; padding: 28px 8% 36px; }
     #eps-reel::-webkit-scrollbar { display: none; }
-    .ep-card {
-      flex: 0 0 clamp(220px, 22vw, 300px);
-      background: #fff; border: 1px solid rgba(0,0,0,0.09);
-      border-radius: 8px; box-shadow: 0 2px 12px rgba(0,0,0,0.06);
-      padding: 20px 22px 18px; display: flex; flex-direction: column; gap: 12px;
-      cursor: pointer; transition: box-shadow 200ms, transform 200ms; box-sizing: border-box;
-    }
+    .ep-card { flex: 0 0 clamp(220px, 22vw, 300px); background: #fff; border: 1px solid rgba(0,0,0,0.09); border-radius: 8px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); padding: 18px 20px 16px; display: flex; flex-direction: column; gap: 10px; cursor: pointer; transition: box-shadow 200ms, transform 200ms; box-sizing: border-box; }
     .ep-card:hover { box-shadow: 0 6px 24px rgba(0,0,0,0.11); transform: translateY(-2px); }
     .ep-card-top { display: flex; align-items: center; gap: 10px; }
-    .ep-thumb { width: 46px; height: 46px; border-radius: 6px; background: #e8e8e8; overflow: hidden; flex-shrink: 0; }
+    .ep-thumb { width: 44px; height: 44px; border-radius: 6px; background: #e8e8e8; overflow: hidden; flex-shrink: 0; }
     .ep-thumb img { width: 100%; height: 100%; object-fit: cover; }
     .ep-card-meta { display: flex; flex-direction: column; gap: 2px; }
     .ep-card-num { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(0,0,0,0.35); }
     .ep-card-date { font-size: 11px; color: rgba(0,0,0,0.4); }
-    .ep-card-title { font-size: 14px; font-weight: 700; line-height: 1.35; letter-spacing: -0.01em; color: #000; }
-    .ep-card-desc { font-size: 12px; line-height: 1.65; color: rgba(0,0,0,0.45); display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; flex: 1; }
+    .ep-card-title { font-size: 13px; font-weight: 700; line-height: 1.35; letter-spacing: -0.01em; color: #000; }
+    .ep-card-desc { font-size: 12px; line-height: 1.6; color: rgba(0,0,0,0.45); display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; flex: 1; }
     .ep-card-listen { display: flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 700; color: #000; padding-top: 2px; }
     .ep-card-listen svg { width: 11px; height: 11px; }
-    #eps-loading { padding: 64px 8%; font-size: 12px; color: rgba(0,0,0,0.3); letter-spacing: 0.1em; text-transform: uppercase; font-family: 'Fragment Mono', monospace; }
+    #eps-loading { padding: 48px 8%; font-size: 12px; color: rgba(0,0,0,0.3); letter-spacing: 0.1em; text-transform: uppercase; font-family: 'Fragment Mono', monospace; }
     #spotify-fallback { display: none; padding: 32px 8%; }
 
     /* ─── ABOUT THE SHOW ─── */
-    #about-show { border-top: 1px solid rgba(0,0,0,0.09); margin-top: 20px; background: #000; color: #fff; }
-    .about-row-1 { display: grid; grid-template-columns: 1fr 1fr; min-height: 520px; }
+    #about-show { border-top: 1px solid rgba(0,0,0,0.09); background: #000; color: #fff; }
+    .about-row-1 { display: grid; grid-template-columns: 1fr 1fr; min-height: 400px; }
     .about-img-main { position: relative; overflow: hidden; }
     .about-img-main img { width: 100%; height: 100%; object-fit: cover; object-position: center top; display: block; filter: grayscale(100%); }
-    .about-text-main { padding: 72px 8%; display: flex; flex-direction: column; justify-content: center; gap: 28px; }
+    .about-text-main { padding: 52px 8%; display: flex; flex-direction: column; justify-content: center; gap: 20px; }
     .about-text-main .section-label { color: rgba(255,255,255,0.35); }
-    .show-para-dark { font-size: clamp(15px, 1.3vw, 18px); line-height: 1.75; color: rgba(255,255,255,0.5); }
     .about-row-2 { display: grid; grid-template-columns: 1fr 1fr 1fr; border-top: 1px solid rgba(255,255,255,0.08); }
-    .about-img-sm { position: relative; overflow: hidden; aspect-ratio: 3/4; border-right: 1px solid rgba(255,255,255,0.08); }
+    .about-img-sm { position: relative; overflow: hidden; aspect-ratio: 4/3; border-right: 1px solid rgba(255,255,255,0.08); }
     .about-img-sm:last-child { border-right: none; }
     .about-img-sm img { width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; filter: grayscale(100%); transition: transform 600ms ease, filter 400ms ease; }
     .about-img-sm:hover img { transform: scale(1.04); filter: grayscale(0%); }
-    .about-img-sm-caption { position: absolute; bottom: 0; left: 0; right: 0; padding: 20px 20px 16px; background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 100%); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.5); font-family: 'Fragment Mono', monospace; }
+    .about-img-sm-caption { position: absolute; bottom: 0; left: 0; right: 0; padding: 16px 16px 12px; background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 100%); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.5); font-family: 'Fragment Mono', monospace; }
 
     /* ─── GUEST FORM ─── */
-    #guest-section { background: #000; color: #fff; padding: 80px 8%; border-top: 1px solid rgba(255,255,255,0.08); }
+    #guest-section { background: #000; color: #fff; padding: 60px 8%; border-top: 1px solid rgba(255,255,255,0.08); }
     #guest-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
-    #guest-left { display: flex; flex-direction: column; gap: 20px; }
+    #guest-left { display: flex; flex-direction: column; gap: 16px; }
     .guest-label { font-size: 11px; letter-spacing: 0.32em; text-transform: uppercase; color: rgba(255,255,255,0.4); font-family: 'Fragment Mono', monospace; }
-    .guest-heading { font-size: clamp(28px, 3.5vw, 48px); font-weight: 900; letter-spacing: -0.03em; line-height: 1.05; color: #fff; }
-    .guest-para { font-size: clamp(15px, 1.3vw, 18px); line-height: 1.75; color: rgba(255,255,255,0.5); }
-    #guest-right { display: flex; flex-direction: column; gap: 16px; }
+    #guest-right { display: flex; flex-direction: column; gap: 14px; }
     .g-field { display: flex; flex-direction: column; gap: 6px; }
     .g-label { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.38); }
-    .g-input, .g-textarea { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 3px; color: #fff; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 14px; padding: 12px 16px; outline: none; transition: border-color 180ms; width: 100%; }
+    .g-input, .g-textarea { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 3px; color: #fff; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 14px; padding: 11px 14px; outline: none; transition: border-color 180ms; width: 100%; box-sizing: border-box; }
     .g-input::placeholder, .g-textarea::placeholder { color: rgba(255,255,255,0.22); }
     .g-input:focus, .g-textarea:focus { border-color: rgba(255,255,255,0.38); }
-    .g-textarea { resize: vertical; min-height: 120px; }
-    .g-submit { margin-top: 8px; height: 48px; padding: 0 28px; background: #fff; color: #000; border-radius: 3px; font-size: 13px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; font-family: 'Plus Jakarta Sans', sans-serif; cursor: pointer; border: none; align-self: flex-start; transition: opacity 180ms; }
+    .g-textarea { resize: vertical; min-height: 100px; }
+    .g-submit { margin-top: 6px; height: 44px; padding: 0 24px; background: #fff; color: #000; border-radius: 3px; font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; font-family: 'Plus Jakarta Sans', sans-serif; cursor: pointer; border: none; align-self: flex-start; transition: opacity 180ms; }
     .g-submit:hover { opacity: 0.8; }
 
     /* ─── RESPONSIVE ─── */
@@ -171,28 +148,28 @@
     @media (max-width: 900px) {
       .ep-card { flex: 0 0 72vw; }
       .pod-feat-grid { grid-template-columns: 1fr; }
-      .pod-feat-left { border-right: none; border-bottom: 1px solid rgba(0,0,0,0.09); padding: 28px 0; }
-      .pod-feat-right { padding: 28px 0 0; }
+      .pod-feat-left { border-right: none; border-bottom: 1px solid rgba(0,0,0,0.09); padding: 24px 0; }
+      .pod-feat-right { padding: 24px 0 0; }
       .about-row-1 { grid-template-columns: 1fr; }
-      .about-img-main { min-height: 380px; }
+      .about-img-main { min-height: 300px; }
       .about-row-2 { grid-template-columns: 1fr 1fr; }
       .about-img-sm:nth-child(2) { border-right: none; }
       .about-img-sm:nth-child(3) { grid-column: 1 / -1; border-right: none; border-top: 1px solid rgba(255,255,255,0.08); aspect-ratio: 16/9; }
-      #guest-inner { grid-template-columns: 1fr; gap: 40px; }
-      #guest-section { padding: 60px 6%; }
+      #guest-inner { grid-template-columns: 1fr; gap: 36px; }
+      #guest-section { padding: 48px 6%; }
     }
     @media (max-width: 768px) {
       #pod-hero-text { right: 5%; left: 5%; width: auto; text-align: left; }
       #pod-platforms { justify-content: flex-start; }
       .ep-card { flex: 0 0 84vw; }
-      #eps-reel { padding: 24px 6% 32px; }
-      .eps-header { padding: 0 6% 28px; }
-      #pod-featured { padding: 60px 6%; }
+      #eps-reel { padding: 20px 6% 28px; }
+      .eps-header { padding: 0 6% 20px; }
+      #pod-featured { padding: 48px 6%; }
     }
     @media (max-width: 600px) {
       .about-row-2 { grid-template-columns: 1fr; }
       .about-img-sm { border-right: none; border-top: 1px solid rgba(255,255,255,0.08); aspect-ratio: 4/3; }
-      .about-text-main { padding: 48px 6%; }
+      .about-text-main { padding: 40px 6%; }
     }
   </style>
 </head>
@@ -255,8 +232,8 @@
         </div>
       </div>
       <div class="pod-feat-right">
-        <p class="pod-desc-text">Ralph Waldo Emerson once said that in the minds of geniuses, we find our own neglected thoughts. The more I learn, the more I find this to be true. Untold is where I and you go to explore those neglected thoughts, by listening to people far smarter than me.</p>
-        <p class="pod-desc-text">I look to speak with researchers, explorers, thinkers, and anyone with an idea worth spreading, a story worth telling, or a question more of us should be asking ourselves. Join me as I feed my curiosity, one conversation at a time.</p>
+        <p class="body-text">Ralph Waldo Emerson once said that in the minds of geniuses, we find our own neglected thoughts. The more I learn, the more I find this to be true. Untold is where I and you go to explore those neglected thoughts, by listening to people far smarter than me.</p>
+        <p class="body-text">I look to speak with researchers, explorers, thinkers, and anyone with an idea worth spreading, a story worth telling, or a question more of us should be asking ourselves. Join me as I feed my curiosity, one conversation at a time.</p>
       </div>
     </div>
     <hr class="pod-feat-divider" style="margin-top:0">
@@ -294,11 +271,11 @@
       <div class="about-text-main">
         <div>
           <div class="section-label">About the Show</div>
-          <div class="section-title" style="color:#fff;">The quiet engine behind Untold</div>
+          <div class="section-title" style="color:#fff;">Driving Untold</div>
         </div>
-        <p class="show-para-dark">André Gide once wrote: "Everything that needs to be said has already been said. But since no one was listening, everything must be said again." That is what drives this show.</p>
-        <p class="show-para-dark">I started it because I kept coming across ideas that deserved a bigger audience — research buried in papers, questions people should ask themselves but aren't, stories that never made it to the mainstream.</p>
-        <p class="show-para-dark">The format is simple: long-form, unscripted. No agenda. Just following the conversation wherever it goes.</p>
+        <p class="body-text-dark">André Gide once wrote: "Everything that needs to be said has already been said. But since no one was listening, everything must be said again." That is what drives this show.</p>
+        <p class="body-text-dark">I started it because I kept coming across ideas that deserved a bigger audience — research buried in papers, questions people should ask themselves but aren't, stories that never made it to the mainstream.</p>
+        <p class="body-text-dark">The format is simple: long-form, unscripted. No agenda. Just following the conversation wherever it goes.</p>
       </div>
     </div>
     <div class="about-row-2">
@@ -322,8 +299,8 @@
     <div id="guest-inner">
       <div id="guest-left">
         <div class="guest-label">Be a Guest</div>
-        <div class="guest-heading">Is your story worth telling?</div>
-        <p class="guest-para">Is your approach to life unconventional? Have an idea to expose to the world? You do not need a big following. If it is interesting, we can speak about it. Dare to fill out the form — you might just be my new favourite conversation.</p>
+        <div class="section-title" style="color:#fff;">Is your story worth telling?</div>
+        <p class="body-text-dark">Is your approach to life unconventional? Have an idea to expose to the world? You do not need a big following. If it is interesting, we can speak about it. Dare to fill out the form — you might just be my new favourite conversation.</p>
       </div>
       <form id="guest-right" onsubmit="handleGuestSubmit(event)">
         <div class="g-field"><label class="g-label" for="g-name">Your Name</label><input class="g-input" type="text" id="g-name" placeholder="Nicolas Vaca" required></div>
