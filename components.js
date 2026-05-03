@@ -47,7 +47,7 @@
           <a href="https://instagram.com/nicolasvacagr" target="_blank">Instagram</a>
           <a href="https://x.com/nicolasvacagr" target="_blank">X (Twitter)</a>
           <a href="https://youtube.com/@nicolasvacagr" target="_blank">YouTube</a>
-          <a href="https://linkedin.com/in/nicovaca" target="_blank">LinkedIn</a>
+          <a href="https://www.linkedin.com/in/nicovaca/" target="_blank">LinkedIn</a>
         </div>
       </div>
     </div>
