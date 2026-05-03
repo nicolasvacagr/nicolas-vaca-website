@@ -19,6 +19,8 @@
       width: 100%; height: 100%;
       object-fit: cover; object-position: center center;
     }
+    #pod-hero-img-mobile { display: none; object-position: center top; }
+    #pod-hero-img-desktop { display: block; }
     #pod-hero::after {
       content: '';
       position: absolute; inset: 0;
@@ -192,6 +194,8 @@
       #eps-reel { padding: 20px 6% 28px; }
       .eps-header { padding: 0 6% 20px; }
       #pod-featured { padding: 48px 6%; }
+      #pod-hero-img-desktop { display: none; }
+      #pod-hero-img-mobile { display: block; }
     }
     @media (max-width: 600px) {
       .about-row-2 { grid-template-columns: 1fr; }
@@ -206,7 +210,8 @@
 
   <!-- ─── HERO ─── -->
   <section id="pod-hero">
-    <img src="images/naked-thumbnail.jpeg" alt="Untold Podcast">
+    <img id="pod-hero-img-desktop" src="images/naked-thumbnail.jpeg" alt="Untold Podcast">
+    <img id="pod-hero-img-mobile" src="images/podcast-page.jpeg" alt="Untold Podcast">
     <div id="pod-hero-text">
       <div id="pod-hero-label">The Podcast</div>
       <div id="pod-hero-title">Untold</div>
