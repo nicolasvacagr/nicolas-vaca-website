@@ -1,8 +1,10 @@
 // ─── COMPONENTS.JS ─── //
 (function () {
+  const isHome = (window.location.pathname.split('/').pop() || 'index.html') === 'index.html';
+
   // ── NAV HTML ──
   const navHTML = `
-    <nav id="nav" class="compact inner-page">
+    <nav id="nav" class="${isHome ? '' : 'compact inner-page'}">
       <div id="nav-expanded">
         <a href="about.html">ABOUT</a>
         <a href="podcast.html">PODCAST</a>
@@ -93,11 +95,12 @@
 
   // ── NAV SCROLL BEHAVIOUR ──
   const navEl = document.getElementById('nav');
-  const lightSections = ['contact'];
+  const THRESHOLD = 80;
   let ticking = false;
+
   function getNavTheme() {
     const mid = window.scrollY + 30;
-    const pageLightSections = (window.PAGE_LIGHT_SECTIONS || []).concat(lightSections);
+    const pageLightSections = (window.PAGE_LIGHT_SECTIONS || []).concat(['contact']);
     for (const id of pageLightSections) {
       const el = document.getElementById(id);
       if (el && mid >= el.offsetTop && mid < el.offsetTop + el.offsetHeight) return 'light';
@@ -109,12 +112,20 @@
     }
     return 'default';
   }
+
   function updateNav() {
+    if (isHome) {
+      // Home: show pill only after scrolling past threshold
+      window.scrollY > THRESHOLD
+        ? navEl.classList.add('compact')
+        : navEl.classList.remove('compact');
+    }
     const theme = getNavTheme();
     navEl.classList.toggle('light', theme === 'light');
     navEl.classList.toggle('dark-section', theme === 'dark-section');
     ticking = false;
   }
+
   window.addEventListener('scroll', () => {
     if (!ticking) { requestAnimationFrame(updateNav); ticking = true; }
   }, { passive: true });
