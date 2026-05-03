@@ -16,74 +16,23 @@
     button { cursor: pointer; background: none; border: none; font: inherit; color: inherit; }
     img { display: block; max-width: 100%; }
 
-    /* ─── NAV ─── */
-    #nav {
-      position: fixed;
-      top: 20px; left: 0; right: 0;
-      z-index: 1000;
-      pointer-events: none;
-      height: 52px;
-    }
-    #nav-expanded {
-      position: absolute; top: 0; left: 50px; right: 50px;
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 14px 0; color: #1a1a1a;
-      pointer-events: auto; opacity: 1;
-      transition: opacity 0.4s ease, color 0.3s ease;
-    }
-    #nav-expanded a {
-      font-size: 13px; letter-spacing: 0.15em; font-weight: 500; opacity: 0.88;
-      transition: opacity 180ms ease;
-    }
-    #nav-expanded a:hover { opacity: 1; }
-
-    #nav-compact {
-      position: absolute; top: 0; right: 40px;
-      display: flex; align-items: center; gap: 28px;
-      padding: 10px 24px; border-radius: 40px;
-      background: rgba(0, 0, 0, 0.15);
-      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-      border: 1px solid rgba(0, 0, 0, 0.18); color: #1a1a1a;
-      pointer-events: none; opacity: 0;
-      transition: opacity 0.4s ease, background 0.3s ease, border-color 0.3s ease, color 0.3s ease;
-    }
-    #nav-compact a {
-      font-size: 13px; letter-spacing: 0.15em; font-weight: 500; opacity: 0.88;
-      white-space: nowrap; transition: opacity 180ms ease;
-    }
-    #nav-compact a:first-child { font-weight: 800; letter-spacing: 0.02em; }
-    #nav-compact a:hover { opacity: 1; }
-
-    #nav.compact #nav-expanded { opacity: 0; pointer-events: none; }
-    #nav.compact #nav-compact  { opacity: 1; pointer-events: auto; }
-
-    #nav.dark-section #nav-expanded { color: #fff; }
-    #nav.dark-section #nav-compact {
-      color: #fff;
-      background: rgba(255, 255, 255, 0.1);
-      border-color: rgba(255, 255, 255, 0.15);
-    }
-    #nav.light #nav-expanded { color: #1a1a1a; }
-    #nav.light #nav-compact {
-      color: #1a1a1a;
-      background: rgba(0, 0, 0, 0.07);
-      border-color: rgba(0, 0, 0, 0.14);
-    }
-
     /* ─── HERO ─── */
-    #hero { position: relative; height: 100vh; overflow: hidden; background: #111; z-index: 1; }
-    #hero::after { content: ''; position: absolute; inset: 0; background: rgba(0,0,0,0.18); pointer-events: none; }
+    #hero {
+      position: relative; height: 100vh; overflow: hidden; background: #111; z-index: 1;
+    }
+    #hero::after {
+      content: ''; position: absolute; inset: 0;
+      background: rgba(0,0,0,0.18); pointer-events: none;
+    }
     #hero-nico {
       position: absolute; top: 72px; left: 40px;
-      font-size: clamp(80px, 14vw, 160px);
-      font-weight: 900; letter-spacing: -0.02em; line-height: 1;
-      color: #fff; z-index: 2; user-select: none;
+      font-size: clamp(80px, 14vw, 160px); font-weight: 900;
+      letter-spacing: -0.02em; line-height: 1; color: #fff; z-index: 2; user-select: none;
     }
     #hero-vaca {
       position: absolute; bottom: 18px; right: 40px;
-      font-size: clamp(80px, 14vw, 160px);
-      font-weight: 900; letter-spacing: -0.02em; line-height: 1;
-      color: #fff; z-index: 2; user-select: none;
+      font-size: clamp(80px, 14vw, 160px); font-weight: 900;
+      letter-spacing: -0.02em; line-height: 1; color: #fff; z-index: 2; user-select: none;
     }
     #hero-tagline {
       position: absolute; bottom: 36px; left: 40px;
@@ -93,19 +42,37 @@
       transition: opacity 0.3s ease;
     }
     #hero-arrow { display: block; margin-top: 8px; font-size: 18px; animation: bounce 2s ease-in-out infinite; }
-    @keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(5px)} }
+    @keyframes bounce {
+      0%,100% { transform: translateY(0); }
+      50%      { transform: translateY(5px); }
+    }
 
-    /* ─── ABOUT SCROLL ─── */
+    /* ─── ABOUT SCROLL HIGHLIGHT ─── */
     #about-scroll-wrapper { position: relative; height: 400vh; background: #000; z-index: 2; }
-    #about-scroll-sticky { position: sticky; top: 0; height: 100vh; display: flex; align-items: center; padding: 0 8%; overflow: hidden; }
-    .about-sentence { display: inline; font-size: clamp(28px, 4.5vw, 60px); font-weight: 700; line-height: 1.22; letter-spacing: -0.02em; color: rgba(255,255,255,0.15); transition: color 500ms ease; }
-    .about-sentence.lit { color: #fff; }
-    .about-sentence.dim { color: rgba(255,255,255,0.15); }
+    #about-scroll-sticky {
+      position: sticky; top: 0; height: 100vh;
+      display: flex; align-items: center; padding: 0 8%; overflow: hidden;
+    }
+    .about-sentence {
+      display: inline; font-size: clamp(28px, 4.5vw, 60px);
+      font-weight: 700; line-height: 1.22; letter-spacing: -0.02em;
+      color: rgba(255,255,255,0.15); transition: color 500ms ease;
+    }
+    .about-sentence.lit  { color: #fff; }
+    .about-sentence.dim  { color: rgba(255,255,255,0.15); }
 
     /* ─── ABOUT BIO ─── */
-    #about { background: #000; display: grid; grid-template-columns: 1fr 1fr; min-height: 100vh; align-items: center; padding: 80px 8%; gap: 80px; }
-    #about-photo { position: relative; aspect-ratio: 3/4; max-height: 600px; overflow: hidden; border-radius: 2px; background: #1a1a1a; }
-    #about-photo img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%); }
+    #about {
+      background: #000; display: grid; grid-template-columns: 1fr 1fr;
+      min-height: 100vh; align-items: center; padding: 80px 8%; gap: 80px;
+    }
+    #about-photo {
+      position: relative; aspect-ratio: 3/4; max-height: 600px;
+      overflow: hidden; border-radius: 2px; background: #1a1a1a;
+    }
+    #about-photo img {
+      width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%);
+    }
     #about-text-col { display: flex; flex-direction: column; gap: 32px; }
     .about-para { font-size: clamp(16px, 1.6vw, 20px); line-height: 1.7; color: rgba(255,255,255,0.38); }
     .about-para .hi { color: #fff; font-weight: 700; }
@@ -115,7 +82,12 @@
     #about-clock span { font-size: 14px; font-weight: 400; color: rgba(255,255,255,0.4); margin-left: 4px; }
     #about-divider { width: 100%; height: 1px; background: rgba(255,255,255,0.12); }
     #about-socials { display: flex; gap: 20px; align-items: center; }
-    #about-socials a { display: flex; align-items: center; justify-content: center; width: 38px; height: 38px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.2); color: rgba(255,255,255,0.6); transition: border-color 180ms, color 180ms; }
+    #about-socials a {
+      display: flex; align-items: center; justify-content: center;
+      width: 38px; height: 38px; border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.2); color: rgba(255,255,255,0.6);
+      transition: border-color 180ms, color 180ms;
+    }
     #about-socials a:hover { border-color: rgba(255,255,255,0.8); color: #fff; }
     #about-socials svg { width: 16px; height: 16px; }
 
@@ -123,7 +95,7 @@
     #podcast-section { background: #fff; color: #1a1a1a; padding: 80px 8%; }
     .pod-header { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 32px; flex-wrap: wrap; gap: 12px; }
     .pod-title-label { font-size: 11px; letter-spacing: 0.32em; text-transform: uppercase; color: rgba(0,0,0,0.35); margin-bottom: 4px; font-family: 'Fragment Mono', monospace; }
-    .pod-title { font-size: clamp(44px, 7vw, 80px); font-weight: 900; letter-spacing: 0.22em; text-transform: uppercase; line-height: 0.88; }
+    .pod-title { font-size: clamp(44px, 7vw, 80px); font-weight: 900; letter-spacing: -0.22em; text-transform: uppercase; line-height: 0.88; }
     .pod-cta { font-size: 13px; font-weight: 600; border-bottom: 1px solid rgba(0,0,0,0.18); padding-bottom: 2px; transition: opacity 180ms; }
     .pod-cta:hover { opacity: 0.5; }
     .pod-divider { width: 100%; height: 1px; background: rgba(0,0,0,0.09); border: none; margin: 0; }
@@ -171,13 +143,12 @@
 
     /* ─── RESPONSIVE ─── */
     @media (max-width: 768px) {
-      #nav-expanded { left: 20px; right: 20px; }
-      #nav-compact  { right: 20px; padding: 10px 20px; }
       #hero-nico { top: 72px; left: 20px; font-size: clamp(52px,16vw,100px); }
       #hero-vaca { bottom: 80px; right: 20px; font-size: clamp(52px,16vw,100px); }
-      #hero-tagline { left: 20px; bottom: 24px; font-size: 18px; }
+      #hero-tagline { left: 20px; bottom: auto; top: 50%; transform: translateY(-50%); font-size: 14px; }
       #about { grid-template-columns: 1fr; padding: 60px 6%; gap: 40px; }
       #about-photo { max-height: 400px; aspect-ratio: 4/3; }
+      #about-photo img { object-position: center 15%; transform: scale(1.1); transform-origin: center top; }
       .pod-grid { grid-template-columns: 1fr; }
       .pod-left { border-right: none; border-bottom: 1px solid rgba(0,0,0,0.09); padding: 28px 0; }
       .pod-right { padding: 28px 0 0; }
@@ -193,24 +164,7 @@
 
 <a href="#about" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)">Skip to content</a>
 
-<!-- NAV -->
-<nav id="nav">
-  <div id="nav-expanded">
-    <a href="about.html">ABOUT</a>
-    <a href="podcast.html">PODCAST</a>
-    <a href="thoughts.html">THOUGHTS</a>
-    <a href="contact.html">CONTACT</a>
-  </div>
-  <div id="nav-compact">
-    <a href="#">NICOLAS VACA</a>
-    <a href="about.html">ABOUT</a>
-    <a href="podcast.html">PODCAST</a>
-    <a href="thoughts.html">THOUGHTS</a>
-    <a href="contact.html">CONTACT</a>
-  </div>
-</nav>
-
-<!-- HERO -->
+<!-- ─── HERO ─── -->
 <section id="hero" aria-label="Hero">
   <img src="images/HERO" alt="Nicolas Vaca" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top;" loading="eager">
   <span id="hero-nico" aria-hidden="true">NICO</span>
@@ -221,29 +175,29 @@
   </div>
 </section>
 
-<!-- ABOUT SCROLL HIGHLIGHT -->
+<!-- ─── ABOUT SCROLL HIGHLIGHT ─── -->
 <section id="about-scroll-wrapper" aria-label="About intro">
   <div id="about-scroll-sticky">
     <div role="text">
-      <span class="about-sentence" data-index="0">Curiosity has always been my default setting.</span>
-      <span class="about-sentence" data-index="1">I spent years chasing a tennis ball across courts around the world, learning that the best version of yourself is built through repetition.</span>
-      <span class="about-sentence" data-index="2">When I hung up the racket, I channelled that same obsession into something else: ideas.</span>
-      <span class="about-sentence" data-index="3">Today I spend my time going down rabbit holes most people disregard. Here is where I expose my interest in rabbit holes to the world.</span>
+      <span class="about-sentence" data-index="0">As a former tennis player and athlete at the Rafa Nadal Academy,</span>
+      <span class="about-sentence" data-index="1"> I am used to spending my free time learning about one of the many interests I have.</span>
+      <span class="about-sentence" data-index="2"> I recently decided to channel my curiosity into Untold.</span>
+      <span class="about-sentence" data-index="3"> My platform to speak with smart and interesting people.</span>
     </div>
   </div>
 </section>
 
-<!-- ABOUT BIO -->
+<!-- ─── ABOUT BIO ─── -->
 <section id="about" aria-label="About Nicolas Vaca">
   <div id="about-photo">
     <img src="images/cheeky-look" alt="Nicolas Vaca" loading="lazy">
   </div>
   <div id="about-text-col">
-    <p class="about-para">As someone who since early on found pleasure in <span class="hi">knowing more than was necessary</span> about things only few found interesting I still spend my free time learning about <span class="hi">fun facts</span> and <span class="hi">unknown stories</span>.</p>
-    <p class="about-para">Right now, I'm specially interested in <span class="hi">artificial intelligence</span>, <span class="hi">evolutionary psychology</span>, <span class="hi">relationship dynamics</span>, and <span class="hi">personal development</span>. But one of my core beliefs is that anything can be interesting if you ask the right question and go deep enough into it.</p>
+    <p class="about-para">As someone who since early on found pleasure in <span class="hi">knowing more than was necessary</span> about things only few found interesting I still spend my time filling my head with <span class="hi">fun facts</span> and <span class="hi">unknown stories</span>.</p>
+    <p class="about-para">Right now, I'm diving deep into conversations with experts in <span class="hi">artificial intelligence</span> (with a focus on infrastructure needs and model alignment), <span class="hi">evolutionary psychology</span>, <span class="hi">relationship dynamics</span>, <span class="hi">personal development</span>, and more.</p>
     <div id="about-meta">
       <div id="about-location">Based and work in Madrid 🇪🇸</div>
-      <div id="about-clock"><span id="clock-time">00:00</span><span>(CET)</span></div>
+      <div id="about-clock"><span id="clock-time">00:00</span><span> (CET)</span></div>
     </div>
     <div id="about-divider"></div>
     <nav id="about-socials" aria-label="Social links">
@@ -263,7 +217,7 @@
   </div>
 </section>
 
-<!-- PODCAST -->
+<!-- ─── PODCAST ─── -->
 <section id="podcast-section" aria-label="Podcast">
   <div class="pod-header">
     <div>
@@ -284,12 +238,12 @@
         </div>
       </div>
       <div class="pod-ep-label">Podcast Preview</div>
-      <div class="pod-ep-title">Untold: An Introduction</div>
+      <div class="pod-ep-title">Untold — An Introduction</div>
       <div class="pod-ep-meta">What Untold is, and why I started it!</div>
       <div class="pod-platforms">
-        <button class="pod-plat-btn" onclick="window.open('https://open.spotify.com/show/5FGKcMKTWyOAPTgkGNxATB','_blank')">→ Spotify</button>
-        <button class="pod-plat-btn" onclick="window.open('https://podcasts.apple.com/co/podcast/untold/id1881240541','_blank')">→ Apple Podcasts</button>
-        <button class="pod-plat-btn" onclick="window.open('https://youtube.com/@nicolasvacagr','_blank')">→ YouTube</button>
+        <button class="pod-plat-btn" onclick="window.open('https://open.spotify.com/show/5FGKcMKTWyOAPTgkGNxATB','_blank')">Spotify</button>
+        <button class="pod-plat-btn" onclick="window.open('https://podcasts.apple.com/co/podcast/untold/id1881240541','_blank')">Apple Podcasts</button>
+        <button class="pod-plat-btn" onclick="window.open('https://youtube.com/@nicolasvacagr','_blank')">YouTube</button>
       </div>
     </div>
     <div class="pod-right">
@@ -297,10 +251,10 @@
       <p class="pod-desc-text">I look to speak with researchers, explorers, thinkers, and anyone with an idea worth spreading, a story worth telling, or a question more of us should be asking ourselves. Join me as I feed my curiosity, one conversation at a time.</p>
     </div>
   </div>
-  <hr class="pod-divider" style="margin-top:0">
+  <hr class="pod-divider" style="margin-top:0;">
 </section>
 
-<!-- NEWSLETTER -->
+<!-- ─── NEWSLETTER ─── -->
 <section id="newsletter-section">
   <hr class="nl-divider">
   <div class="nl-header">
@@ -312,16 +266,16 @@
   </div>
   <hr class="nl-divider">
   <div id="nl-articles">
-    <div class="nl-article" style="pointer-events:none;opacity:0.3">
+    <div class="nl-article" style="pointer-events:none;opacity:0.3;">
       <div class="nl-art-img"></div>
-      <div style="height:11px;background:#e8e8e8;width:35%;border-radius:3px"></div>
-      <div style="height:16px;background:#e8e8e8;width:90%;border-radius:3px"></div>
+      <div style="height:11px;background:#e8e8e8;width:35%;border-radius:3px;"></div>
+      <div style="height:16px;background:#e8e8e8;width:90%;border-radius:3px;"></div>
     </div>
   </div>
   <div class="nl-signup">
     <div class="nl-signup-copy">
       <div class="nl-signup-title">Get the newsletter</div>
-      <div class="nl-signup-sub">Sneak peek into my mind — here you'll get an inside look at some of the things I am putting on paper. Explore, discover, and learn about things that move me, have shifted my perspectives, or I am questioning.</div>
+      <div class="nl-signup-sub">Ideas worth sitting with, delivered to your inbox. No noise, just the good stuff when it's ready.</div>
     </div>
     <form class="nl-form" onsubmit="handleNlSubmit(event)">
       <input class="nl-input" type="email" placeholder="Your email address" required id="nl-email">
@@ -330,173 +284,77 @@
   </div>
 </section>
 
-<!-- FOOTER -->
-<footer id="contact">
-  <span id="footer-name">NICOLAS VACA</span>
-  <div id="footer-grid">
-    <div class="fc-left">
-      <div class="footer-col-value">
-        <a href="mailto:contact@nicolasvacagr.com">contact@nicolasvacagr.com</a>
-        <a href="tel:+34678789532">+34 678 78 95 32</a>
-      </div>
-    </div>
-    <div class="fc-left">
-      <div class="footer-col-label">My current time</div>
-      <div class="footer-col-value">
-        <span class="footer-time-big"><span id="footer-clock">00:00</span><span class="footer-time-loc"> Madrid (CET)</span></span>
-      </div>
-    </div>
-    <div class="fc-left">
-      <div class="footer-col-value">Calle de Santo Tomé 6,<br>Madrid, 28004</div>
-    </div>
-    <div class="fc-right">
-      <div class="footer-col-value">
-        <a href="https://instagram.com/nicolasvacagr" target="_blank">Instagram</a>
-        <a href="https://x.com/nicolasvacagr" target="_blank">X (Twitter)</a>
-        <a href="https://youtube.com/@nicolasvacagr" target="_blank">YouTube</a>
-        <a href="https://linkedin.com/in/nicovaca" target="_blank">LinkedIn</a>
-      </div>
-    </div>
-  </div>
-  <div id="footer-bottom">
-    <span>© 2026 Nicolas Vaca</span>
-    <div style="display:flex;align-items:center;gap:16px;">
-      <a href="#">Privacy Policy</a> | <a href="#">Terms</a>
-      <button id="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top">↑</button>
-    </div>
-  </div>
-</footer>
+<!-- ─── ABOUT SCROLL HIGHLIGHT SCRIPT ─── -->
+<script>
+  const wrapper   = document.getElementById('about-scroll-wrapper');
+  const sentences = document.querySelectorAll('.about-sentence');
+  window.addEventListener('scroll', () => {
+    const p = Math.max(0, Math.min(1, -wrapper.getBoundingClientRect().top / (wrapper.offsetHeight - window.innerHeight)));
+    sentences.forEach((el, i) => {
+      const t = i / sentences.length, n = (i + 1) / sentences.length;
+      el.classList.toggle('lit', p >= t && p < n);
+      el.classList.toggle('dim', p >= n);
+    });
+  }, { passive: true });
+</script>
 
 <script>
-const navEl     = document.getElementById('nav');
-const taglineEl = document.getElementById('hero-tagline');
-const heroEl    = document.getElementById('hero');
-const THRESHOLD = 80;
-let ticking = false;
+  window.PAGE_DARK_SECTIONS  = ['about-scroll-wrapper', 'about'];
+  window.PAGE_LIGHT_SECTIONS = ['podcast-section', 'newsletter-section'];
 
-const darkSections  = ['about-scroll-wrapper', 'about'];
-const lightSections = ['podcast-section', 'newsletter-section', 'contact'];
-
-function getNavTheme() {
-  const mid = window.scrollY + 30;
-  for (const id of lightSections) {
-    const el = document.getElementById(id);
-    if (el && mid >= el.offsetTop && mid < el.offsetTop + el.offsetHeight) return 'light';
-  }
-  for (const id of darkSections) {
-    const el = document.getElementById(id);
-    if (el && mid >= el.offsetTop && mid < el.offsetTop + el.offsetHeight) return 'dark-section';
-  }
-  return 'default';
-}
-
-function update() {
-  const y = window.scrollY;
-  y > THRESHOLD ? navEl.classList.add('compact') : navEl.classList.remove('compact');
-  const theme = getNavTheme();
-  navEl.classList.toggle('light', theme === 'light');
-  navEl.classList.toggle('dark-section', theme === 'dark-section');
-  taglineEl.style.opacity = Math.max(0, 1 - y / (heroEl.offsetHeight * 0.45)).toFixed(3);
-  ticking = false;
-}
-
-window.addEventListener('scroll', () => {
-  if (!ticking) { requestAnimationFrame(update); ticking = true; }
-}, { passive: true });
-
-update();
-
-/* About scroll highlight */
-const wrapper   = document.getElementById('about-scroll-wrapper');
-const sentences = document.querySelectorAll('.about-sentence');
-window.addEventListener('scroll', () => {
-  const p = Math.max(0, Math.min(1, -wrapper.getBoundingClientRect().top / (wrapper.offsetHeight - window.innerHeight)));
-  sentences.forEach((el, i) => {
-    const t = i / sentences.length, n = (i+1) / sentences.length;
-    el.classList.toggle('lit', p >= t && p < n);
-    el.classList.toggle('dim', p >= n);
-  });
-}, { passive: true });
-
-/* Clocks */
-function updateClocks() {
-  const t = new Date().toLocaleTimeString('en-GB', { timeZone:'Europe/Madrid', hour:'2-digit', minute:'2-digit', hour12:false });
-  const c1 = document.getElementById('clock-time');
-  const c2 = document.getElementById('footer-clock');
-  if (c1) c1.textContent = t;
-  if (c2) c2.textContent = t;
-}
-updateClocks();
-setInterval(updateClocks, 60000);
-
-/* Footer name auto-fit */
-function fitFooterName() {
-  const el = document.getElementById('footer-name');
-  const avail = el.parentElement.clientWidth - 80;
-  let lo = 10, hi = 600, mid;
-  while (hi - lo > 1) {
-    mid = Math.floor((lo + hi) / 2);
-    el.style.fontSize = mid + 'px';
-    el.scrollWidth <= avail ? lo = mid : hi = mid;
-  }
-  el.style.fontSize = lo + 'px';
-}
-fitFooterName();
-window.addEventListener('resize', fitFooterName);
-
-/* Substack articles */
-async function loadArticles() {
-  const container = document.getElementById('nl-articles');
-  const feedUrl   = 'https://nicolasvaca.substack.com/feed';
-  const proxies   = [
-    u => 'https://corsproxy.io/?url=' + encodeURIComponent(u),
-    u => 'https://api.allorigins.win/raw?url=' + encodeURIComponent(u),
-    u => 'https://thingproxy.freeboard.io/fetch/' + u,
-  ];
-  let xml = null;
-  for (const p of proxies) {
-    try {
-      const res = await fetch(p(feedUrl), { signal: AbortSignal.timeout(6000) });
-      if (!res.ok) continue;
-      const doc = new DOMParser().parseFromString(await res.text(), 'text/xml');
-      if (doc.querySelector('item')) { xml = doc; break; }
-    } catch { continue; }
-  }
-  if (!xml) {
-    container.innerHTML = '<div style="padding:24px 0;color:rgba(0,0,0,0.4);font-size:14px;">Could not load articles. <a href="thoughts.html" style="color:#1a1a1a;text-decoration:underline;">Read all thoughts →</a></div>';
-    return;
-  }
-  container.innerHTML = Array.from(xml.querySelectorAll('item')).slice(0, 3).map((item, i, arr) => {
-    const title   = item.querySelector('title')?.textContent?.trim() ?? '';
-    const link    = item.querySelector('link')?.textContent?.trim() ?? '#';
-    const pub     = item.querySelector('pubDate')?.textContent ?? '';
-    const date    = pub ? new Date(pub).toLocaleDateString('en-GB', { day:'numeric', month:'long', year:'numeric' }) : '';
-    const desc    = item.querySelector('description')?.textContent ?? '';
-    const tmp     = document.createElement('div'); tmp.innerHTML = desc;
-    const excerpt = (tmp.textContent||'').replace(/\s+/g,' ').trim().slice(0,180);
-    const imgM    = desc.match(/<img[^>]+src=["'](https?[^"']+)['"]/);
-    return `<a href="${link}" target="_blank" rel="noopener" class="nl-article"${i===arr.length-1?' style="border-right:none;padding-right:0"':''}>
-      ${imgM ? `<div class="nl-art-img"><img src="${imgM[1]}" alt="${title}" loading="lazy"></div>` : '<div class="nl-art-img" style="background:#e0e0e0"></div>'}
-      <span class="nl-art-date">${date}</span>
-      <span class="nl-art-title">${title}</span>
-      <span class="nl-art-excerpt">${excerpt}</span>
-      <span class="nl-art-read">Read →</span>
-    </a>`;
-  }).join('');
-}
-loadArticles();
-
-/* Newsletter form */
-function handleNlSubmit(e) {
-  e.preventDefault();
-  const btn = document.getElementById('nl-btn');
-  btn.textContent = '...';
-  setTimeout(() => {
-    document.getElementById('nl-email').value = '';
-    btn.textContent = "You're in ✓";
-    setTimeout(() => { btn.textContent = 'Subscribe'; }, 3000);
-  }, 1000);
-}
+  // Tagline fade on scroll
+  const taglineEl = document.getElementById('hero-tagline');
+  const heroEl    = document.getElementById('hero');
+  window.addEventListener('scroll', () => {
+    const y = window.scrollY;
+    if (taglineEl) taglineEl.style.opacity = Math.max(0, 1 - y / (heroEl.offsetHeight * 0.45)).toFixed(3);
+  }, { passive: true });
 </script>
+<script src="components.js"></script>
+
+<!-- Substack articles -->
+<script>
+  async function loadArticles() {
+    const container = document.getElementById('nl-articles');
+    const feedUrl = 'https://nicolasvaca.substack.com/feed';
+    const proxies = [
+      u => `https://corsproxy.io/?url=${encodeURIComponent(u)}`,
+      u => `https://api.allorigins.win/raw?url=${encodeURIComponent(u)}`,
+      u => `https://thingproxy.freeboard.io/fetch/${u}`,
+    ];
+    let xml = null;
+    for (const p of proxies) {
+      try {
+        const res = await fetch(p(feedUrl), { signal: AbortSignal.timeout(6000) });
+        if (!res.ok) continue;
+        const doc = new DOMParser().parseFromString(await res.text(), 'text/xml');
+        if (doc.querySelector('item')) { xml = doc; break; }
+      } catch { continue; }
+    }
+    if (!xml) {
+      container.innerHTML = `<div style="padding:24px 0;color:rgba(0,0,0,0.4);font-size:14px;">Could not load articles. <a href="thoughts.html" style="color:#1a1a1a;text-decoration:underline;">Read all thoughts</a></div>`;
+      return;
+    }
+    container.innerHTML = Array.from(xml.querySelectorAll('item')).slice(0, 3).map((item, i, arr) => {
+      const title   = item.querySelector('title')?.textContent?.trim() ?? '';
+      const link    = item.querySelector('link')?.textContent?.trim() ?? '#';
+      const pub     = item.querySelector('pubDate')?.textContent ?? '';
+      const date    = pub ? new Date(pub).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }) : '';
+      const desc    = item.querySelector('description')?.textContent ?? '';
+      const tmp     = document.createElement('div'); tmp.innerHTML = desc;
+      const excerpt = tmp.textContent.replace(/\s+/g, ' ').trim().slice(0, 180);
+      const imgM    = desc.match(/img.*?src=["']([^"']+)/);
+      return `<a href="${link}" target="_blank" rel="noopener" class="nl-article"${i === arr.length - 1 ? ' style="border-right:none;padding-right:0;"' : ''}>
+        ${imgM ? `<div class="nl-art-img"><img src="${imgM[1]}" alt="${title}" loading="lazy"></div>` : `<div class="nl-art-img" style="background:#e0e0e0;"></div>`}
+        <span class="nl-art-date">${date}</span>
+        <span class="nl-art-title">${title}</span>
+        <span class="nl-art-excerpt">${excerpt}</span>
+        <span class="nl-art-read">Read →</span>
+      </a>`;
+    }).join('');
+  }
+  loadArticles();
+</script>
+
 </body>
 </html>
