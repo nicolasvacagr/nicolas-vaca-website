@@ -14,7 +14,6 @@
     body { font-family: 'Plus Jakarta Sans', sans-serif; background: #000; color: #fff; overflow-x: hidden; }
     a { color: inherit; text-decoration: none; }
 
-    /* ─── HERO ─── */
     #pp-hero {
       padding: 120px 8% 64px;
       border-bottom: 1px solid rgba(255,255,255,0.08);
@@ -33,7 +32,6 @@
       font-family: 'Fragment Mono', monospace;
     }
 
-    /* ─── LAYOUT ─── */
     #pp-body {
       display: grid;
       grid-template-columns: 220px 1fr;
@@ -44,7 +42,6 @@
       align-items: start;
     }
 
-    /* ─── SIDEBAR NAV ─── */
     #pp-nav {
       position: sticky; top: 80px;
       padding: 48px 32px 48px 0;
@@ -62,7 +59,6 @@
     #pp-nav a:hover { color: rgba(255,255,255,0.8); }
     #pp-nav a.active { color: #fff; border-left-color: rgba(255,255,255,0.5); }
 
-    /* ─── CONTENT ─── */
     #pp-content {
       padding: 48px 0 48px 56px;
       display: flex; flex-direction: column; gap: 48px;
@@ -89,7 +85,6 @@
     }
     .pp-section a:hover { color: #fff; text-decoration-color: rgba(255,255,255,0.6); }
 
-    /* Callout box */
     .pp-callout {
       background: rgba(255,255,255,0.04);
       border: 1px solid rgba(255,255,255,0.08);
@@ -100,7 +95,6 @@
     }
     .pp-callout strong { color: rgba(255,255,255,0.7); }
 
-    /* Contact email chip */
     .pp-email {
       display: inline-block;
       padding: 6px 14px;
@@ -114,7 +108,6 @@
     }
     .pp-email:hover { background: rgba(255,255,255,0.1); }
 
-    /* ─── RESPONSIVE ─── */
     @media (max-width: 768px) {
       #pp-hero { padding: 100px 6% 48px; }
       #pp-body { grid-template-columns: 1fr; padding: 0 6% 64px; }
@@ -126,6 +119,9 @@
 </head>
 <body>
 
+<!-- ← Nav bar loads here, same as every other page -->
+<script src="components.js"></script>
+
 <!-- ─── HERO ─── -->
 <section id="pp-hero">
   <div id="pp-hero-label">Legal</div>
@@ -136,7 +132,6 @@
 <!-- ─── BODY ─── -->
 <div id="pp-body">
 
-  <!-- Sidebar Navigation -->
   <nav id="pp-nav" aria-label="Privacy policy sections">
     <ul>
       <li><a href="#overview">Overview</a></li>
@@ -154,7 +149,6 @@
     </ul>
   </nav>
 
-  <!-- Main Content -->
   <main id="pp-content">
 
     <section class="pp-section" id="overview">
@@ -278,7 +272,7 @@
   </main>
 </div>
 
-<!-- Active nav link on scroll -->
+<!-- Active sidebar nav highlight on scroll -->
 <script>
   const sections = document.querySelectorAll('.pp-section');
   const navLinks = document.querySelectorAll('#pp-nav a');
@@ -294,6 +288,5 @@
   sections.forEach(s => observer.observe(s));
 </script>
 
-<script src="components.js"></script>
 </body>
 </html>
