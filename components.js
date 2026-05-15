@@ -63,7 +63,7 @@
       <div id="footer-bottom">
         <span>© 2026 Nicolas Vaca</span>
         <div style="display:flex;align-items:center;gap:16px;">
-          <a href="#">Privacy Policy</a> | <a href="#">Terms</a>
+          <a href="privacy-policy.html">Privacy Policy</a>
           <button id="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top">↑</button>
         </div>
       </div>
