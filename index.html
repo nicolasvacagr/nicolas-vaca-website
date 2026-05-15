@@ -8,6 +8,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Nicolas Vaca</title>
+    <meta name="description" content="Nicolas Vaca — entrepreneur, podcast host of Untold, and writer based in Madrid. Exploring curiosity through conversations, essays, and ideas.">
+    <meta name="keywords" content="Nicolas Vaca, Untold podcast, Madrid entrepreneur, curiosity podcast, startup ecosystem, AWS, economics IE University">
+    <meta property="og:title" content="Nicolas Vaca">
+    <meta property="og:description" content="Nicolas Vaca — entrepreneur, podcast host of Untold, and writer based in Madrid. Exploring curiosity through conversations, essays, and ideas.">
+    <meta property="og:url" content="https://www.nicolasvacagr.com/">  <meta property="og:type" content="website">  <meta name="twitter:card" content="summary">  <meta name="twitter:title" content="Nicolas Vaca">  <meta name="twitter:description" content="Entrepreneur, podcast host of Untold, and writer based in Madrid. Exploring curiosity through conversations and ideas.">  <link rel="canonical" href="https://www.nicolasvacagr.com/">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { -webkit-font-smoothing: antialiased; scroll-behavior: smooth; }
@@ -200,7 +205,7 @@
     <p class="about-para">As someone who since early on found pleasure in <span class="hi">knowing more than was necessary</span> about things only few found interesting I still spend my free time learning about <span class="hi">fun facts</span> and <span class="hi">unknown stories</span>.</p>
     <p class="about-para">Right now, I'm specially interested on <span class="hi">artificial intelligence</span>, <span class="hi">evolutionary psychology</span>, <span class="hi">relationship dynamics</span>, and <span class="hi">personal development</span>. But one of my core beliefs is that anything can be interesting if you ask the right question and go deep enough into it.</p>
     <div id="about-meta">
-      <div id="about-location">Based and work in Madrid 🇪🇸</div>
+      <div id="about-location">Based in Madrid 🇪🇸</div>
       <div id="about-clock"><span id="clock-time">00:00</span><span> (CET)</span></div>
     </div>
     <div id="about-divider"></div>
@@ -336,7 +341,7 @@
       const tmp     = document.createElement('div'); tmp.innerHTML = item.description || '';
       const excerpt = tmp.textContent.replace(/\s+/g, ' ').trim().slice(0, 180);
       return `<a href="${link}" target="_blank" rel="noopener" class="nl-article"${i === arr.length - 1 ? ' style="border-right:none;padding-right:0;"' : ''}>
-        ${imgM ? `<div class="nl-art-img"><img src="${imgM[1]}" alt="${title}" loading="lazy"></div>` : `<div class="nl-art-img" style="background:#e0e0e0;"></div>`}
+        ${imgSrc ? `<div class="nl-art-img"><img src="${imgSrc}" alt="${title}" loading="lazy"></div>` : `<div class="nl-art-img" style="background:#e0e0e0;"></div>`}
         <span class="nl-art-date">${pub}</span>
         <span class="nl-art-title">${title}</span>
         <span class="nl-art-excerpt">${excerpt}</span>
