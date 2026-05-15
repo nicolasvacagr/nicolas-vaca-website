@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Thoughts — Nicolas Vaca</title>
+    <meta name="description" content="Thoughts by Nicolas Vaca — essays, ideas and articles on curiosity, ambition, psychology and the things worth thinking about. Read on Substack.">
   <link rel="stylesheet" href="shared.css">
   <style>
     body { background: #fff; color: #1a1a1a; }
@@ -388,7 +389,7 @@
       const date = post.date ? new Date(post.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) : '';
       document.getElementById('featured-tag').textContent = 'Latest post';
       document.getElementById('featured-title').textContent = post.title;
-      document.getElementById('featured-excerpt').textContent = post.excerpt;
+      const _dec = document.createElement('textarea'); _dec.innerHTML = post.excerpt; document.getElementById('featured-excerpt').textContent = _dec.value;
       document.getElementById('featured-date').textContent = date;
       document.getElementById('featured-read-time').textContent = post.readTime;
       document.getElementById('featured-read').href = post.link;
@@ -413,7 +414,7 @@
     function renderGrid(posts) {
       const grid = document.getElementById('posts-grid');
       document.getElementById('posts-loading').style.display = 'none';
-      if (!posts.length) { grid.innerHTML = ''; return; }
+      if (!posts.length) { grid.innerHTML = '<div id="posts-empty" style="display:block;padding:40px 0;font-size:14px;color:rgba(0,0,0,0.4);">More posts coming soon. <a href="https://nicolasvaca.substack.com" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline;">Read all on Substack ↗</a></div>'; return; }
       grid.innerHTML = posts.map(post => {
         const date = post.date ? new Date(post.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : '';
         const cover = post.image
