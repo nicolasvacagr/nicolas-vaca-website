@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&family=Fragment+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="shared.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy Policy — Nicolas Vaca</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { -webkit-font-smoothing: antialiased; scroll-behavior: smooth; }
+    body { font-family: 'Plus Jakarta Sans', sans-serif; background: #000; color: #fff; overflow-x: hidden; }
+    a { color: inherit; text-decoration: none; }
+
+    /* ─── HERO ─── */
+    #pp-hero {
+      padding: 120px 8% 64px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    #pp-hero-label {
+      font-family: 'Fragment Mono', monospace;
+      font-size: 11px; letter-spacing: 0.3em; text-transform: uppercase;
+      color: rgba(255,255,255,0.35); margin-bottom: 16px;
+    }
+    #pp-hero h1 {
+      font-size: clamp(36px, 6vw, 72px); font-weight: 900;
+      letter-spacing: -0.03em; line-height: 1; margin-bottom: 20px;
+    }
+    #pp-hero-meta {
+      font-size: 13px; color: rgba(255,255,255,0.35);
+      font-family: 'Fragment Mono', monospace;
+    }
+
+    /* ─── LAYOUT ─── */
+    #pp-body {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: 0;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 8% 80px;
+      align-items: start;
+    }
+
+    /* ─── SIDEBAR NAV ─── */
+    #pp-nav {
+      position: sticky; top: 80px;
+      padding: 48px 32px 48px 0;
+      border-right: 1px solid rgba(255,255,255,0.08);
+    }
+    #pp-nav ul { list-style: none; display: flex; flex-direction: column; gap: 4px; }
+    #pp-nav a {
+      display: block; padding: 6px 0;
+      font-size: 12px; font-weight: 500; letter-spacing: 0.02em;
+      color: rgba(255,255,255,0.35);
+      transition: color 180ms;
+      border-left: 2px solid transparent;
+      padding-left: 12px;
+    }
+    #pp-nav a:hover { color: rgba(255,255,255,0.8); }
+    #pp-nav a.active { color: #fff; border-left-color: rgba(255,255,255,0.5); }
+
+    /* ─── CONTENT ─── */
+    #pp-content {
+      padding: 48px 0 48px 56px;
+      display: flex; flex-direction: column; gap: 48px;
+    }
+    .pp-section { display: flex; flex-direction: column; gap: 16px; scroll-margin-top: 96px; }
+    .pp-section h2 {
+      font-size: 18px; font-weight: 700; letter-spacing: -0.01em; color: #fff;
+      padding-bottom: 12px; border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .pp-section p, .pp-section li {
+      font-size: 15px; line-height: 1.8; color: rgba(255,255,255,0.5);
+      max-width: 68ch;
+    }
+    .pp-section ul, .pp-section ol {
+      padding-left: 20px; display: flex; flex-direction: column; gap: 8px;
+    }
+    .pp-section ul { list-style: disc; }
+    .pp-section ol { list-style: decimal; }
+    .pp-section strong { color: rgba(255,255,255,0.8); font-weight: 600; }
+    .pp-section a {
+      color: rgba(255,255,255,0.7); text-decoration: underline;
+      text-decoration-color: rgba(255,255,255,0.2);
+      transition: color 180ms, text-decoration-color 180ms;
+    }
+    .pp-section a:hover { color: #fff; text-decoration-color: rgba(255,255,255,0.6); }
+
+    /* Callout box */
+    .pp-callout {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 4px;
+      padding: 20px 24px;
+      font-size: 14px; line-height: 1.7;
+      color: rgba(255,255,255,0.45);
+    }
+    .pp-callout strong { color: rgba(255,255,255,0.7); }
+
+    /* Contact email chip */
+    .pp-email {
+      display: inline-block;
+      padding: 6px 14px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 100px;
+      font-size: 13px; font-family: 'Fragment Mono', monospace;
+      color: rgba(255,255,255,0.7);
+      transition: background 180ms;
+      text-decoration: none;
+    }
+    .pp-email:hover { background: rgba(255,255,255,0.1); }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 768px) {
+      #pp-hero { padding: 100px 6% 48px; }
+      #pp-body { grid-template-columns: 1fr; padding: 0 6% 64px; }
+      #pp-nav { display: none; }
+      #pp-content { padding: 40px 0 0; gap: 40px; }
+      .pp-section p, .pp-section li { font-size: 14px; max-width: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ─── HERO ─── -->
+<section id="pp-hero">
+  <div id="pp-hero-label">Legal</div>
+  <h1>Privacy Policy</h1>
+  <p id="pp-hero-meta">Last updated: May 2026 &nbsp;·&nbsp; Applies to nicolasvacagr.com</p>
+</section>
+
+<!-- ─── BODY ─── -->
+<div id="pp-body">
+
+  <!-- Sidebar Navigation -->
+  <nav id="pp-nav" aria-label="Privacy policy sections">
+    <ul>
+      <li><a href="#overview">Overview</a></li>
+      <li><a href="#data-collected">Data We Collect</a></li>
+      <li><a href="#contact-form">Contact Form</a></li>
+      <li><a href="#newsletter">Newsletter</a></li>
+      <li><a href="#third-parties">Third-Party Services</a></li>
+      <li><a href="#cookies">Cookies</a></li>
+      <li><a href="#your-rights">Your Rights</a></li>
+      <li><a href="#data-retention">Data Retention</a></li>
+      <li><a href="#security">Security</a></li>
+      <li><a href="#minors">Minors</a></li>
+      <li><a href="#changes">Changes</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- Main Content -->
+  <main id="pp-content">
+
+    <section class="pp-section" id="overview">
+      <h2>Overview</h2>
+      <div class="pp-callout">
+        <strong>Plain-language summary:</strong> This site is a personal project — a podcast, newsletter, and portfolio run by Nicolas Vaca. I collect only what I need to operate the contact form and newsletter, I do not sell your data, and I do not run advertising. Full details are below.
+      </div>
+      <p>This Privacy Policy explains how Nicolas Vaca ("<strong>I</strong>", "<strong>me</strong>", or "<strong>my</strong>") collects, uses, and protects personal information when you visit <strong>nicolasvacagr.com</strong> (the "Site") and interact with its features, including the contact form, newsletter sign-up, and embedded third-party content.</p>
+      <p>By using this Site you agree to the practices described in this Policy. If you disagree, please do not submit any personal information through the Site.</p>
+    </section>
+
+    <section class="pp-section" id="data-collected">
+      <h2>Data We Collect</h2>
+      <p>I collect information in two ways: information you provide directly, and information collected automatically when you visit the Site.</p>
+      <p><strong>Information you provide directly:</strong></p>
+      <ul>
+        <li><strong>Contact form:</strong> your name, email address, and the content of your message.</li>
+        <li><strong>Newsletter sign-up:</strong> your email address.</li>
+      </ul>
+      <p><strong>Information collected automatically:</strong></p>
+      <ul>
+        <li>Basic server-level logs (IP address, browser type, pages visited, referring URL, timestamp) — retained briefly for security and diagnostic purposes.</li>
+        <li>If an analytics tool is active on the Site, aggregate, anonymised usage statistics (pages viewed, session duration). No individual profiles are built.</li>
+      </ul>
+      <p>I do not collect payment information, government IDs, or sensitive personal data of any kind.</p>
+    </section>
+
+    <section class="pp-section" id="contact-form">
+      <h2>Contact Form</h2>
+      <p>When you submit the contact form, the information you enter (name, email, message) is sent directly to me so I can respond to your enquiry. This data is:</p>
+      <ul>
+        <li>Used solely to reply to your message.</li>
+        <li>Not added to any marketing list without your separate, explicit consent.</li>
+        <li>Retained only as long as necessary to handle your enquiry and any reasonable follow-up period (typically up to 12 months), after which it is deleted.</li>
+      </ul>
+      <p>The legal basis for processing this data is <strong>legitimate interest</strong> (responding to a message you chose to send me) and, where applicable, your consent.</p>
+    </section>
+
+    <section class="pp-section" id="newsletter">
+      <h2>Newsletter</h2>
+      <p>If you subscribe to the newsletter through this Site, your email address is passed to <strong>Substack</strong>, the third-party platform I use to write and distribute it. Once your email is submitted, it is governed by <a href="https://substack.com/privacy" target="_blank" rel="noopener noreferrer">Substack's Privacy Policy</a>.</p>
+      <p>By subscribing you consent to:</p>
+      <ul>
+        <li>Receiving periodic emails about ideas, articles, podcast episodes, and related content I publish.</li>
+        <li>Your email address being stored and processed by Substack on my behalf.</li>
+      </ul>
+      <p>You can <strong>unsubscribe at any time</strong> by clicking the "Unsubscribe" link included in every email, or by emailing me directly. Unsubscribing removes you from future sends; it does not automatically delete historical data held by Substack — for that, please refer to their deletion request process.</p>
+    </section>
+
+    <section class="pp-section" id="third-parties">
+      <h2>Third-Party Services</h2>
+      <p>This Site embeds or links to content hosted by third-party platforms. When you interact with that content, those platforms may collect data about you under their own privacy policies, which I do not control. The relevant platforms are:</p>
+      <ul>
+        <li><strong>Spotify</strong> — podcast episodes are hosted and streamed via Spotify. <a href="https://www.spotify.com/legal/privacy-policy/" target="_blank" rel="noopener noreferrer">Spotify Privacy Policy →</a></li>
+        <li><strong>Substack</strong> — newsletter articles are hosted on Substack. <a href="https://substack.com/privacy" target="_blank" rel="noopener noreferrer">Substack Privacy Policy →</a></li>
+        <li><strong>YouTube</strong> — podcast video content may be embedded from YouTube (Google LLC). Embedded players may set cookies when played. <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Google Privacy Policy →</a></li>
+        <li><strong>Apple Podcasts</strong> — podcast is distributed via Apple Podcasts. <a href="https://www.apple.com/legal/privacy/" target="_blank" rel="noopener noreferrer">Apple Privacy Policy →</a></li>
+        <li><strong>Instagram, X (Twitter), LinkedIn</strong> — links to my social profiles are present on the Site. Visiting those platforms is subject to their respective policies.</li>
+      </ul>
+      <p>I recommend reviewing the privacy policies of any third-party service you choose to use.</p>
+    </section>
+
+    <section class="pp-section" id="cookies">
+      <h2>Cookies &amp; Tracking</h2>
+      <p>This Site itself sets minimal or no first-party cookies. However, <strong>embedded third-party players</strong> (e.g. YouTube, Spotify) may set their own cookies when you interact with them. These are governed by the respective third parties' cookie policies.</p>
+      <p>If I add analytics in the future, I will update this section and, where required by law, request your consent before setting non-essential cookies.</p>
+      <p>You can control cookies through your browser settings. Disabling cookies may affect certain embedded features but will not prevent you from reading content on this Site.</p>
+    </section>
+
+    <section class="pp-section" id="your-rights">
+      <h2>Your Rights</h2>
+      <p>Depending on your country of residence, you may have the following rights regarding your personal data:</p>
+      <ul>
+        <li><strong>Access:</strong> request a copy of the personal data I hold about you.</li>
+        <li><strong>Correction:</strong> ask me to correct inaccurate or incomplete data.</li>
+        <li><strong>Deletion:</strong> request that I delete your personal data ("right to be forgotten").</li>
+        <li><strong>Restriction:</strong> ask me to restrict processing of your data in certain circumstances.</li>
+        <li><strong>Objection:</strong> object to processing based on legitimate interest.</li>
+        <li><strong>Portability:</strong> receive your data in a structured, machine-readable format.</li>
+        <li><strong>Withdraw consent:</strong> where processing is based on consent, withdraw it at any time without affecting prior processing.</li>
+      </ul>
+      <p>To exercise any of these rights, contact me at the address in the <a href="#contact">Contact section</a> below. I will respond within 30 days. For data held by Substack, YouTube, or other third parties, requests must be directed to them directly.</p>
+      <p>If you are located in the European Economic Area (EEA) or the UK, you also have the right to lodge a complaint with your local data protection authority. As the Site is operated from Spain, the relevant authority is the <strong>Agencia Española de Protección de Datos (AEPD)</strong> — <a href="https://www.aepd.es" target="_blank" rel="noopener noreferrer">aepd.es →</a></p>
+    </section>
+
+    <section class="pp-section" id="data-retention">
+      <h2>Data Retention</h2>
+      <ul>
+        <li><strong>Contact form submissions:</strong> retained for up to 12 months from the date of your last communication, then deleted.</li>
+        <li><strong>Newsletter subscribers:</strong> retained by Substack for as long as you are subscribed. After unsubscribing, Substack's own retention schedule applies.</li>
+        <li><strong>Server logs:</strong> typically retained for 30–90 days for security purposes, then deleted automatically.</li>
+      </ul>
+      <p>I do not retain personal data longer than necessary for the purpose for which it was collected.</p>
+    </section>
+
+    <section class="pp-section" id="security">
+      <h2>Security</h2>
+      <p>I take reasonable precautions to protect the information you share with me, including using HTTPS encryption for all data in transit. However, no method of transmission over the internet or electronic storage is 100% secure. I cannot guarantee absolute security and encourage you not to share sensitive personal information through the contact form.</p>
+    </section>
+
+    <section class="pp-section" id="minors">
+      <h2>Minors</h2>
+      <p>This Site is not directed at children under the age of 16. I do not knowingly collect personal data from anyone under 16. If you believe a minor has submitted information through this Site, please contact me and I will delete it promptly.</p>
+    </section>
+
+    <section class="pp-section" id="changes">
+      <h2>Changes to This Policy</h2>
+      <p>I may update this Privacy Policy from time to time as the Site evolves. When I do, I will update the "Last updated" date at the top of this page. For significant changes I will make reasonable efforts to notify newsletter subscribers. Continued use of the Site after a policy change constitutes acceptance of the updated terms.</p>
+      <p>I recommend checking this page periodically for any updates.</p>
+    </section>
+
+    <section class="pp-section" id="contact">
+      <h2>Contact</h2>
+      <p>If you have any questions about this Privacy Policy, want to exercise your rights, or have a concern about how your data has been handled, please reach out:</p>
+      <p>
+        <a href="mailto:contact@nicolasvacagr.com" class="pp-email">contact@nicolasvacagr.com</a>
+      </p>
+      <p>I aim to respond to all enquiries within <strong>30 days</strong>. For complex requests this may be extended by a further 60 days, in which case I will inform you of the extension and the reason for it.</p>
+    </section>
+
+  </main>
+</div>
+
+<!-- Active nav link on scroll -->
+<script>
+  const sections = document.querySelectorAll('.pp-section');
+  const navLinks = document.querySelectorAll('#pp-nav a');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(l => l.classList.remove('active'));
+        const active = document.querySelector(`#pp-nav a[href="#${entry.target.id}"]`);
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+  sections.forEach(s => observer.observe(s));
+</script>
+
+<script src="components.js"></script>
+</body>
+</html>
