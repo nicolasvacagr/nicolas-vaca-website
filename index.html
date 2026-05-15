@@ -318,44 +318,35 @@
 <!-- Substack articles -->
 <script>
   async function loadArticles() {
-    const container = document.getElementById('nl-articles');
-    const feedUrl = 'https://nicolasvaca.substack.com/feed';
-    const proxies = [
-      u => `https://corsproxy.io/?url=${encodeURIComponent(u)}`,
-      u => `https://api.allorigins.win/raw?url=${encodeURIComponent(u)}`,
-      u => `https://thingproxy.freeboard.io/fetch/${u}`,
-    ];
-    let xml = null;
-    for (const p of proxies) {
-      try {
-        const res = await fetch(p(feedUrl), { signal: AbortSignal.timeout(6000) });
-        if (!res.ok) continue;
-        const doc = new DOMParser().parseFromString(await res.text(), 'text/xml');
-        if (doc.querySelector('item')) { xml = doc; break; }
-      } catch { continue; }
-    }
-    if (!xml) {
-      container.innerHTML = `<div style="padding:24px 0;color:rgba(0,0,0,0.4);font-size:14px;">Could not load articles. <a href="thoughts.html" style="color:#1a1a1a;text-decoration:underline;">Read all thoughts</a></div>`;
-      return;
-    }
-    container.innerHTML = Array.from(xml.querySelectorAll('item')).slice(0, 3).map((item, i, arr) => {
-      const title   = item.querySelector('title')?.textContent?.trim() ?? '';
-      const link    = item.querySelector('link')?.textContent?.trim() ?? '#';
-      const pub     = item.querySelector('pubDate')?.textContent ?? '';
-      const date    = pub ? new Date(pub).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }) : '';
-      const desc    = item.querySelector('description')?.textContent ?? '';
-      const tmp     = document.createElement('div'); tmp.innerHTML = desc;
+  const container = document.getElementById('nl-articles');
+  const feedUrl = 'https://nicolasvaca.substack.com/feed';
+  const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feedUrl)}&count=3`;
+
+  try {
+    const res = await fetch(apiUrl);
+    if (!res.ok) throw new Error('fetch failed');
+    const data = await res.json();
+    if (data.status !== 'ok' || !data.items || data.items.length === 0) throw new Error('no items');
+
+    container.innerHTML = data.items.slice(0, 3).map((item, i, arr) => {
+      const title   = item.title || '';
+      const link    = item.link  || '#';
+      const pub     = item.pubDate ? new Date(item.pubDate).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }) : '';
+      const imgM    = (item.description || '').match(/img.*?src=["']([^"']+)/);
+      const tmp     = document.createElement('div'); tmp.innerHTML = item.description || '';
       const excerpt = tmp.textContent.replace(/\s+/g, ' ').trim().slice(0, 180);
-      const imgM    = desc.match(/img.*?src=["']([^"']+)/);
       return `<a href="${link}" target="_blank" rel="noopener" class="nl-article"${i === arr.length - 1 ? ' style="border-right:none;padding-right:0;"' : ''}>
         ${imgM ? `<div class="nl-art-img"><img src="${imgM[1]}" alt="${title}" loading="lazy"></div>` : `<div class="nl-art-img" style="background:#e0e0e0;"></div>`}
-        <span class="nl-art-date">${date}</span>
+        <span class="nl-art-date">${pub}</span>
         <span class="nl-art-title">${title}</span>
         <span class="nl-art-excerpt">${excerpt}</span>
-        <span class="nl-art-read">Read →</span>
+        <span class="nl-art-read">Read &#8594;</span>
       </a>`;
     }).join('');
+  } catch (e) {
+    container.innerHTML = `<div style="padding:24px 0;color:rgba(0,0,0,0.4);font-size:14px;">Could not load articles. <a href="thoughts.html" style="color:inherit;text-decoration:underline;">Read thoughts instead.</a></div>`;
   }
+}
   loadArticles();
 </script>
 
