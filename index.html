@@ -320,7 +320,7 @@
   async function loadArticles() {
   const container = document.getElementById('nl-articles');
   const feedUrl = 'https://nicolasvaca.substack.com/feed';
-  const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feedUrl)}&count=3`;
+  const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feedUrl)}`;
 
   try {
     const res = await fetch(apiUrl);
