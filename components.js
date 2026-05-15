@@ -110,7 +110,7 @@
       const el = document.getElementById(id);
       if (el && mid >= el.offsetTop && mid < el.offsetTop + el.offsetHeight) return 'dark-section';
     }
-    return 'default';
+    return isHome ? 'default' : 'dark-section';
   }
 
   function updateNav() {
