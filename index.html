@@ -95,7 +95,10 @@
     #podcast-section { background: #fff; color: #1a1a1a; padding: 80px 8%; }
     .pod-header { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 32px; flex-wrap: wrap; gap: 12px; }
     .pod-title-label { font-size: 11px; letter-spacing: 0.32em; text-transform: uppercase; color: rgba(0,0,0,0.35); margin-bottom: 4px; font-family: 'Fragment Mono', monospace; }
-    .pod-title { font-size: clamp(44px, 7vw, 80px); font-weight: 900; letter-spacing: -0.22em; text-transform: uppercase; line-height: 0.88; }
+    .pod-title {
+      font-size: clamp(44px, 7vw, 80px); font-weight: 900;
+      letter-spacing: -0.05em; text-transform: uppercase; line-height: 0.88;
+    }
     .pod-cta { font-size: 13px; font-weight: 600; border-bottom: 1px solid rgba(0,0,0,0.18); padding-bottom: 2px; transition: opacity 180ms; }
     .pod-cta:hover { opacity: 0.5; }
     .pod-divider { width: 100%; height: 1px; background: rgba(0,0,0,0.09); border: none; margin: 0; }
@@ -180,10 +183,10 @@
 <section id="about-scroll-wrapper" aria-label="About intro">
   <div id="about-scroll-sticky">
     <div role="text">
-      <span class="about-sentence" data-index="0">As a former tennis player and athlete at the Rafa Nadal Academy,</span>
-      <span class="about-sentence" data-index="1"> I am used to spending my free time learning about one of the many interests I have.</span>
-      <span class="about-sentence" data-index="2"> I recently decided to channel my curiosity into Untold.</span>
-      <span class="about-sentence" data-index="3"> My platform to speak with smart and interesting people.</span>
+      <span class="about-sentence" data-index="0">Curiosity has always been my default setting.</span>
+      <span class="about-sentence" data-index="1"> I spent years chasing a tennis ball across courts around the world, learning that the best version of yourself is built through repetition.</span>
+      <span class="about-sentence" data-index="2"> When I hung up the racket, I channelled that same obsession into something else: ideas.</span>
+      <span class="about-sentence" data-index="3"> Today I spend my time going down rabbit holes most people disregard. Here is where I expose my interest in rabbit holes to the world.</span>
     </div>
   </div>
 </section>
@@ -194,8 +197,8 @@
     <img src="images/cheeky-look" alt="Nicolas Vaca" loading="lazy">
   </div>
   <div id="about-text-col">
-    <p class="about-para">As someone who since early on found pleasure in <span class="hi">knowing more than was necessary</span> about things only few found interesting I still spend my time filling my head with <span class="hi">fun facts</span> and <span class="hi">unknown stories</span>.</p>
-    <p class="about-para">Right now, I'm diving deep into conversations with experts in <span class="hi">artificial intelligence</span> (with a focus on infrastructure needs and model alignment), <span class="hi">evolutionary psychology</span>, <span class="hi">relationship dynamics</span>, <span class="hi">personal development</span>, and more.</p>
+    <p class="about-para">As someone who since early on found pleasure in <span class="hi">knowing more than was necessary</span> about things only few found interesting I still spend my free time learning about <span class="hi">fun facts</span> and <span class="hi">unknown stories</span>.</p>
+    <p class="about-para">Right now, I'm specially interested on <span class="hi">artificial intelligence</span>, <span class="hi">evolutionary psychology</span>, <span class="hi">relationship dynamics</span>, and <span class="hi">personal development</span>. But one of my core beliefs is that anything can be interesting if you ask the right question and go deep enough into it.</p>
     <div id="about-meta">
       <div id="about-location">Based and work in Madrid 🇪🇸</div>
       <div id="about-clock"><span id="clock-time">00:00</span><span> (CET)</span></div>
@@ -276,7 +279,7 @@
   <div class="nl-signup">
     <div class="nl-signup-copy">
       <div class="nl-signup-title">Get the newsletter</div>
-      <div class="nl-signup-sub">Ideas worth sitting with, delivered to your inbox. No noise, just the good stuff when it's ready.</div>
+      <div class="nl-signup-sub">Sneak peak into my mind; get an inside look some of the things I am putting in paper.</div>
     </div>
     <form class="nl-form" onsubmit="handleNlSubmit(event)">
       <input class="nl-input" type="email" placeholder="Your email address" required id="nl-email">
@@ -285,7 +288,7 @@
   </div>
 </section>
 
-<!-- ─── ABOUT SCROLL HIGHLIGHT SCRIPT ─── -->
+<!-- ─── SCROLL HIGHLIGHT SCRIPT ─── -->
 <script>
   const wrapper   = document.getElementById('about-scroll-wrapper');
   const sentences = document.querySelectorAll('.about-sentence');
@@ -303,7 +306,6 @@
   window.PAGE_DARK_SECTIONS  = ['about-scroll-wrapper', 'about'];
   window.PAGE_LIGHT_SECTIONS = ['podcast-section', 'newsletter-section'];
 
-  // Tagline fade on scroll
   const taglineEl = document.getElementById('hero-tagline');
   const heroEl    = document.getElementById('hero');
   window.addEventListener('scroll', () => {
