@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Contact — Nicolas Vaca</title>
+    <meta name="description" content="Get in touch with Nicolas Vaca — entrepreneur, podcast host of Untold, and writer based in Madrid. Drop a message or connect on social media.">
   <link rel="stylesheet" href="shared.css">
   <style>
     body { background: #fff; color: #1a1a1a; }
@@ -263,7 +264,7 @@
       <form id="contact-form" onsubmit="handleSubmit(event)" style="display:flex;flex-direction:column;gap:14px;margin-top:8px;">
         <div class="g-field">
           <label class="g-label" for="c-name">Your Name</label>
-          <input class="g-input" type="text" id="c-name" placeholder="Rafael Nadal" required>
+          <input class="g-input" type="text" id="c-name" placeholder="Your name" required>
         </div>
         <div class="g-field">
           <label class="g-label" for="c-email">Email</label>
@@ -320,7 +321,7 @@
 
     let currentQuote = 0;
 
-    function renderQuote(index, animate = true) {
+    function fitQuoteText() { const right = document.getElementById('quote-right'); const txt = document.getElementById('quote-text'); txt.style.fontSize = ''; let size = parseFloat(getComputedStyle(txt).fontSize); while (document.getElementById('quote-display').scrollHeight > right.clientHeight && size > 10) { size -= 0.5; txt.style.fontSize = size + 'px'; } } function renderQuote(index, animate = true) {
       const q = QUOTES[index];
       const display = document.getElementById('quote-display');
       if (animate) {
@@ -330,7 +331,7 @@
       }
       document.getElementById('quote-text').textContent = q.text;
       document.getElementById('quote-author').textContent = '— ' + q.author;
-      document.querySelectorAll('.q-dot').forEach((d, i) => d.classList.toggle('active', i === index));
+      document.querySelectorAll('.q-dot').forEach((d, i) => d.classList.toggle('active', i === index)); setTimeout(fitQuoteText, 0);
     }
 
     function buildDots() {
